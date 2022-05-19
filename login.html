@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login page</title>
+
+    <!-- Bootstrap library inclusions -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+    <!-- Login Page -->
+    <div class="container">
+        <div class="text-center my-4">
+            <h1>Login Page</h1>
+        </div>
+
+        <!-- Creates container grid for text -->
+        <div class="row justify-content-center my-4">
+            <div class="col-lg-6 justify-content-center">
+
+                <!-- Creates the form for Login -->
+                <form action="">
+                    
+                    <!-- Title card -->
+                    <div class="card mb-3" style="background-color:DodgerBlue;" >
+                        <div class="row">
+                            <div class="card-body">
+                              <h1 class="card-title" style="font-family:courier;" text-align= "center;">Oh My Wordle!!!</h1>
+                              <p class="card-text">Login & play against friends to see who is supreme overlord of five letter words. </p>
+                            </div>              
+                        </div>
+                      </div>
+
+                    <!-- Username entry container and floating label -->
+                    <div class="form-floating my-4">
+                        <input 
+                            type="username"
+                            id="username" 
+                            placeholder="admin"
+                            class="form-control"
+                        />
+                        <label for="username" class="form-label">Username:</label>
+                    </div>
+
+                    <!-- Password entry container and floating label -->
+                    <div class="form-floating my-4">
+                        <input 
+                            type="password"
+                            id="password" 
+                            placeholder="admin"
+                            class="form-control"
+                        />
+                        <label for="password" class="form-label">Password:</label>
+                    </div>
+
+                    <!-- Login and sign up button -->
+                    <div class="text-center my-4">
+                        <button type="submit" class="btn btn-secondary"onclick="checkLogin ()">Login
+                        <!-- Icon in button -->    
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                        </svg>
+                        </button>
+
+                        <button type="submit" class="btn btn-secondary"onclick="checkLogin ()">Sign up
+                        <!-- Icon in button -->    
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                        </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Link to resetting password page -->
+                    <div class="text-center my-4">
+                        <a class="page_url" href="./" id="link_to_login">Forgot your password? Reset it here</a>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.js"></script>
+    <script src="login.js"></script>
+</body>
+</html>
