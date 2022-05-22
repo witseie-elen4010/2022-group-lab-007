@@ -1,0 +1,60 @@
+* {
+    color:cornflowerblue;
+    font-family: 
+    "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-image: url("images/wordlegamebackground.jpg");
+    }
+
+
+    .guess-grid {
+        display: grid;
+        justify-content: center;
+        align-content: center;
+        flex-wrap: wrap;
+        grid-template-columns: repeat(5, 4em);
+        grid-template-rows: repeat(6, 4em);
+        gap: .25em;
+        margin-bottom: 1em;
+      }
+      
+      .tile {
+          /*BACKGROUND*/
+        background-color: cornflowerblue;
+        border: .05em solid black;
+
+        /*LETTERRS*/ 
+        font-size: 2.5em;
+        color: black;
+        text-transform: uppercase;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        user-select: none;
+        transition: transform 250ms linear;
+      }
+
+      .tile[data-state="active"] {
+        border-color: black;
+      }
+
+      .tile[data-state="wrong"] {
+        
+        background-color: red;
+      }
+      
+      .tile[data-state="wrong-location"] {
+        
+        background-color: yellow;
+      }
+      
+      .tile[data-state="correct"] {
+        
+        background-color:forestgreen;
+      }
+
+
