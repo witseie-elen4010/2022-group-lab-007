@@ -2,25 +2,26 @@
 <html> 
 
     <head>
+        <!--setting web page dimension characteristics and compatibility settings-->
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Oh My Wordle</title>
 
-        <!--Bootstrap libraries-->
+        <!--Bootstrap libraries, css and javascript files-->
         <link rel="stylesheet" href="css/bootstrap.css">
         <link rel="stylesheet" href="css/styles.css">
         <script src="gamePage.js" defer></script>        
 
     </head>
     <body>
-        <!-- setting page spacing -->
+        <!-- setting page title container -->
    <div class="container">
         <div class="text-center my-4">
             <h1><strong>OH MY WORDLE!</strong></h1>
         </div>
      
-        <div class="alert-container" data-alert-container></div>
+        <!-- creating the tiles for the guessing grid using bootstrap 5-->
         <div data-guess-grid class="guess-grid">
           <div class="tile" ></div>
           <div class="tile" ></div>
@@ -101,6 +102,6 @@
 
 <!--include javascript files-->
 <script src="js/bootstrap.bundle.js"></script>
-<script src="main.js"></script>
+<script src="gamePage.js"></script>
 
 </html>
