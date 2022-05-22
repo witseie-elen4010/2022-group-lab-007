@@ -64,22 +64,26 @@ body {
        .keyboard-row{
          display: flex;
          justify-content:center;
+         align-items: center;
          width:100%;
          margin:0  auto 6px;
          touch-action: manipulation;
        }
        
        .keyboard-row button{
+         
          font-family: inherit;
+         font-size:clamp(.5rem,2.5vmin,1.5rem) ;
          font-weight: bolder;
+         justify-content: center;
          border: 0.7ch;
-         padding: 0%;
+         padding: 0;
          height: 60px;
-         width: 20px;
+         width: 10px;
          cursor: pointer;
          background-color: aqua;
          color: #000000;
-         flex-grow: 2;
+         flex-grow: 1;
          text-transform: uppercase;
          margin-right: 10px;
          border-radius: 10px;
@@ -90,6 +94,6 @@ body {
        }
        
        .spacer-half{
-         flex-grow: 0.5;
+         flex-grow: 0;
        }
 
