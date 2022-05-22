@@ -27,23 +27,45 @@ function MouseClick(event)                               // An input event butto
      pressedKey(event.target.dataset.key)    // The specific key that was pressed is sent to a function that will enter it into the row for the guess
      return
     }
+
+    if (event.target.matches("[data-delete]")) 
+    {                                           
+        DeleteRow()                             // Call the delete function to delete the letters in the row
+        return
+    }
+
+    if (event.target.matches("[data-enter]"))
+    {
+        submitGuess()                         // Call the function to check if the 
+        return
+    }
 }
 
 // Function to register which key on the user's keyboard was pressed
 function KeyPressed(event)                
-{
-    console.log(event)                   // The key that was pressed down is converted to a letter and compared to a letter in the alphabet to
+{                                        // The key that was pressed down is ompared to a letter in the alphabet to
     if (event.key.match(/^[a-z]$/))      // be approved for the input guess
     {
         pressedKey(event.key)
         return
     }
 
+    if (event.key === "Delete")
+    {
+        DeleteRow()
+        return        
+    }
+
+    if (event.key === "Enter")
+    {
+        submitGuess()
+        return        
+    }
 }
 
 function pressedKey(key)
 {
-    const wordLength = getWordLength()     // This function checks the length of the word to know when the user has completed a guessed word
+    const wordLength = getWord()     // This function checks the length of the word to know when the user has completed a guessed word
     if (wordLength.length > 4)             // and if the word is less than 5 letters then it will place the inputted word
     {
         return
@@ -54,8 +76,36 @@ function pressedKey(key)
     FollowingTile.dataset.state = "taken"
 }
 
-function getWordLength()  //Returns the length of the word
+function getWord()  //Returns the word
 {
-    const wordLen = guessingGrid.querySelectorAll('[data-state="taken"]')
+    const wordLen = guessingGrid.querySelectorAll('[data-state="taken"]')  // Returns a string of the word being inputted
     return wordLen
+}
+
+function DeleteRow()                             //Function to delete the entire row calls the current word in the row 
+{                                                // and each element in the string is deleted and cleared to delete the 
+    const filledTiles = getWord()                // entire string/word
+
+    for (let i=0;i < filledTiles.length;i++)
+    {
+        if (filledTiles == null)
+        {
+            return                               //Nothing to delete
+        }
+        filledTiles[i].textContent = ""
+        delete filledTiles[i].dataset.state      //empty the string and remove the state to reset it
+        delete filledTiles[i].dataset.letter
+    }
+
+}
+
+function submitGuess()                        //Function to submit the guess
+{
+    const filledTiles = getWord()
+
+    if (filledTiles < 4)
+    {
+        console.log("Word not long enough")    // Function will output an error message if the inputted word 
+        return                                 // is smaller than the word to be guessed
+    }
 }
