@@ -8,10 +8,12 @@
 <link rel="stylesheet" href="css/bootstrap.css">
 <script src="js/bootstrap.bundle.js"></script>
 
-<!-- defer means that the JS code is executed after the DOM is fully built -->
+<!-- Linking Js file -->
 <script defer src="GameInstruction.js"></script>
 
 <style>
+   
+   /* Button apperance values */
     .button {
         background-color: #f50606; 
         border: black;
@@ -25,16 +27,17 @@
         cursor: pointer;
         border-radius: 4px;
     }
-    .Greentext { /* OK, a bit contrived... */
+    /* Different text colours */
+    .Greentext { 
         color: green;
       }
-    .Yellowtext { /* OK, a bit contrived... */
+    .Yellowtext { 
         color: yellow;
       }
-    .GreyText { /* OK, a bit contrived... */
+    .GreyText {
         color: grey;
       }
-
+      /* Setting backround image */
       body {
     background-image: url('css/images/MenuBackround.jpg');
     font-family: "Georgia", Times, serif;
@@ -53,6 +56,7 @@
 
     <div class="container">
         <div class="text-center my-4">
+            <!-- Singleplayer instructions -->
             <h3 id="heading2">SinglePlayer</h3>
             <p id="paragraph"> The goal of the game is to guess the hidden five letter word.
                 <br>
@@ -79,6 +83,7 @@
             </p>
             <br>
             <h3 id="heading2">MultiPlayer</h3>
+             <!-- Multiplayer instructions -->
             <p id="paragraph">
                 During versus MultiPlayer you cannot see the letters that your opponent has guessed but you can see the
                 <span class="Yellowtext">Yellow</span>
@@ -96,6 +101,6 @@
 
             </p>
     <button style = "position:absolute; right:80px; bottom:20px;" class="button" id="Back">Back</button>        
-
+             <!-- Back Button position bottom right -->
 </body>
 </html>
