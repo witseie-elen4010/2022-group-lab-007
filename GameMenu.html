@@ -17,10 +17,11 @@
 <style>
     body {
     background-image: url('css/images/MenuBackround.jpg');
+    font-family: "Georgia", Times, serif;
     }
 </style>
 
-<!-- Set botton look -->
+<!-- Set button look -->
 <style>
 .button {
     background-color: #f50606; 
@@ -30,27 +31,31 @@
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 20px;
     margin: 4px 2px;
     cursor: pointer;
+    border-radius: 4px;
 }
 </style>
+
 
 </head>
 <body>
     <!-- Game Menu Page -->
     <div class="container">
         <div class="text-center my-4">
-            <h1>Oh My Wordle!!!</h1>
+            <h1 style="color:black">Oh My Wordle!!!</h1>
             <br>
             <button class="button" id="SinglePlayer" >SinglePlayer</button>
             <br>
-            <button class="button" id="Multiplayer">Multiplayer</button>
+            <button class="button" id="MultiplayerVs">Multiplayer Versus</button>
+            <br>
+            <button class="button" id="MultiplayerWC">Multiplayer Word Guess</button>
             <br>
             <button class="button" id="Scoreboard">Scoreboard</button>
             <br>
-            <button class="button" id="Logout">Logout</button>
-            <br>
             <button class="button" id="Instructions">Instructions</button>
+            <br>
+            <button style = "position:absolute; right:80px; bottom:20px;" class="button" id="Logout">Logout</button>
 </body>
 </html>
