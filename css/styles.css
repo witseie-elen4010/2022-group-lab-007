@@ -64,10 +64,11 @@ background-color: yellow;
 background-color:forestgreen;
 }
 
+/*Onscreen keyboard container settings */
 #onScreenkeyboard-container{
 height: 200px
 }
-
+/*Onscreen keyboard settings per row */
 .keyboard-row{
   display: flex;
   justify-content:center;
@@ -76,7 +77,7 @@ height: 200px
   margin:0  auto 6px;
   touch-action: manipulation;
 }
-
+/*Onscreen keyboard settings per button */
 .keyboard-row button{
   
   font-family: inherit;
@@ -95,7 +96,7 @@ height: 200px
   margin-right: 10px;
   border-radius: 10px;
 }
-
+/*Setting to make larger buttons */
 .keyboard-row button.wide-button {
   flex-grow: 1.6;
 }
