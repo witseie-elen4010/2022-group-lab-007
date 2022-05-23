@@ -10,6 +10,10 @@ dboperations.createAccount(AccountInfo).then(result => {
 })
 
 // Call function to retrieve account information
+dboperations.createAccount().then(result => {
+    console.log(result);
+})
+
 dboperations.getAccount().then(result => {
     console.log(result);
 })
