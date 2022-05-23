@@ -1,0 +1,107 @@
+* {
+  /* font settings for the web page*/
+    color:cornflowerblue;
+    font-family: 
+    "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+/* background image setting */
+body {
+    background-image: url("images/gamePageBackground.jpg");
+    }
+
+/* implementing the characteristics of the guessing grid */
+.guess-grid {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    grid-template-columns: repeat(5, 4em);
+    grid-template-rows: repeat(6, 4em);
+    gap: .25em;
+    margin-bottom: 1em;
+  }
+      
+/* default empty tile settings */
+.tile {
+  /*BACKGROUND*/
+background-color: cornflowerblue;
+border: .05em solid black;
+
+/*LETTERRS*/ 
+font-size: 2.5em;
+color: black;
+text-transform: uppercase;
+font-weight: bold;
+display: flex;
+justify-content: center;
+align-items: center;
+user-select: none;
+transition: transform 250ms linear;
+}
+
+/* setting currently selected tile */
+.tile[data-state="active"] {
+border-color: black;
+}
+
+/* setting characteristics of wrong letter tile */
+.tile[data-state="wrong"] {
+
+background-color: red;
+}
+
+/* setting characteristics of right letter wrong location tile */
+.tile[data-state="wrong-location"] {
+
+background-color: yellow;
+}
+
+/* setting characteristics of correct letter in right tile */
+.tile[data-state="correct"] {
+
+background-color:forestgreen;
+}
+
+/*Onscreen keyboard container settings */
+#onScreenkeyboard-container{
+height: 200px
+}
+/*Onscreen keyboard settings per row */
+.keyboard-row{
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  width:100%;
+  margin:0  auto 6px;
+  touch-action: manipulation;
+}
+/*Onscreen keyboard settings per button */
+.keyboard-row button{
+  
+  font-family: inherit;
+  font-size:clamp(.5rem,2.5vmin,1.5rem) ;
+  font-weight: bolder;
+  justify-content: center;
+  border: 0.7ch;
+  padding: 0;
+  height: 60px;
+  width: 10px;
+  cursor: pointer;
+  background-color: aqua;
+  color: #000000;
+  flex-grow: 1;
+  text-transform: uppercase;
+  margin-right: 10px;
+  border-radius: 10px;
+}
+/*Setting to make larger buttons */
+.keyboard-row button.wide-button {
+  flex-grow: 1.6;
+}
+
+.spacer-half{
+  flex-grow: 0;
+}
+

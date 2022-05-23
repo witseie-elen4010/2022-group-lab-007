@@ -1,0 +1,29 @@
+{
+  "name": "2022-group-lab-007",
+  "version": "1.0.0",
+  "description": "Get ready for \"Oh my Wordle!\"",
+  "main": "createAccount.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon api.js"
+  },
+  "dependencies": {
+    "body-parser": "~1.0.1",
+    "cors": "2.8.1",
+    "express": "~4.0.0",
+    "mssql": "^6.2.1"
+  },
+  "devDependencies":{
+    "nodemon": "^2.0.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/witseie-elen4010/2022-group-lab-007.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/witseie-elen4010/2022-group-lab-007/issues"
+  },
+  "homepage": "https://github.com/witseie-elen4010/2022-group-lab-007#readme"
+}
