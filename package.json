@@ -4,7 +4,8 @@
   "description": "Get ready for \"Oh my Wordle!\"",
   "main": "createAccount.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon api.js"
   },
   "dependencies": {
     "body-parser": "~1.0.1",
