@@ -1,4 +1,4 @@
-
+// configure the communication with the server
 const config = {
     user:'admin7',
     password: 'SoftwareGroup7',

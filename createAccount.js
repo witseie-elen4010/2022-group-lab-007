@@ -1,3 +1,4 @@
+// function called when submit button pressed during sign up
 function checkRegister () {
   const username = document.getElementById('username').value
   const password = document.getElementById('password').value
@@ -8,6 +9,7 @@ function checkRegister () {
   }
 }
 
+// contains columns of the AccountTable
 class createAccount {
   constructor (id, username, password) {
     this.id = id

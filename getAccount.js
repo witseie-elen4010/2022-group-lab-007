@@ -1,3 +1,4 @@
+// class has same columns as AccountTable
 class getAccount{
     constructor(id,username,password){
         this.id = id;
