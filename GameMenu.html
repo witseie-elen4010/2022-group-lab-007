@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>GameMenu</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- defer means that the JS code is executed after the DOM is fully built -->
+<script defer src="GameMenu.js"></script>
+
+<!-- Bootstrap library inclusions -->
+<link rel="stylesheet" href="css/bootstrap.css">
+<script src="js/bootstrap.bundle.js"></script>
+
+<!-- Set backround image -->
+<style>
+    body {
+    background-image: url('css/images/MenuBackround.jpg');
+    font-family: "Georgia", Times, serif;
+    }
+</style>
+
+<!-- Set button look -->
+<style>
+.button {
+    background-color: #f50606; 
+    border: black;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+</style>
+
+
+</head>
+<body>
+    <!-- Game Menu Page -->
+    <div class="container">
+        <div class="text-center my-4">
+             <!-- All the different buttons for navigation -->
+            <h1 style="color:black">Oh My Wordle!!!</h1>
+            <br>
+            <button class="button" id="SinglePlayer" >SinglePlayer</button>
+            <br>
+            <button class="button" id="MultiplayerVs">Multiplayer Versus</button>
+            <br>
+            <button class="button" id="MultiplayerWC">Multiplayer Word Guess</button>
+            <br>
+            <button class="button" id="Scoreboard">Scoreboard</button>
+            <br>
+            <button class="button" id="Instructions">Instructions</button>
+            <br>
+            <button style = "position:absolute; right:80px; bottom:20px;" class="button" id="Logout">Logout</button>
+</body>
+</html>
