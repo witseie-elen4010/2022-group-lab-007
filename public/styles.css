@@ -103,3 +103,9 @@ header {
 .spacer-half {
   flex-grow: 0.5;
 }
+
+
+.body2 {
+  background-image: url('images/MenuBackround.jpg');
+  font-family: "Georgia", Times, serif;
+}

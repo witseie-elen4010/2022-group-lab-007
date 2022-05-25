@@ -1,3 +1,5 @@
+
+
 const Singlebutton = document.getElementById('SinglePlayer')
 const MultiVsbutton = document.getElementById('MultiplayerVs')
 const MultiWCbutton = document.getElementById('MultiplayerWC')
@@ -7,7 +9,7 @@ const Instbutton= document.getElementById('Instructions')
 
 //Single player button destination
 Singlebutton.addEventListener('click', function () {
-    
+
 }, false)
 
 //Versus Multiplayer button destination
@@ -30,6 +32,8 @@ Logoutbutton.addEventListener('click', function () {
 
 }, false)
 
+//Instructions button destination
 Instbutton.addEventListener('click', function () {
-    window.location.href = ("GameInstructions.html");
+    redirect('/instructions')
 }, false)
+
