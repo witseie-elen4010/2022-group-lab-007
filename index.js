@@ -22,6 +22,7 @@ app.use(logger)
 const createRouter = require('./routes/create')
 const loginRouter = require('./routes/users')
 const homeRouter = require('./routes/home')
+const InstructionsRouter = require('./routes/Instruction')
 
 // ///////////////////////////////////////////////////
 // Define routes
@@ -29,6 +30,7 @@ const homeRouter = require('./routes/home')
 app.use('/create', createRouter)
 app.use('/users', loginRouter)
 app.use('/home', homeRouter)
+app.use('/instructions', InstructionsRouter)
 
 // ///////////////////////////////////////////////////
 // define function
