@@ -2,12 +2,9 @@
 // import express library and create instance
 // ///////////////////////////////////////////////////
 const express = require('express')
+const database = require('../serverConfig.js')
+//const bcrypt = require('bcrypt')
 const router = express.Router()
-
-// ///////////////////////////////////////////////////
-// get users from server
-// ///////////////////////////////////////////////////
-const users = [{ username: "Admin", password: "1234"}]
 
 // ///////////////////////////////////////////////////
 // routes
@@ -21,18 +18,9 @@ router.get('/login', (req, res) => {
     res.render("users/login")
 })   
 
-router.post('/', (req, res) => {
-    let x = req.body.username
-    let y = req.body.password
-    let isValid = checkLogin(x, y, users)
-    if (isValid != undefined) {
-        res.redirect('/users/'+isValid)
-    } else {
-        console.log("Error")
-        res.render('users/login', { username: x})
-    }
-})
-
+// ///////////////////////////////////////////////////
+// update users in server
+// ///////////////////////////////////////////////////
 router
     .route("/:id")
     .get((req, res) => {
@@ -56,24 +44,38 @@ router.param('id', (req, res, next, id) => {
 })
 
 // ///////////////////////////////////////////////////
-// function to determine validity of Login
+// validate login by comparing users from server
 // ///////////////////////////////////////////////////
-function checkLogin(username_, password_, users_){
-    let temp
-    for (let i=0; i < users_.length; i++){
-        if (username_ === users_[i].username){
-            temp = i
-        }
-    }
-    if (temp === undefined){
-        return undefined
-    }
-    if (users_[temp].password === password_){
-        return temp
-    }
-    else {
-        return undefined
-    }
-}
+router.post('/', (req, res) => {
+    let username_ = req.body.username
+    let password_ = req.body.password
+    //const hashedPassword = bcrypt.hash(password_, 10)
+    
+    database.pools
+    // Run the query on the database
+    .then((pool) => {
+    return pool.request()
+    .input('username', username_)
+    .input('password', password_)
+    //.input('password',hashedPassword)
 
+    // check for entry for corresponding password and username
+    .query('SELECT username FROM dbo.AccountTbl WHERE username = @username AND password = @password;')         
+    })
+
+    // Send back the result to validate Login
+    .then(result => {
+        if (result.recordset.length === 1){
+            console.log("LOGIN USERNAME FOUND AND PASSWORD CORRECT!")
+          
+            // Go to game menu if login successful
+            return res.redirect('/home')
+        }else{
+            console.log("NO SUCH USER EXISTS")
+          
+            // Stay on login page if login unsuccessful
+            res.render('users/login', { username: username_})
+        }
+    })
+})
 module.exports = router
