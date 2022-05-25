@@ -18,6 +18,9 @@ router.get('/login', (req, res) => {
     res.render("users/login")
 })   
 
+// ///////////////////////////////////////////////////
+// update users in server
+// ///////////////////////////////////////////////////
 router
     .route("/:id")
     .get((req, res) => {
@@ -49,23 +52,29 @@ router.post('/', (req, res) => {
     //const hashedPassword = bcrypt.hash(password_, 10)
     
     database.pools
-    // Run the query
+    // Run the query on the database
     .then((pool) => {
     return pool.request()
     .input('username', username_)
     .input('password', password_)
     //.input('password',hashedPassword)
+
+    // check for entry for corresponding password and username
     .query('SELECT username FROM dbo.AccountTbl WHERE username = @username AND password = @password;')         
     })
 
-    // Send back the result
+    // Send back the result to validate Login
     .then(result => {
         if (result.recordset.length === 1){
-          console.log("LOGIN USERNAME FOUND AND PASSWORD CORRECT!")
-          return res.redirect('/home')
+            console.log("LOGIN USERNAME FOUND AND PASSWORD CORRECT!")
+          
+            // Go to game menu if login successful
+            return res.redirect('/home')
         }else{
-          console.log("NO SUCH USER EXISTS")
-          res.render('users/login', { username: username_})
+            console.log("NO SUCH USER EXISTS")
+          
+            // Stay on login page if login unsuccessful
+            res.render('users/login', { username: username_})
         }
     })
 })
