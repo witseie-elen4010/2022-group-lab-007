@@ -1,4 +1,3 @@
-
 const Singlebutton = document.getElementById('SinglePlayer')
 const MultiVsbutton = document.getElementById('MultiplayerVs')
 const MultiWCbutton = document.getElementById('MultiplayerWC')
@@ -34,5 +33,3 @@ Logoutbutton.addEventListener('click', function () {
 Instbutton.addEventListener('click', function () {
     window.location.href = ("GameInstructions.html");
 }, false)
-
-
