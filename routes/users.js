@@ -11,72 +11,48 @@ const router = express.Router()
 // ///////////////////////////////////////////////////
 router.get('/', (req, res) => {
     console.log(req.query.username)
-    res.send('User List')
+    res.send('Login unsuccessful')
 })
 
+// rerouting to the login page should login fail
 router.get('/login', (req, res) => {
     res.render("users/login")
 })   
 
 // ///////////////////////////////////////////////////
-// update users in server
-// ///////////////////////////////////////////////////
-router
-    .route("/:id")
-    .get((req, res) => {
-        let x = req.params.id
-        let y = users[x].username
-        let z = users[x].password
-        res.redirect('/home')
-    })
-    .put((req, res) => {
-        let x = req.params.id
-        res.send('Update User with ID '+x)
-    })
-    .delete((req, res) => {
-        let x = req.params.id
-        res.send('Delete User with ID '+x)
-    })
-
-router.param('id', (req, res, next, id) => {
-    req.user = users[id]
-    next()
-})
-
-// ///////////////////////////////////////////////////
 // validate login by comparing users from server
 // ///////////////////////////////////////////////////
 router.post('/', (req, res) => {
+
+    // user input from login page
     let username_ = req.body.username
     let password_ = req.body.password
-    //const hashedPassword = bcrypt.hash(password_, 10)
-    // (await bcrypt.compare(password, server Password))
-    
+
+  // Check the server database for the inputted username
     database.pools
-    // Run the query on the database
     .then((pool) => {
-    return pool.request()
-    .input('username', username_)
-    .input('password', password_)
-    //.input('password',hashedPassword)
+      return pool.request()
+      // input to query is the username
+      .input('username', username_)
+      // SQL Query to server database table
+      .query('SELECT password FROM dbo.AccountTbl WHERE username = @username;')
+  })
 
-    // check for entry for corresponding password and username
-    .query('SELECT password FROM dbo.AccountTbl WHERE username = @username AND password = @password;')         
-    })
+  // Compare the input password and the server password 
+  .then(async (result) => {
+    // server password is hashed therefore bcrypt.compare is used
+    if (await bcrypt.compare(password_, result.recordset[0].password)) {      
+      // if Login succeeds go to Game menu
+      return res.redirect('/home')
+    } else {
+      // if Login fails remain on Login page
+      return res.redirect('/users/login')
+    }
+  })
+// Error with the server database
+  .catch(err => {
+    res.send({ Error: err })
+  })
 
-    // Send back the result to validate Login
-    .then(result => {
-        if (result.recordset.length === 1){
-            console.log("LOGIN USERNAME FOUND AND PASSWORD CORRECT!")
-            console.log(result.recordset)
-            // Go to game menu if login successful
-            return res.redirect('/home')
-        }else{
-            console.log("NO SUCH USER EXISTS")
-          
-            // Stay on login page if login unsuccessful
-            res.render('users/login', { username: username_})
-        }
-    })
 })
 module.exports = router
