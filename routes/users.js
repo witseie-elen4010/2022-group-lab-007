@@ -1,10 +1,17 @@
 // ///////////////////////////////////////////////////
 // import express library and create instance
 // ///////////////////////////////////////////////////
+// import Express
 const express = require('express')
+// Server config
 const database = require('../serverConfig.js')
+// import hash capability for passwords
 const bcrypt = require('bcrypt')
+// create instance of express
 const router = express.Router()
+// import Express session for token creation
+const expSession = require('express-session');
+//const FileStore = require('session-file-store')(expSession)
 
 // ///////////////////////////////////////////////////
 // routes
@@ -42,17 +49,19 @@ router.post('/', (req, res) => {
   .then(async (result) => {
     // server password is hashed therefore bcrypt.compare is used
     if (await bcrypt.compare(password_, result.recordset[0].password)) {      
-      // if Login succeeds go to Game menu
-      return res.redirect('/home')
+        // create a token for user if login succeeds
+      
+        // if Login succeeds go to Game menu
+        return res.redirect('/home')
     } else {
-      // if Login fails remain on Login page
-      return res.redirect('/users/login')
+        // if Login fails remain on Login page
+        return res.redirect('/users/login')
     }
   })
 // Error with the server database
-  .catch(err => {
+    .catch(err => {
     res.send({ Error: err })
-  })
+    })
 
 })
 module.exports = router
