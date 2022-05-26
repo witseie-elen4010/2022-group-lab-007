@@ -1,5 +1,10 @@
+// ///////////////////////////////////////////////////
+// import express library and create instance
+// ///////////////////////////////////////////////////
+// import Express
 const express = require('express')
 const router = express.Router()
+// import Express session to check for token
 const session = require('express-session');
 
 // check if logged in
