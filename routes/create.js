@@ -62,7 +62,7 @@ router.post('/', async (req, res) => {
       })
     } else {
       // return if email already in use
-      return res.redirect('/createAccount')
+      return res.redirect('/create')
       }
   })
   // check for an error
@@ -71,7 +71,7 @@ router.post('/', async (req, res) => {
   })
   } else {
   // check for wrong password
-  return res.redirect('/createAccount')
+  return res.redirect('/create')
   }
 })
 
