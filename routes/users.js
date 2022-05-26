@@ -3,7 +3,7 @@
 // ///////////////////////////////////////////////////
 const express = require('express')
 const database = require('../serverConfig.js')
-//const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt')
 const router = express.Router()
 
 // ///////////////////////////////////////////////////
@@ -50,6 +50,7 @@ router.post('/', (req, res) => {
     let username_ = req.body.username
     let password_ = req.body.password
     //const hashedPassword = bcrypt.hash(password_, 10)
+    // (await bcrypt.compare(password, server Password))
     
     database.pools
     // Run the query on the database
@@ -60,14 +61,14 @@ router.post('/', (req, res) => {
     //.input('password',hashedPassword)
 
     // check for entry for corresponding password and username
-    .query('SELECT username FROM dbo.AccountTbl WHERE username = @username AND password = @password;')         
+    .query('SELECT password FROM dbo.AccountTbl WHERE username = @username AND password = @password;')         
     })
 
     // Send back the result to validate Login
     .then(result => {
         if (result.recordset.length === 1){
             console.log("LOGIN USERNAME FOUND AND PASSWORD CORRECT!")
-          
+            console.log(result.recordset)
             // Go to game menu if login successful
             return res.redirect('/home')
         }else{
