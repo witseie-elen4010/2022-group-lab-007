@@ -98,11 +98,20 @@
             <button class="key" data-delete class= "wide-button">delete</button>
             
         </div>
-
+        <button style = "position:absolute; right:80px; bottom:20px;" class="buttonMenu" id="Back">Back</button>
         </div>
 
 <!--include javascript files-->
 <script src="js/bootstrap.bundle.js"></script>
 <script src="gamePage.js"></script>
+
+<script>
+    const Backbutton= document.getElementById('Back')
+    //Back button destination
+    Backbutton.addEventListener('click', function () {
+    window.location.href = ("/home");
+}, false)
+
+</script>
 
 </html>

@@ -103,3 +103,23 @@ header {
 .spacer-half {
   flex-grow: 0.5;
 }
+
+
+.body2 {
+  background-image: url('images/MenuBackround.jpg');
+  font-family: "Georgia", Times, serif;
+}
+
+.buttonMenu {
+  background-color: #f50606; 
+  border: black;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}

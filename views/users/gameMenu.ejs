@@ -6,20 +6,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- defer means that the JS code is executed after the DOM is fully built -->
-<script defer src="GameMenu.js"></script>
 
 <!-- Bootstrap library inclusions -->
-<link rel="stylesheet" href="css/bootstrap.css">
-<script src="js/bootstrap.bundle.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
 
-<!-- Set backround image -->
-<style>
-    body {
-    background-image: url('css/images/MenuBackround.jpg');
-    font-family: "Georgia", Times, serif;
-    }
-</style>
+<!-- Set style -->
+<link rel="stylesheet" href="/styles.css"/>
+
 
 <!-- Set button look -->
 <style>
@@ -40,14 +34,14 @@
 
 
 </head>
-<body>
+<body class="body2">
     <!-- Game Menu Page -->
     <div class="container">
         <div class="text-center my-4">
              <!-- All the different buttons for navigation -->
-            <h1 style="color:black">Oh My Wordle!!!</h1>
+            <h1 id="heading" style="color:black">Oh My Wordle!!!</h1>
             <br>
-            <button class="button" id="SinglePlayer" >SinglePlayer</button>
+            <button class="button" id="SinglePlayer">SinglePlayer</button>
             <br>
             <button class="button" id="MultiplayerVs">Multiplayer Versus</button>
             <br>
@@ -58,5 +52,55 @@
             <button class="button" id="Instructions">Instructions</button>
             <br>
             <button style = "position:absolute; right:80px; bottom:20px;" class="button" id="Logout">Logout</button>
+            <br>
+            <button style = "position:absolute; left:80px; bottom:20px;" class="button" id="About">About</button>
 </body>
+
+<!-- JS script to run with ejs file -->
+<script>
+const Singlebutton = document.getElementById('SinglePlayer')
+const MultiVsbutton = document.getElementById('MultiplayerVs')
+const MultiWCbutton = document.getElementById('MultiplayerWC')
+const Scorebutton = document.getElementById('Scoreboard')
+const Logoutbutton = document.getElementById('Logout')
+const Instbutton= document.getElementById('Instructions')
+const Aboutbutton= document.getElementById('About')
+
+//Single player button destination
+Singlebutton.addEventListener('click', function () {
+    window.location.href = ("/singleplayer")
+}, false)
+
+//Versus Multiplayer button destination
+MultiVsbutton.addEventListener('click', function () {
+
+}, false)
+
+//Word challengeMultiplayer button destination
+MultiWCbutton.addEventListener('click', function () {
+
+}, false)
+
+//Scoreboard button destination
+Scorebutton.addEventListener('click', function () {
+
+}, false)
+
+//Logout button destination
+Logoutbutton.addEventListener('click', function () {
+    window.location.href = ("/users/login");
+}, false)
+
+//Instructions button destination
+Instbutton.addEventListener('click', function () {
+    window.location.href = ("/instructions");
+}, false)
+
+//About button destination
+Aboutbutton.addEventListener('click', function () {
+    window.location.href = ("/about");
+}, false)
+
+</script>
+
 </html>

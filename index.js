@@ -38,13 +38,24 @@ app.use(logger)
 const createRouter = require('./routes/create')
 const loginRouter = require('./routes/users')
 const homeRouter = require('./routes/home')
-
+const InstructionsRouter = require('./routes/Instruction')
+const SingleGameRouter = require('./routes/SinglePlayer')
+const aboutRouter = require('./routes/about')
+const Multiplayer1Router = require('./routes/MultiplayerMode1')
+const Multiplayer2Router = require('./routes/MultiplayerMode2')
+const LeaderboardRouter=require('./routes/leaderboard')
 // ///////////////////////////////////////////////////
 // Define routes
 // ///////////////////////////////////////////////////
 app.use('/create', createRouter)
 app.use('/users', loginRouter)
 app.use('/home', homeRouter)
+app.use('/instructions', InstructionsRouter)
+app.use('/singleplayer',SingleGameRouter)
+app.use('/about',aboutRouter)
+app.use('/MultiplayerMode1',Multiplayer1Router)
+app.use('/MultiplayerMode2',Multiplayer2Router)
+app.use('/leaderboard',LeaderboardRouter)
 
 // ///////////////////////////////////////////////////
 // define function
