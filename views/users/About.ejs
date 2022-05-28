@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>GameInstructions</title>
+<meta charset="utf-8" />
+
+<!-- Bootstrap library inclusions -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+<!-- Set style -->
+<link rel="stylesheet" href="/styles.css"/>
+
+<style>
+   
+   /* Button apperance values */
+    .button {
+        background-color: #f50606; 
+        border: black;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 20px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+    /* Different text colours */
+    .Greentext { 
+        color: green;
+      }
+    .Yellowtext { 
+        color: yellow;
+      }
+    .GreyText {
+        color: grey;
+      }
+      /* Setting backround image */
+      body {
+    background-image: url('css/images/MenuBackround.jpg');
+    font-family: "Georgia", Times, serif;
+    }
+    </style>
+
+</head>
+<body class="body2">
+    <div class="container">
+        <div class="text-center my-4">
+            <h1 id="heading">About us</h1>
+            <br>
+        </div>
+
+    </div>
+
+    <div class="container">
+        <div class="text-center my-4">
+           <p>
+               This game was created by:
+               <br>
+                Tristan de Groot
+                <br>
+                Keri-Lee Carstens
+                <br>
+                Maria Botha
+                <br>
+                Mohammed Raees Haffejee
+                <br>
+                Zunaid Valodia
+           </p>
+           <br>
+           <p>
+               We hope you enjoy our game and have fun playing wordle with your friends!!!
+           </p>
+
+    <button style = "position:absolute; right:80px; bottom:20px;" class="button" id="Back">Back</button>        
+             <!-- Back Button position bottom right -->
+</body>
+
+<!-- JS script to run with ejs file -->
+<script>
+const Backbutton= document.getElementById('Back')
+
+//Back button destination
+Backbutton.addEventListener('click', function () {
+    window.location.href = ("/home");
+}, false)
+
+</script>
+
+
+</html>

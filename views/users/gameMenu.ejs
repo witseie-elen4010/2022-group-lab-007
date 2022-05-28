@@ -52,6 +52,8 @@
             <button class="button" id="Instructions">Instructions</button>
             <br>
             <button style = "position:absolute; right:80px; bottom:20px;" class="button" id="Logout">Logout</button>
+            <br>
+            <button style = "position:absolute; left:80px; bottom:20px;" class="button" id="About">About</button>
 </body>
 
 <!-- JS script to run with ejs file -->
@@ -62,6 +64,7 @@ const MultiWCbutton = document.getElementById('MultiplayerWC')
 const Scorebutton = document.getElementById('Scoreboard')
 const Logoutbutton = document.getElementById('Logout')
 const Instbutton= document.getElementById('Instructions')
+const Aboutbutton= document.getElementById('About')
 
 //Single player button destination
 Singlebutton.addEventListener('click', function () {
@@ -91,6 +94,11 @@ Logoutbutton.addEventListener('click', function () {
 //Instructions button destination
 Instbutton.addEventListener('click', function () {
     window.location.href = ("/instructions");
+}, false)
+
+//About button destination
+Aboutbutton.addEventListener('click', function () {
+    window.location.href = ("/about");
 }, false)
 
 </script>
