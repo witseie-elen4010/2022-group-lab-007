@@ -23,6 +23,7 @@ const createRouter = require('./routes/create')
 const loginRouter = require('./routes/users')
 const homeRouter = require('./routes/home')
 const InstructionsRouter = require('./routes/Instruction')
+const SingleGameRouter = require('./routes/SinglePlayer')
 
 // ///////////////////////////////////////////////////
 // Define routes
@@ -31,6 +32,7 @@ app.use('/create', createRouter)
 app.use('/users', loginRouter)
 app.use('/home', homeRouter)
 app.use('/instructions', InstructionsRouter)
+app.use('/singleplayer',SingleGameRouter)
 
 // ///////////////////////////////////////////////////
 // define function

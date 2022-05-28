@@ -6,8 +6,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- defer means that the JS code is executed after the DOM is fully built -->
-<script defer src="GameMenu.js"></script>
 
 <!-- Bootstrap library inclusions -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -56,6 +54,7 @@
             <button style = "position:absolute; right:80px; bottom:20px;" class="button" id="Logout">Logout</button>
 </body>
 
+<!-- JS script to run with ejs file -->
 <script>
 const Singlebutton = document.getElementById('SinglePlayer')
 const MultiVsbutton = document.getElementById('MultiplayerVs')
@@ -66,7 +65,7 @@ const Instbutton= document.getElementById('Instructions')
 
 //Single player button destination
 Singlebutton.addEventListener('click', function () {
-
+    window.location.href = ("/singleplayer")
 }, false)
 
 //Versus Multiplayer button destination
