@@ -37,7 +37,7 @@ router.post('/', async (req, res) => {
       .then((pool) => {
         return pool.request()
         .input('email', email)
-        .query('Select email from dbo.AccountTbl where email = @email;')         
+        .query('Select email from dbo.AccountTable where email = @email;')         
       })
       // Send back the result
       .then(result => {
@@ -49,7 +49,7 @@ router.post('/', async (req, res) => {
         .input('username', username)
         .input('password', hashedPassword)
         .input('email', email)
-        .query('INSERT INTO dbo.AccountTbl (username, password, email) VALUES (@username, @password, @email);')
+        .query('INSERT INTO dbo.AccountTable (username, password, email) VALUES (@username, @password, @email);')
       })
       // Send result
       .then(result => {

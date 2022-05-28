@@ -3,9 +3,25 @@
 // ///////////////////////////////////////////////////
 // imports and configuration files
 // ///////////////////////////////////////////////////
+// Import express and create instance
 const express = require('express')
 const app = express()
+// import server configuration
 const db = require('./serverConfig.js')
+// import express session
+const session = require('express-session');
+const FileStore = require('session-file-store')(session)
+
+// ///////////////////////////////////////////////////
+// user token session
+// ///////////////////////////////////////////////////
+app.use(session({
+  store: new FileStore(),
+  secret: 'lacrazywordgamesqwertyasdf',
+  resave: false,
+  saveUninitialized: false
+})
+)
 
 // ///////////////////////////////////////////////////
 // settings for route use
