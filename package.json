@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Get ready for \"Oh my Wordle!\"",
   "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -18,6 +21,10 @@
     "session-file-store": "^1.5.0"
   },
   "devDependencies": {
-    "jest": "^28.1.0"
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "jest": "^28.1.0",
+    "superagent": "^7.1.3",
+    "supertest": "^6.2.3"
   }
 }
