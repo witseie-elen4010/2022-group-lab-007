@@ -58,7 +58,7 @@
         </div>
      <!--Container with keyboard buttons in it for the on screen keyboard-->
      <div class="onScreenkeyboard-container">
-        <div class="keyboard-row">
+        <div data-keyboard class="keyboard-row">
             <button class="key" data-key="q">q</button>
             <button class="key" data-key="w">w</button>
             <button class="key" data-key="e">e</button>
@@ -71,7 +71,7 @@
             <button class="key" data-key="p">p</button>
         </div>
         <!--second row with keyboard buttons in it for the on screen keyboard-->
-        <div class="keyboard-row">
+        <div data-keyboard class="keyboard-row">
             <div class="spacer-half"></div>
             <button class="key" data-key="a">a</button>
             <button class="key" data-key="s">s</button>
@@ -87,7 +87,7 @@
             
         </div>
         <!--third row  with keyboard buttons in it for the on screen keyboard-->
-        <div class="keyboard-row">
+        <div data-keyboard class="keyboard-row">
             <div class="spacer-half"></div>
             <button class="key" data-key="z">z</button>
             <button class="key" data-key="x">x</button>
@@ -13080,9 +13080,11 @@ const dictionary =  [
     "rural",
     "shave"
   ]
+  
 // Update the grid guesses
+const keyboard = document.querySelector("[data-keyboard]")
 const guessingGrid = document.querySelector("[data-guess-grid]")
-const answer = "apple"
+const answer = dictionary[Math.floor(12483)]
 
 // A function to refresh  the programme to find if the keyboard or mouse has been clicked
 refreshInteraction()
@@ -13196,17 +13198,61 @@ function submitGuess()                        //Function to submit the guess
         return word + tile.dataset.letter
     }, "")
     
-    if (answer != attempt)
+    completeInteraction()                                               //Call function to prevent the user from typing while the 
+    console.log("here1")                                                // programme checks the word
+    filledTiles.forEach((...params) => changeTile(...params,attempt))   // Alter the status of the tiles
+    console.log("here2")
+}
+
+function changeTile(tile,index,array,attempt)                          //Function that alters the status of the tile so that the tiles
+{                                                                      //become colour coded
+     const letter = tile.dataset.letter 
+     console.log(letter)
+     const key = keyboard.querySelector(`[data-key="${letter}"i]`)
+     console.log(key)
+     console.log(answer[index])
+
+     for (let i = 0; i <5;i++)
+     {
+      if (answer[index] === letter) {
+        tile.dataset.state = "correct"
+        key.classList.add("correct")
+        console.log("here")
+      } else if (answer.includes(letter)) {
+        tile.dataset.state = "wrong-location"
+        key.classList.add("wrong-location")
+        console.log("here")
+      } else {
+        tile.dataset.state = "wrong"
+        key.classList.add("wrong")
+        console.log("here")
+      }
+
+      if (index === array.length - 1) {
+            refreshInteraction()
+            console.log("here3")
+            gameStatus(attempt, array)
+      }
+    }
+
+}
+
+function gameStatus(attempt, tiles)                             //Function to check if the guess is correct or not
+{
+    if (attempt === answer)
     {
-        console.log(attempt)
+        console.log("You win")
+        completeInteraction()
         return
     }
 
-    if (answer == attempt)
+    const unusedTiles = guessingGrid.querySelectorAll(":not([data-letter])")
+    if (unusedTiles.length === 0)
     {
-        console.log("You win")
-        return
+        console.log("Tripe was the correct word")
+        completeInteraction()
     }
+
 }
 
 const Backbutton= document.getElementById('Back')
