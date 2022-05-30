@@ -5,11 +5,11 @@
 <meta charset="utf-8" />
 
 <!-- Bootstrap library inclusions -->
-<link rel="stylesheet" href="css/bootstrap.css">
-<script src="js/bootstrap.bundle.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
 
-<!-- Linking Js file -->
-<script defer src="GameInstruction.js"></script>
+<!-- Set style -->
+<link rel="stylesheet" href="/styles.css"/>
 
 <style>
    
@@ -45,7 +45,7 @@
     </style>
 
 </head>
-<body>
+<body class="body2">
     <div class="container">
         <div class="text-center my-4">
             <h1 id="heading">Oh My Wordle Instructions</h1>
@@ -66,7 +66,7 @@
                 <br>
                 If a letter in your guess turns
                 <span class="Yellowtext">Yellow</span>
-                then the letter in you guess is correct but in the wrong location.So the letter is in the wrong position.
+                then the letter in your guess are correct but in the wrong position.So the letter is in one of the other positions.
                 <br>
                 If a letter in your guess turns
                 <span class="Greentext">Green</span>
@@ -103,4 +103,17 @@
     <button style = "position:absolute; right:80px; bottom:20px;" class="button" id="Back">Back</button>        
              <!-- Back Button position bottom right -->
 </body>
+
+<!-- JS script to run with ejs file -->
+<script>
+const Backbutton= document.getElementById('Back')
+
+//Back button destination
+Backbutton.addEventListener('click', function () {
+    window.location.href = ("/home");
+}, false)
+
+</script>
+
+
 </html>
