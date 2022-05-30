@@ -16,10 +16,8 @@ const config = {
   server: 'ohmywordle.database.windows.net',
   database: 'Oh My Wordle',
   // Put login details in env. variables for security
-  // user: process.env.dbusername,
-  // password: process.env.dbpassword,
-  user: admin7,
-  password: SoftwareGroup7,
+   user: process.env.dbusername,
+   password: process.env.dbpassword,
   port: 1433,
   // Required for Azure
   options: {
