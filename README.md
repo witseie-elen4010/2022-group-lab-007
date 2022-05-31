@@ -4,12 +4,12 @@ Get ready for "Oh my Wordle!"
 
 DEVELOPERS: 
 
-            -Tristan de Groot
+-Tristan de Groot
             
-            -Keri-Lee Carstens
+-Keri-Lee Carstens
             
-            -Maria Botha
+-Maria Botha
             
-            -Mohammed Raees Haffejee
+-Mohammed Raees Haffejee
             
-            -Zunaid Valodia
+-Zunaid Valodia
