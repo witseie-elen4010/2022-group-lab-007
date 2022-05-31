@@ -1,17 +1,15 @@
 /* eslint-env jest */
 
 
+const res = require("express/lib/response");
 const request = require("supertest")
-const app = require("../routes/SinglePlayer")
-    
-describe("Test gamePage root path", () =>{
+const router = require("../routes/SinglePlayer")
+const express = require('express');
+
+
+describe("Test gamePage root path",() =>{
     test("SinglePlayer route should work",()=>{
-        return request(app)
-        .get("/")
-        .then(response =>{
-            expect(response.statusCode).toBe(200);
-        })
-    })
-})
-    
-    
+        
+    expect(router).toMatch('users/gamePage.ejs');
+  });
+});
