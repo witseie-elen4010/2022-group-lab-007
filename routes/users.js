@@ -63,7 +63,7 @@ router.post('/', (req, res) => {
         // create a token for user if login succeeds
         sessData = req.session
         sessData.ID = result.recordset[0].userID
-        console.log(req.session.ID)
+        //console.log(req.session.ID)
         // if Login succeeds go to Game menu
         return res.redirect('/home')
     } else {

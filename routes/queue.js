@@ -3,7 +3,7 @@
 // ///////////////////////////////////////////
 const express = require('express')
 const router = express.Router()
-const db = require('../serverConfig.js')
+const database = require('../serverConfig.js')
 
 // ///////////////////////////////////////////
 // render foyer page if token exists
@@ -29,7 +29,7 @@ router.post('/', (req, res) => {
   // if logged in check the queue
   } else {
     const accountId = req.session.ID
-    db.pools
+    database.pools
     // Run query
     .then((pool) => {
       return pool.request()
