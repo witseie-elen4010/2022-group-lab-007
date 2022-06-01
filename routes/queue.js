@@ -11,8 +11,19 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  // insert for choice of player type or waiting to play
-
+  // insert for choice of player type/ wait
+  let nofriends = false
+  if (nofriends===true){
+    res.redirect('/queue')
+  } 
+  else{
+    
+    //insert into games table the two players with word they must guess
+    //delete two players from queue table
+    
+    res.redirect('/MultiplayerMode1')
+  }
+  
 })
 
 module.exports = router
