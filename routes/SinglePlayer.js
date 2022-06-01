@@ -5,5 +5,4 @@ router.get('/', (req, res) => {
     res.render('users/gamePage.ejs')
 })
 
-
 module.exports = router
