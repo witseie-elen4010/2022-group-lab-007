@@ -13084,7 +13084,8 @@ const dictionary =  [
 // Update the grid guesses
 const keyboard = document.querySelector("[data-keyboard]")
 const guessingGrid = document.querySelector("[data-guess-grid]")
-const answer = dictionary[Math.floor(12483)]
+const answer = dictionary[Math.floor((Math.random()*12971)+0)]
+console.log(answer)
 
 // A function to refresh  the programme to find if the keyboard or mouse has been clicked
 refreshInteraction()
@@ -13197,7 +13198,13 @@ function submitGuess()                        //Function to submit the guess
     {
         return word + tile.dataset.letter
     }, "")
-    
+
+    if (!dictionary.includes(attempt))
+    {
+        console.log("Word does not exist")    // Function will output an error message if the inputted word                                  // is smaller than the word to be guessed
+        return
+    }
+
     completeInteraction()                                               //Call function to prevent the user from typing while the 
     console.log("here1")                                                // programme checks the word
     filledTiles.forEach((...params) => changeTile(...params,attempt))   // Alter the status of the tiles
@@ -13250,7 +13257,7 @@ function gameStatus(attempt, tiles)                             //Function to ch
     const unusedTiles = guessingGrid.querySelectorAll(":not([data-letter])")
     if (unusedTiles.length === 0)
     {
-        console.log("Tripe was the correct word")
+        console.log(answer + " was the correct word")
         completeInteraction()
     }
 
