@@ -1,7 +1,13 @@
+// ///////////////////////////////////////////
+// library imports and instance creations
+// ///////////////////////////////////////////
 const express = require('express')
 const router = express.Router()
 const db = require('../serverConfig.js')
 
+// ///////////////////////////////////////////
+// render foyer page if token exists
+// ///////////////////////////////////////////
 router.get('/', (req, res) => {
   if (!req.session.ID) {
       res.redirect('/login')
@@ -9,43 +15,36 @@ router.get('/', (req, res) => {
   res.render("users/foyer")
   }
 })
-/*
-router.post('/', (req, res) => {
-  // insert for choice of player type/ wait
-  let nofriends = false
-  if (nofriends===true){
-    res.redirect('/queue')
-  } 
-  else{
-    
-    //insert into games table the two players with word they must guess
-    //delete two players from queue table
-    
-    res.redirect('/MultiplayerMode1')
-  }
-  
-})
-*/
+
+// ///////////////////////////////////////////
+// check queue button logic
+// ///////////////////////////////////////////
 router.post('/', (req, res) => {
   console.log('Button was clicked')
 
+  // check if logged in
   if (!req.session.ID) {
     res.redirect('/login')
+  
+  // if logged in check the queue
   } else {
     const accountId = req.session.ID
     db.pools
     // Run query
     .then((pool) => {
       return pool.request()
-      //check for other people in the lobby
-      //.input('accountId', accountId)
+      //check for other people in the queue
       .query('Select * from dbo.queue')         
     })
     // Send back the result
     .then(result => {
+      
+      // if result is 1 you are the only person in the queue
       if (result.recordset.length === 1) {
         console.log("no other players yet")
         res.redirect('/queue')
+      
+        // if not, continue to game
       } else {
         console.log("you have a friend to play with!!")
         res.redirect('/MultiplayerMode1')
