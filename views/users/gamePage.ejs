@@ -13084,7 +13084,8 @@ const dictionary =  [
 // Update the grid guesses
 const keyboard = document.querySelector("[data-keyboard]")
 const guessingGrid = document.querySelector("[data-guess-grid]")
-const answer = dictionary[Math.floor(12483)]
+const answer = dictionary[Math.floor((Math.random()*12971)+0)]
+console.log(answer)
 
 // A function to refresh  the programme to find if the keyboard or mouse has been clicked
 refreshInteraction()
@@ -13197,40 +13198,41 @@ function submitGuess()                        //Function to submit the guess
     {
         return word + tile.dataset.letter
     }, "")
-    
-    completeInteraction()                                               //Call function to prevent the user from typing while the 
-    console.log("here1")                                                // programme checks the word
+
+    if (!dictionary.includes(attempt))
+    {
+        console.log("Word does not exist")    // Function will output an error message if the inputted word                                  // is smaller than the word to be guessed
+        return
+    }
+
+    completeInteraction()                                               //Call function to prevent the user from typing while the                                         
     filledTiles.forEach((...params) => changeTile(...params,attempt))   // Alter the status of the tiles
-    console.log("here2")
 }
 
 function changeTile(tile,index,array,attempt)                          //Function that alters the status of the tile so that the tiles
 {                                                                      //become colour coded
      const letter = tile.dataset.letter 
      console.log(letter)
+     console.log(tile.dataset.state)
      const key = keyboard.querySelector(`[data-key="${letter}"i]`)
-     console.log(key)
+     //console.log(key)
      console.log(answer[index])
 
      for (let i = 0; i <5;i++)
      {
       if (answer[index] === letter) {
         tile.dataset.state = "correct"
-        key.classList.add("correct")
-        console.log("here")
+      //  key.classList.add("correct")
       } else if (answer.includes(letter)) {
         tile.dataset.state = "wrong-location"
-        key.classList.add("wrong-location")
-        console.log("here")
+      //  key.classList.add("wrong-location")
       } else {
         tile.dataset.state = "wrong"
-        key.classList.add("wrong")
-        console.log("here")
+       // key.classList.add("wrong")
       }
 
       if (index === array.length - 1) {
             refreshInteraction()
-            console.log("here3")
             gameStatus(attempt, array)
       }
     }
@@ -13249,7 +13251,7 @@ function gameStatus(attempt, tiles)                             //Function to ch
     const unusedTiles = guessingGrid.querySelectorAll(":not([data-letter])")
     if (unusedTiles.length === 0)
     {
-        console.log("Tripe was the correct word")
+        console.log(answer + " was the correct word")
         completeInteraction()
     }
 
