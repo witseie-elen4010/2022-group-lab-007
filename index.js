@@ -24,6 +24,25 @@ app.use(session({
 )
 
 // ///////////////////////////////////////////////////
+// Socket setup
+// ///////////////////////////////////////////////////
+const { createServer } = require("http");
+const { Server } = require("socket.io");
+
+const httpServer = createServer(app);
+const io = new Server(httpServer, { /* options */ });
+
+io.on("connection", (socket) => {
+  console.log(socket.id)
+  socket.on("SendMessage",message=>{
+    socket.broadcast.emit("GetMessage",message)
+  })
+  });
+
+
+
+
+// ///////////////////////////////////////////////////
 // settings for route use
 // ///////////////////////////////////////////////////
 app.use(express.static("public"))
@@ -69,6 +88,8 @@ function logger(req, res, next) {
 
 module.exports = app
 
-const port = process.env.PORT || 3000
-app.listen(port)
-console.log('Listening to port: ', port)
+//const port = process.env.PORT || 3000
+//app.listen(port)
+httpServer.listen(3000);
+
+//console.log('Listening to port: ', port)
