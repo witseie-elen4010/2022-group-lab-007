@@ -56,9 +56,9 @@
           <div class="tile"></div>
           <div class="tile"></div>
         </div>
-     <!--Container with keyboard buttons in it for the on screen keyboard-->
-     <div class="onScreenkeyboard-container">
-        <div data-keyboard class="keyboard-row">
+         <!--Container with keyboard buttons in it for the on screen keyboard-->
+         <div class="onScreenkeyboard-container">
+        <div data-keyboard class="keyboard">
             <button class="key" data-key="q">q</button>
             <button class="key" data-key="w">w</button>
             <button class="key" data-key="e">e</button>
@@ -69,10 +69,8 @@
             <button class="key" data-key="i">i</button>
             <button class="key" data-key="o">o</button>
             <button class="key" data-key="p">p</button>
-        </div>
-        <!--second row with keyboard buttons in it for the on screen keyboard-->
-        <div data-keyboard class="keyboard-row">
-            <div class="spacer-half"></div>
+        
+        <!--second row with keyboard buttons in it for the on screen keyboard-->  
             <button class="key" data-key="a">a</button>
             <button class="key" data-key="s">s</button>
             <button class="key" data-key="d">d</button>
@@ -82,13 +80,10 @@
             <button class="key" data-key="j">j</button>
             <button class="key" data-key="k">k</button>
             <button class="key" data-key="l">l</button>
-            <button data-enter class="key large">Enter</button>
+            <button class="key" data-enter class="wide-button">Enter</button>
             <div class="spacer-half"></div>
             
-        </div>
-        <!--third row  with keyboard buttons in it for the on screen keyboard-->
-        <div data-keyboard class="keyboard-row">
-            <div class="spacer-half"></div>
+        <!--third row  with keyboard buttons in it for the on screen keyboard-->    
             <button class="key" data-key="z">z</button>
             <button class="key" data-key="x">x</button>
             <button class="key" data-key="c">c</button>
@@ -99,9 +94,9 @@
             <button class="key" data-delete class="wide-button">delete</button>
             
         </div>
-
         </div>
         <button style = "position:absolute; right:80px; bottom:20px;" class="buttonMenu" id="Back">Back</button> 
+    
     </body>
 
 <script> 
@@ -13086,6 +13081,7 @@ const keyboard = document.querySelector("[data-keyboard]")
 const guessingGrid = document.querySelector("[data-guess-grid]")
 const answer = dictionary[Math.floor((Math.random()*12971)+0)]
 console.log(answer)
+const alertContainer = document.querySelector("[data-alert-container]")
 
 // A function to refresh  the programme to find if the keyboard or mouse has been clicked
 refreshInteraction()
@@ -13161,11 +13157,7 @@ function pressedKey(key)
     FollowingTile.dataset.state = "taken"
 }
 
-function getWord()  //Returns the word
-{
-    const wordLen = guessingGrid.querySelectorAll('[data-state="taken"]')  // Returns a string of the word being inputted
-    return wordLen
-}
+
 
 function DeleteRow()                             //Function to delete the entire row calls the current word in the row 
 {                                                // and each element in the string is deleted and cleared to delete the 
@@ -13209,37 +13201,45 @@ function submitGuess()                        //Function to submit the guess
     filledTiles.forEach((...params) => changeTile(...params,attempt))   // Alter the status of the tiles
 }
 
-function changeTile(tile,index,array,attempt)                          //Function that alters the status of the tile so that the tiles
+function changeTile(tile,index,array,attempt)                          //Function that alters the status of the tile and the keyboard so that the grid tiles and keyboard tiles
 {                                                                      //become colour coded
      const letter = tile.dataset.letter 
      console.log(letter)
+     console.log("here3")
      console.log(tile.dataset.state)
      const key = keyboard.querySelector(`[data-key="${letter}"i]`)
-     //console.log(key)
+     console.log(key)
      console.log(answer[index])
-
+    
      for (let i = 0; i <5;i++)
      {
       if (answer[index] === letter) {
         tile.dataset.state = "correct"
-      //  key.classList.add("correct")
+       key.classList.add("correct")
       } else if (answer.includes(letter)) {
         tile.dataset.state = "wrong-location"
-      //  key.classList.add("wrong-location")
+        key.classList.add("wrong-location")
       } else {
         tile.dataset.state = "wrong"
-       // key.classList.add("wrong")
+        key.classList.add("wrong")
       }
-
       if (index === array.length - 1) {
             refreshInteraction()
             gameStatus(attempt, array)
       }
     }
-
 }
 
-function gameStatus(attempt, tiles)                             //Function to check if the guess is correct or not
+
+
+function getWord()  //Returns the word
+{
+    const wordLen = guessingGrid.querySelectorAll('[data-state="taken"]')  // Returns a string of the word being inputted
+    return wordLen
+}
+
+
+function gameStatus(attempt, tiless)                             //Function to check if the guess is correct or not
 {
     if (attempt === answer)
     {
