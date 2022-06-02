@@ -1,9 +1,12 @@
 const express = require('express')
 const router = express.Router()
 
-//Fill in route for Multiplayer versus page
 router.get('/', (req, res) => {
-    res.render('')
+    if (!req.session.ID) {
+        res.redirect('/login')
+        } else {
+    res.render("users/multiplayerMode1")
+    }
 })
 
 module.exports = router
