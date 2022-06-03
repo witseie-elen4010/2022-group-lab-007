@@ -138,5 +138,33 @@
     background-color: forestgreen;
   }
 
+.popUpcontainer {
+ position: fixed;
+ top: 10vh;
+ left: 70vw;
+ transform: translateX(50%);
+ z-index: 1;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
 
-  
+}
+.popUp {
+  opacity: 1;
+  pointer-events: none;
+  background-color: aliceblue;
+  padding: .75em;
+  align-content: center;
+  color: #000000;
+  font-weight: bolder;
+  border-radius: .25em;
+  transition: opacity 500ms ease-in-out;
+  margin-bottom: .5em;
+}
+.popUp:last-child{
+
+  margin-bottom: 0;
+}
+.popUp.hide{
+  opacity:0;
+}

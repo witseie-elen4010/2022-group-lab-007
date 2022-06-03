@@ -17,7 +17,9 @@
 
     </head>
     <body>
-        <!-- setting page title container -->
+    <!--setting popUp message container-->  
+      <div class="popUpcontainer" data-alert-container></div>
+     <!-- setting page title container -->
      <div class="container">
         <div class="text-center my-4">
             <h1><strong>OH MY WORDLE!</strong></h1>
@@ -13082,6 +13084,7 @@ const guessingGrid = document.querySelector("[data-guess-grid]")
 const answer = dictionary[Math.floor((Math.random()*12971)+0)]
 console.log(answer)
 const alertContainer = document.querySelector("[data-alert-container]")
+const popUp_Container = document.querySelector("[data-alert-container]")
 
 // A function to refresh  the programme to find if the keyboard or mouse has been clicked
 refreshInteraction()
@@ -13120,6 +13123,26 @@ function MouseClick(event)                               // An input event butto
         return
     }
 }
+
+
+//Function to create pop-up messages 
+function popUpAlert(message,duration=4000)
+{
+const popUp =document.createElement("div")
+popUp.textContent=message
+popUp.classList.add("popUp")
+popUp_Container.prepend(popUp)
+if (duration ==null) return
+    setTimeout(()=>
+    {
+    popUp.classList.add("hide")
+    popUp.addEventListener("transitionend",() => {
+      popUp.remove()
+    }
+    )
+    },duration)
+}
+
 
 // Function to register which key on the user's keyboard was pressed
 function KeyPressed(event)                
@@ -13182,8 +13205,9 @@ function submitGuess()                        //Function to submit the guess
 
     if (filledTiles.length < 5)
     {
-        console.log("Word not long enough")    // Function will output an error message if the inputted word 
-        return                                 // is smaller than the word to be guessed
+        //console.log("Word not long enough")    // Function will output an error message if the inputted word 
+       popUpAlert("Word not long enough")
+       return                                 // is smaller than the word to be guessed
     }
 
     const attempt = filledTiles.reduce((word,tile) =>
@@ -13194,6 +13218,7 @@ function submitGuess()                        //Function to submit the guess
     if (!dictionary.includes(attempt))
     {
         console.log("Word does not exist")    // Function will output an error message if the inputted word                                  // is smaller than the word to be guessed
+        popUpAlert("Word does not exist")
         return
     }
 
@@ -13232,6 +13257,8 @@ function changeTile(tile,index,array,attempt)                          //Functio
 
 
 
+
+
 function getWord()  //Returns the word
 {
     const wordLen = guessingGrid.querySelectorAll('[data-state="taken"]')  // Returns a string of the word being inputted
@@ -13242,7 +13269,7 @@ function getWord()  //Returns the word
 function gameStatus(attempt, tiless)                             //Function to check if the guess is correct or not
 {
     if (attempt === answer)
-    {
+    {   popUpAlert("You win!")
         console.log("You win")
         completeInteraction()
         return
@@ -13250,10 +13277,13 @@ function gameStatus(attempt, tiless)                             //Function to c
 
     const unusedTiles = guessingGrid.querySelectorAll(":not([data-letter])")
     if (unusedTiles.length === 0)
-    {
+    {   popUpAlert(answer + "  was the correct word" )
         console.log(answer + " was the correct word")
+        return
         completeInteraction()
+        //return
     }
+    //completeInteraction()
 
 }
 
