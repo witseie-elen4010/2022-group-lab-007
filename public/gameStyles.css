@@ -32,7 +32,7 @@
     }
 
   .Multi-guess-grid1 {
-      display: grid;
+      display: inline-grid;
       justify-content: left;
       align-content: center;
       flex-wrap: wrap;
@@ -44,7 +44,7 @@
   }
 
   .Multi-guess-grid2 {
-    display: grid;
+    display: inline-grid;
     justify-content: right;
     align-content: center;
     flex-wrap: wrap;
