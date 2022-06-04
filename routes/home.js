@@ -12,8 +12,8 @@ const database = require('../serverConfig.js')
 router.get('/', (req, res) => {
     // if no token go to login page
     if (!req.session.ID) {
-        //res.redirect('/users')
-        res.render('users/login')
+        res.redirect('/users')
+        //res.render('users/login')
     // if there is a token continue to Game menu
     } else {
         res.render('users/gameMenu')
