@@ -1,6 +1,6 @@
 * {
     /* font settings for the web page*/
-      color:cornflowerblue;
+      color:rgb(3, 3, 3);
       font-family: 
       "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
       "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
@@ -8,11 +8,32 @@
   
   /* background image setting */
   body {
-      background-image: url("images/gamePageBackground.jpg");
-      }
-  
+      background-image: url("images/Background.png");
+  }
+
+  h2 {
+    font-size: 40px;  
+  }
+      
+  h3 {
+    font-size: 40px;
+  }
+      
+  h2, h3 {
+    width: 50%;
+    height: 60px;
+    margin: 0;
+    padding: 0;
+    display: inline;
+    margin-right: 1em;  
+    margin-left: 6em  
+  }      
+
   #container {
-      display: flex;
+      display: flex; 
+      /* justify-content: center;
+      align-content: center;
+      flex-wrap: wrap; */
       background-color: rgb(255, 255, 255);
       height: 100%;
       align-items: center;
@@ -36,11 +57,12 @@
       justify-content: left;
       align-content: center;
       flex-wrap: wrap;
-      grid-template-columns: repeat(5, 3em);
-      grid-template-rows: repeat(6, 3em);
+      grid-template-columns: repeat(5, 3.5em);
+      grid-template-rows: repeat(6, 3.5em);
       gap: .25em;
-      margin-bottom: 0em;
+      margin-bottom: 1em;
       margin-right: 2em;
+      margin-left: 20em;      
   }
 
   .Multi-guess-grid2 {
@@ -48,10 +70,10 @@
     justify-content: right;
     align-content: center;
     flex-wrap: wrap;
-    grid-template-columns: repeat(5, 3em);
-    grid-template-rows: repeat(6, 3em);
+    grid-template-columns: repeat(5, 3.5em);
+    grid-template-rows: repeat(6, 3.5em);
     gap: .25em;
-    margin-bottom: 0em;
+    margin-bottom: 1em;
     margin-left: 2em;    
   }
 
@@ -71,6 +93,7 @@
   align-items: center;
   user-select: none;
   transition: transform 250ms linear;
+
   }
   
   /* setting currently selected tile */
@@ -199,4 +222,20 @@
 }
 .popUp.hide{
   opacity:0;
+}
+
+.connected, .ready {
+  font-weight: normal;
+}
+
+.connected span,
+.ready span {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: red;
+}
+
+span.green {
+  background: green;
 }
