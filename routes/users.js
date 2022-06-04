@@ -18,8 +18,14 @@ const FileStore = require('session-file-store')(session)
 // ///////////////////////////////////////////////////
 
 // rerouting to the login page should login fail
+
 router.get('/login', (req, res) => {
-    res.render("users/login")
+    req.session.destroy(function(err) {
+        if (err) {
+            console.error(err);
+        } 
+    });
+    res.render('users/login')
 }) 
 
 // use this function to destroy token from login

@@ -3,21 +3,26 @@
 // ///////////////////////////////////////////////////
 // imports and configuration files
 // ///////////////////////////////////////////////////
-// Import express and create instance
+
 const express = require('express')
+const path = require('path')
+const http = require('http')
+const PORT = process.env.PORT || 3000
+const socketio = require('socket.io')
 const app = express()
-// import server configuration
-const db = require('./serverConfig.js')
-// import express session
+const server = http.createServer(app)
+const io = socketio(server)
 const session = require('express-session');
 const FileStore = require('session-file-store')(session)
+const db = require('./serverConfig.js')
 
 // ///////////////////////////////////////////////////
 // user token session
 // ///////////////////////////////////////////////////
+
 app.use(session({
   store: new FileStore(),
-  secret: 'lacrazywordgamesqwertyasdf',
+  secret: 'lacrazywordgamesqwertyasdfa',
   resave: false,
   saveUninitialized: false
 })
@@ -26,19 +31,6 @@ app.use(session({
 // ///////////////////////////////////////////////////
 // Socket setup
 // ///////////////////////////////////////////////////
-const { createServer } = require("http");
-const { Server } = require("socket.io");
-
-const httpServer = createServer(app);
-const io = new Server(httpServer, { /* options */ });
-
-io.on("connection", (socket) => {
-  console.log(socket.id)
-  socket.on("SendMessage",message=>{
-    socket.broadcast.emit("GetMessage",message)
-  })
-  });
-
 
 
 
@@ -87,9 +79,3 @@ function logger(req, res, next) {
 }
 
 module.exports = app
-
-//const port = process.env.PORT || 3000
-//app.listen(port)
-httpServer.listen(3000);
-
-//console.log('Listening to port: ', port)

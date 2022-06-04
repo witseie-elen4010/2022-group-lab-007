@@ -5,12 +5,7 @@ const express = require('express')
 const { io } = require('socket.io-client')
 const router = express.Router()
 const database = require('../serverConfig.js')
-
-
-
-// ///////////////////////////////
-
-
+const session = require('express-session');
 
 // ///////////////////////////////////////////
 // render foyer page if token exists
@@ -36,6 +31,7 @@ router.post('/', (req, res) => {
   // if logged in check the queue
   } else {
     const accountId = req.session.ID
+    console.log(accountId)
     database.pools
     // Run query
     .then((pool) => {
