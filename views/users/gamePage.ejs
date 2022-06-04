@@ -13119,7 +13119,7 @@ function MouseClick(event)                               // An input event butto
     }
     if (event.target.matches("[data-backspace]")) 
     {                                           
-        BackSpace()                             // Call the delete function to delete the letters in the row
+        BackSpace()                             // Call the backspace function to delete the most recent letter in the row
         return
     }
 
@@ -13210,18 +13210,19 @@ function DeleteRow()                             //Function to delete the entire
     }
 
 }
-function BackSpace()                             //Function to delete the entire row calls the current word in the row 
-{                                                // and each element in the string is deleted and cleared to delete the 
-    const filledTiles = getWord()                // entire string/word
+function BackSpace()                             //Function to backspace the most recent input letter in the current word in the row 
+{                                                // and that one recent element in the string is deleted and cleared
 
+    const filledTiles = getWord()
+    
     for (let i=(filledTiles.length-1);i < filledTiles.length;i++)
     {
         if (filledTiles == null)
         {
-            return                               //Nothing to delete
+            return                               //Nothing to backspace
         }
         filledTiles[i].textContent = ""
-        delete filledTiles[i].dataset.state      //empty the string and remove the state to reset it
+        delete filledTiles[i].dataset.state      //empty the most recent tile and remove the state to reset it
         delete filledTiles[i].dataset.letter
     }
 
