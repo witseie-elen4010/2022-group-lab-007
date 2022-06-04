@@ -11,6 +11,14 @@
       background-image: url("images/gamePageBackground.jpg");
       }
   
+  #container {
+      display: flex;
+      background-color: rgb(255, 255, 255);
+      height: 100%;
+      align-items: center;
+      flex-direction: column;
+  }
+
   /* implementing the characteristics of the guessing grid */
   .guess-grid {
       display: grid;
@@ -22,7 +30,31 @@
       gap: .25em;
       margin-bottom: 1em;
     }
-        
+
+  .Multi-guess-grid1 {
+      display: grid;
+      justify-content: left;
+      align-content: center;
+      flex-wrap: wrap;
+      grid-template-columns: repeat(5, 3em);
+      grid-template-rows: repeat(6, 3em);
+      gap: .25em;
+      margin-bottom: 0em;
+      margin-right: 2em;
+  }
+
+  .Multi-guess-grid2 {
+    display: grid;
+    justify-content: right;
+    align-content: center;
+    flex-wrap: wrap;
+    grid-template-columns: repeat(5, 3em);
+    grid-template-rows: repeat(6, 3em);
+    gap: .25em;
+    margin-bottom: 0em;
+    margin-left: 2em;    
+  }
+
   /* default empty tile settings */
   .tile {
     /*BACKGROUND*/

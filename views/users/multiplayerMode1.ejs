@@ -4,45 +4,93 @@
     <meta charset="utf-8">
     <title>OMW! Multiplayer</title>
     <!--style and socket library inclusions-->
-    <link rel="stylesheet" href="/styles2.css"/>
+    <link rel="stylesheet" href="/gameStyles.css"/>    
     <script src="/socket.io/socket.io.js"></script>
 
   </head>
   <body>
-
-    <button id="singlePlayerButton">Single Player</button>
-    <button id="multiPlayerButton">Multiplayer</button>
-
-    <!--Divisions to confirm whether a player has connected-->
-    <div class="player p1">
-      Player 1
-      <div class="connected">Connected <span></span></div>
-      <div class="ready">Ready <span></span></div>
-    </div>
-    <div class="player p2">
-      Player 2
-      <div class="connected">Connected <span></span></div>
-      <div class="ready">Ready <span></span></div>
-    </div>
-
-    <div class="container">
-        <div class="grid grid-user"></div>
-        <div class="grid grid-computer"></div>
-    </div>
-
-    <!--Buttons for game control-->
-    <div class="hidden-info">
-      <button id="start">Start Game</button>
-      <button id="rotate">Rotate Your Ships</button>
-      <h3 id="whose-go">Your Go</h3>
-      <h3 id="info"></h3>
-    </div>
-
+      <div class="container">
+        <div class="text-center my-4">
+          <!-- All the different buttons for navigation -->     
+        <button id="multiPlayerButton">Ready to Go!</button>
+  
+        <!-- creating the tiles for the guessing grid using bootstrap 5-->
+        <div data-guess-grid class="Multi-guess-grid1">
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+          <div class="tile"></div>
+        </div>
+         
+        <!-- creating the tiles for the guessing grid using bootstrap 5-->
+          <div data-guess-grid class="Multi-guess-grid2">
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div> 
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+          </div>
+        </div>
+          <button style = "position:absolute; right:80px; bottom:20px;" class="buttonMenu" id="Back">Back</button> 
+      </body>
+  
   </body>
 
 
   <!--Insert game and socket connection logic here-->
 <script>
+  
 document.addEventListener('DOMContentLoaded', () => {
     const userGrid = document.querySelector('.grid-user')
     const computerGrid = document.querySelector('.grid-computer')
@@ -167,5 +215,4 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 </script>
 
-  
 </html>
