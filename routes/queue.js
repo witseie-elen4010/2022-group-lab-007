@@ -54,6 +54,14 @@ router.post('/', (req, res) => {
         // if not, continue to game
       } else {
         console.log("you have a friend to play with!!")
+
+        // delete from queue table
+        database.pools
+        .then((pool) =>{
+          return pool.request()
+          .query('DELETE TOP (2) FROM dbo.queue')
+        })
+
         res.redirect('/MultiplayerMode1')
       }
     })
