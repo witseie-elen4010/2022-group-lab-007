@@ -3,23 +3,27 @@
 // ///////////////////////////////////////////////////
 // imports and configuration files
 // ///////////////////////////////////////////////////
-
+// Express framework for routing
 const express = require('express')
 const path = require('path')
+// http for local server connection
 const http = require('http')
+// defining a port
 const PORT = process.env.PORT || 3000
+// socket instance creation
 const socketio = require('socket.io')
 const app = express()
 const server = http.createServer(app)
 const io = socketio(server)
+// session for user token
 const session = require('express-session');
 const FileStore = require('session-file-store')(session)
+// server configuration
 const db = require('./serverConfig.js')
 
 // ///////////////////////////////////////////////////
 // user token session
 // ///////////////////////////////////////////////////
-
 app.use(session({
   store: new FileStore(),
   secret: 'lacrazywordgamesqwertyasdfa',
@@ -38,12 +42,11 @@ app.use(express.static(path.join(__dirname, 'public')))
 // Start server
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`))
 // Handle a socket connection request from web client
-const connections = [null, null]
+const connections = [null, null] //edit here for allowing an addition player
 
 io.on('connection', socket => {
-  // console.log('New WS Connection')
 
-  // Find an available player number
+// Find an available player number
   let playerIndex = -1
   for (const i in connections) {
     if (connections[i] === null) {
