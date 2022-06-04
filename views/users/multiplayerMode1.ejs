@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>OMW! Multiplayer</title>
+    <!--style and socket library inclusions-->
     <link rel="stylesheet" href="/styles2.css"/>
     <script src="/socket.io/socket.io.js"></script>
 
@@ -12,6 +13,7 @@
     <button id="singlePlayerButton">Single Player</button>
     <button id="multiPlayerButton">Multiplayer</button>
 
+    <!--Divisions to confirm whether a player has connected-->
     <div class="player p1">
       Player 1
       <div class="connected">Connected <span></span></div>
@@ -28,6 +30,7 @@
         <div class="grid grid-computer"></div>
     </div>
 
+    <!--Buttons for game control-->
     <div class="hidden-info">
       <button id="start">Start Game</button>
       <button id="rotate">Rotate Your Ships</button>
@@ -37,6 +40,8 @@
 
   </body>
 
+
+  <!--Insert game and socket connection logic here-->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const userGrid = document.querySelector('.grid-user')
