@@ -94,6 +94,7 @@
             <button class="key" data-key="n">n</button>
             <button class="key" data-key="m">m</button>
             <button class="key" data-delete class="wide-button">delete</button>
+            <button class="key" data-delete class="wide-button">backspace</button>
             
         </div>
         </div>
@@ -13116,6 +13117,11 @@ function MouseClick(event)                               // An input event butto
         DeleteRow()                             // Call the delete function to delete the letters in the row
         return
     }
+    if (event.target.matches("[data-backspace]")) 
+    {                                           
+        BackSpace()                             // Call the delete function to delete the letters in the row
+        return
+    }
 
     if (event.target.matches("[data-enter]"))
     {
@@ -13165,6 +13171,12 @@ function KeyPressed(event)
         return        
     }
 
+    if (event.key === "Backspace")
+    {
+        BackSpace()
+        return        
+    }
+
 }
 
 function pressedKey(key)
@@ -13187,6 +13199,22 @@ function DeleteRow()                             //Function to delete the entire
     const filledTiles = getWord()                // entire string/word
 
     for (let i=0;i < filledTiles.length;i++)
+    {
+        if (filledTiles == null)
+        {
+            return                               //Nothing to delete
+        }
+        filledTiles[i].textContent = ""
+        delete filledTiles[i].dataset.state      //empty the string and remove the state to reset it
+        delete filledTiles[i].dataset.letter
+    }
+
+}
+function BackSpace()                             //Function to delete the entire row calls the current word in the row 
+{                                                // and each element in the string is deleted and cleared to delete the 
+    const filledTiles = getWord()                // entire string/word
+
+    for (let i=(filledTiles.length-1);i < filledTiles.length;i++)
     {
         if (filledTiles == null)
         {
@@ -13266,8 +13294,9 @@ function getWord()  //Returns the word
 }
 
 
-function gameStatus(attempt, tiless)                             //Function to check if the guess is correct or not
+function gameStatus(attempt, tiles)                             //Function to check if the guess is correct or not
 {
+    
     if (attempt === answer)
     {   popUpAlert("You win!")
         console.log("You win")
@@ -13293,6 +13322,9 @@ const Backbutton= document.getElementById('Back')
 Backbutton.addEventListener('click', function () {
     window.location.href = ("/home");
 }, false)
+
+
+
 </script>
 
 <!--include javascript files <script src="js/bootstrap.bundle.js"></script>
