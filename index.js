@@ -44,60 +44,20 @@ server.listen(PORT, () => console.log(`Server running on port ${PORT}`))
 // Handle a socket connection request from web client
 const connections = [null, null] //edit here for allowing an addition player
 
+let NumClient=0;
+let roomNo;
+
 io.on('connection', socket => {
 
-// Find an available player number
-  let playerIndex = -1
-  for (const i in connections) {
-    if (connections[i] === null) {
-      playerIndex = i
-      break
-    }
-  }
+  NumClient++;
+    roomNo = Math.round(NumClient / 2);
+    socket.join(roomNo);
+    console.log(`New client no.: ${NumClient}, room no.: ${roomNo}`);
+    socket.emit('serverMsg',roomNo)
+  
 
-  // Tell the connecting client what player number they are
-  socket.emit('player-number', playerIndex)
-
-  console.log(`Player ${playerIndex} has connected`)
-
-  // Ignore player 3
-  if (playerIndex === -1) return
-
-  connections[playerIndex] = false
-
-  // Tell eveyone what player number just connected
-  socket.broadcast.emit('player-connection', playerIndex)
-
-  // Handle Diconnect
-  socket.on('disconnect', () => {
-    console.log(`Player ${playerIndex} disconnected`)
-    connections[playerIndex] = null
-    // Tell everyone what player numbe just disconnected
-    socket.broadcast.emit('player-connection', playerIndex)
-  })
-
-  // On Ready
-  socket.on('player-ready', () => {
-    socket.broadcast.emit('enemy-ready', playerIndex)
-    connections[playerIndex] = true
-  })
-
-  // Check player connections
-  socket.on('check-players', () => {
-    const players = []
-    for (const i in connections) {
-      connections[i] === null ? players.push({ connected: false, ready: false }) : players.push({ connected: true, ready: connections[i] })
-    }
-    socket.emit('check-players', players)
-  })
-
-  // Timeout connection
-  setTimeout(() => {
-    connections[playerIndex] = null
-    socket.emit('timeout')
-    socket.disconnect()
-  }, 600000) // 10 minute limit per player
 })
+   
 
 
 // ///////////////////////////////////////////////////
