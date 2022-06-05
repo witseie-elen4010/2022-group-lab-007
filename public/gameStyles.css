@@ -1,6 +1,6 @@
 * {
     /* font settings for the web page*/
-      color:cornflowerblue;
+      color:rgb(3, 3, 3);
       font-family: 
       "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
       "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
@@ -8,9 +8,38 @@
   
   /* background image setting */
   body {
-      background-image: url("images/gamePageBackground.jpg");
-      }
-  
+      background-image: url("images/Background.png");
+  }
+
+  h2 {
+    font-size: 40px;  
+  }
+      
+  h3 {
+    font-size: 40px;
+  }
+      
+  h2, h3 {
+    width: 50%;
+    height: 60px;
+    margin: 0;
+    padding: 0;
+    display: inline;
+    margin-right: 1em;  
+    margin-left: 6em  
+  }      
+
+  #container {
+      display: flex; 
+      /* justify-content: center;
+      align-content: center;*/
+      flex-wrap: wrap; 
+      background-color: rgb(255, 255, 255);
+      height: 100%;
+      align-items: center;
+      flex-direction: column;
+  }
+
   /* implementing the characteristics of the guessing grid */
   .guess-grid {
       display: grid;
@@ -22,7 +51,32 @@
       gap: .25em;
       margin-bottom: 1em;
     }
-        
+
+  .Multi-guess-grid1 {
+      display: inline-grid;
+      justify-content: left;
+      align-content: center;
+      flex-wrap: wrap;
+      grid-template-columns: repeat(5, 3.5em);
+      grid-template-rows: repeat(6, 3.5em);
+      gap: .25em;
+      margin-bottom: 1em;
+      margin-right: 2em;
+      margin-left: 20em;      
+  }
+
+  .Multi-guess-grid2 {
+    display: inline-grid;
+    justify-content: right;
+    align-content: center;
+    flex-wrap: wrap;
+    grid-template-columns: repeat(5, 3.5em);
+    grid-template-rows: repeat(6, 3.5em);
+    gap: .25em;
+    margin-bottom: 1em;
+    margin-left: 2em;    
+  }
+
   /* default empty tile settings */
   .tile {
     /*BACKGROUND*/
@@ -39,6 +93,7 @@
   align-items: center;
   user-select: none;
   transition: transform 250ms linear;
+
   }
   
   /* setting currently selected tile */
@@ -63,49 +118,57 @@
   
   background-color:forestgreen;
   }
-  
-  /*Onscreen keyboard container settings */
+    /*Onscreen keyboard container settings */
   #onScreenkeyboard-container{
-  height: 200px
-  }
-  /*Onscreen keyboard settings per row */
-  .keyboard-row{
-    display: flex;
-    justify-content:center;
-    align-items: center;
-    width:100%;
-    margin:0  auto 6px;
-    touch-action: manipulation;
+    height: 100px
+    }
+    
+  .keyboard{
+  display: grid;
+  grid-template-columns: repeat(20, minmax(auto, 2em));
+  grid-auto-rows: 4em;
+  gap: .20em;
+  align-items: end;
+  width: 100%;
+  margin:0  auto 8px;
+  touch-action: manipulation;
+  justify-content: center;
+  resize: both;
   }
   /*Onscreen keyboard settings per button */
-  .keyboard-row button{
+  .key{
     
     font-family: inherit;
+    grid-column: auto/ span 2;
+  
+    align-self: auto;
     font-size:clamp(.5rem,2.5vmin,1.5rem) ;
     font-weight: bolder;
     justify-content: center;
+    align-items: center;
     border: 0.7ch;
     padding: 0;
-    height: 60px;
-    width: 10px;
+    height: 3em;
+    width: 7em;
     cursor: pointer;
     background-color: aqua;
     color: #000000;
     flex-grow: 1;
     text-transform: uppercase;
-    margin-right: 10px;
-    border-radius: 10px;
+    margin-right: 1px;
+    border-radius: 3px;
+   
   }
   /*Setting to make larger buttons */
-  .keyboard-row button.wide-button {
+  .key.wide-button {
     flex-grow: 1.6;
   }
   
   .spacer-half{
     flex-grow: 0;
   }
-  
  
+  
 .buttonMenu {
     background-color: #f50606; 
     border: black;
@@ -119,3 +182,61 @@
     cursor: pointer;
     border-radius: 4px;
   } 
+  .key.wrong {
+    background-color: red;
+  }
+  
+  .key.wrong-location {
+   background-color: yellow;
+  }
+  
+  .key.correct {
+    background-color: forestgreen;
+  }
+
+.popUpcontainer {
+ position: fixed;
+ top: 10vh;
+ left: 70vw;
+ transform: translateX(50%);
+ z-index: 1;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+
+}
+.popUp {
+  opacity: 1;
+  pointer-events: none;
+  background-color: aliceblue;
+  padding: .75em;
+  align-content: center;
+  color: #000000;
+  font-weight: bolder;
+  border-radius: .25em;
+  transition: opacity 500ms ease-in-out;
+  margin-bottom: .5em;
+}
+.popUp:last-child{
+
+  margin-bottom: 0;
+}
+.popUp.hide{
+  opacity:0;
+}
+
+.connected, .ready {
+  font-weight: normal;
+}
+
+.connected span,
+.ready span {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: red;
+}
+
+span.green {
+  background: green;
+}
