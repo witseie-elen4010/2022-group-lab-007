@@ -19,7 +19,12 @@ const FileStore = require('session-file-store')(session)
 
 // rerouting to the login page should login fail
 router.get('/login', (req, res) => {
-    res.render("users/login")
+    req.session.destroy(function(err) {
+        if (err) {
+            console.error(err);
+        } 
+    });
+    res.render('users/login')
 }) 
 
 // use this function to destroy token from login
@@ -63,7 +68,6 @@ router.post('/', (req, res) => {
         // create a token for user if login succeeds
         sessData = req.session
         sessData.ID = result.recordset[0].userID
-        console.log(req.session.ID)
         // if Login succeeds go to Game menu
         return res.redirect('/home')
     } else {

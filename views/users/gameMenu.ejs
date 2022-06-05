@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>GameMenu</title>
+<title>OMW! Game Menu</title>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,6 +35,19 @@
 
 </head>
 <body class="body2">
+    
+    <!--Button test-->
+    <div class="row justify-content-center ">
+        <div class="col-lg-6 justify-content-center">
+            <form action="/home" method="post">
+                <div class="text-center my-4">
+                    <button type="button text-center" class="btn btn-dark btn-lg my-4">do the multiplayer stuff</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    
     <!-- Game Menu Page -->
     <div class="container">
         <div class="text-center my-4">
@@ -73,7 +86,7 @@ Singlebutton.addEventListener('click', function () {
 
 //Versus Multiplayer button destination
 MultiVsbutton.addEventListener('click', function () {
-
+    window.location.href = ("/queue")
 }, false)
 
 //Word challengeMultiplayer button destination
@@ -83,7 +96,7 @@ MultiWCbutton.addEventListener('click', function () {
 
 //Scoreboard button destination
 Scorebutton.addEventListener('click', function () {
-
+    window.location.href = ("/scoreboard")
 }, false)
 
 //Logout button destination
