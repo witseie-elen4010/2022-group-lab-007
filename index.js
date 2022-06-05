@@ -97,7 +97,6 @@ io.on('connection', socket => {
 
     socket.on('SubmitWord',(clientroom,word)=>{
       socket.to(clientroom).emit('Sentword',word)
-  
     })
 
     socket.on('SetWordSend',(answer,room)=>{
