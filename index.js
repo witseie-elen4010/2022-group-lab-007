@@ -121,7 +121,7 @@ const aboutRouter = require('./routes/about')
 const queueRouter=require('./routes/queue')
 const Multiplayer1Router = require('./routes/MultiplayerMode1')
 const Multiplayer2Router = require('./routes/MultiplayerMode2')
-const LeaderboardRouter=require('./routes/leaderboard')
+const scoreboardRouter=require('./routes/scoreboard')
 // ///////////////////////////////////////////////////
 // Define routes
 // ///////////////////////////////////////////////////
@@ -134,7 +134,7 @@ app.use('/about',aboutRouter)
 app.use('/queue',queueRouter)
 app.use('/MultiplayerMode1',Multiplayer1Router)
 app.use('/MultiplayerMode2',Multiplayer2Router)
-app.use('/leaderboard',LeaderboardRouter)
+app.use('/scoreboard',scoreboardRouter)
 
 // ///////////////////////////////////////////////////
 // define function
