@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -5,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="/socket.io/socket.io.js"></script>
-        <title>OMW! Multiplayer </title>
+        <title>OMW! Custom Word Multiplayer </title>
         <link rel="stylesheet" href="/styles.css"/>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     </head>
@@ -14,7 +16,7 @@
         <div class="container">
             <!--page heading-->
             <div class="text-center my-4">
-                <h1>Foyer</h1>
+                <h1>Foyer Custom Word</h1>
             </div>
     
             <div class="row justify-content-center my-4">
@@ -50,7 +52,7 @@
         </div>
 
         </div>
-        <button style = "position:absolute; right:80px; bottom:20px;" class="buttonMenu" id="Back" name="backButton">Back</button>        
+        <button style = "position:absolute; right:80px; bottom:20px;" class="buttonMenu" id="Back">Back</button>        
         <!-- Back Button position bottom right -->
        
         <script>src="routes/queue"</script>
@@ -72,7 +74,8 @@ Matchmakebutton.addEventListener('click', function () {
 
     const socket=io()
     let clientroom;
-    socket.emit('ConnectedA')
+    socket.emit('ConnectedB')
+
 
     //Checks client room number
     socket.on('serverMsg',(data)=>{
@@ -81,14 +84,14 @@ Matchmakebutton.addEventListener('click', function () {
     })
     //Gets the room number of clinets in the room from the server
     socket.on('Roomsize',(roomsize)=>{
-    if(roomsize==2)
+    if(roomsize==3)
     {
         console.log('Match found')
-        window.location.href = ("/MultiplayerMode1");
+        window.location.href = ("/MultiplayerMode2");
         //Takes client to multiplayer game room
         
     }
-    else if(roomsize==1)
+    else if(roomsize<3)
     {
         console.log('No match found')
         //try load again somehow
@@ -114,7 +117,7 @@ setTimeout(() => {
 setTimeout(() => {
     socket.emit('Checkroomsize',clientroom)
     document.getElementById("Results").innerHTML = "No Opponents could be found please try again or return to the menu";
-    socket.emit('Failed to matchmakeA')
+    socket.emit('Failed to matchmakeB')
 }, 15000) //at 15000ms delay matchmaming is cancelled
 
 },false)

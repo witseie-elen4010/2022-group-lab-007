@@ -54,19 +54,19 @@
              <!-- All the different buttons for navigation -->
             <h1 id="heading" style="color:black">Oh My Wordle!!!</h1>
             <br>
-            <button class="button" id="SinglePlayer">SinglePlayer</button>
+            <button class="button" id="SinglePlayer" name="SinglePlayer">SinglePlayer</button>
             <br>
-            <button class="button" id="MultiplayerVs">Multiplayer Versus</button>
+            <button class="button" id="MultiplayerVs" name="MultiplayerVs">Multiplayer Versus</button>
             <br>
-            <button class="button" id="MultiplayerWC">Multiplayer Word Guess</button>
+            <button class="button" id="MultiplayerWC" name="MultiplayerWC">Multiplayer Custom Word</button>
             <br>
-            <button class="button" id="Scoreboard">Scoreboard</button>
+            <button class="button" id="Scoreboard" name="Scoreboard">Scoreboard</button>
             <br>
-            <button class="button" id="Instructions">Instructions</button>
+            <button class="button" id="Instructions" name="Instructions">Instructions</button>
             <br>
-            <button style = "position:absolute; right:80px; bottom:20px;" class="button" id="Logout">Logout</button>
+            <button style = "position:absolute; right:80px; bottom:20px;" class="button" id="Logout" name="Logout">Logout</button>
             <br>
-            <button style = "position:absolute; left:80px; bottom:20px;" class="button" id="About">About</button>
+            <button style = "position:absolute; left:80px; bottom:20px;" class="button" id="About" name="About">About</button>
 </body>
 
 <!-- JS script to run with ejs file -->
@@ -91,7 +91,7 @@ MultiVsbutton.addEventListener('click', function () {
 
 //Word challengeMultiplayer button destination
 MultiWCbutton.addEventListener('click', function () {
-
+    window.location.href = ("/queueB")
 }, false)
 
 //Scoreboard button destination
