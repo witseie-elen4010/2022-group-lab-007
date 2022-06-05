@@ -67,21 +67,24 @@ Backbutton.addEventListener('click', function () {
     window.location.href = ("/home");
 }, false)
 
-
+//Starts socket matchmaking
 Matchmakebutton.addEventListener('click', function () {
 
     const socket=io()
     let clientroom;
 
+    //Checks client room number
     socket.on('serverMsg',(data)=>{
     console.log(`I should be in room ${data}`)
         clientroom=data;
     })
+    //Gets the room number of clinets in the room from the server
     socket.on('Roomsize',(roomsize)=>{
     if(roomsize==2)
     {
         console.log('Match found')
         window.location.href = ("/MultiplayerMode1");
+        //Takes client to multiplayer game room
         
     }
     else if(roomsize==1)
@@ -93,25 +96,25 @@ Matchmakebutton.addEventListener('click', function () {
 setTimeout(() => {
     socket.emit('Checkroomsize',clientroom)
     document.getElementById("Results").innerHTML = "Searching";
-}, 3000) // 15 seconds
+}, 3000) //3000ms delay
 
 setTimeout(() => {
     socket.emit('Checkroomsize',clientroom)
-}, 6000) // 15 seconds
+}, 6000) //Checks periodically for oppenents
 
 setTimeout(() => {
     socket.emit('Checkroomsize',clientroom)
-}, 9000) // 15 seconds
+}, 9000) 
 
 setTimeout(() => {
     socket.emit('Checkroomsize',clientroom)
-}, 12000) // 15 seconds
+}, 12000) 
 
 setTimeout(() => {
     socket.emit('Checkroomsize',clientroom)
     document.getElementById("Results").innerHTML = "No Opponents could be found please try again or return to the menu";
     socket.emit('Failed to matchmake')
-}, 15000) // 15 seconds
+}, 15000) //at 15000ms delay matchmaming is cancelled
 
 },false)
 

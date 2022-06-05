@@ -44,9 +44,11 @@
   <!--Insert game and socket connection logic here-->
 <script>
 
+//Restarts socket
 const socket=io()
 let clientroom;
 
+//Checks the room number of the client
 socket.on('serverMsg',(data)=>{
     console.log(`I should be in room ${data}`)
         clientroom=data;

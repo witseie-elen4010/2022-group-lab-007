@@ -51,17 +51,19 @@ let roomsize
 io.on('connection', socket => {
 
   NumClient++;
+  //Sets 2 clients to a single room
     roomNo = Math.round(NumClient / 2);
     socket.join(roomNo);
     console.log(`New client no.: ${NumClient}, room no.: ${roomNo}`);
     socket.emit('serverMsg',roomNo)
 
-  
+    //Returns the number of clients in the room
     socket.on('Checkroomsize',data=>{
       roomsize=io.sockets.adapter.rooms.get(data).size
       io.to(data).emit('Roomsize',roomsize)
     })
 
+    //If matchmaking fails then client number is reduced so room can be used later
     socket.on('Failed to matchmake',()=>{
       NumClient--;
     })
