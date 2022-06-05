@@ -2,7 +2,6 @@
 // library imports and instance creations
 // ///////////////////////////////////////////
 const express = require('express')
-const { io } = require('socket.io-client')
 const router = express.Router()
 const database = require('../serverConfig.js')
 const session = require('express-session');
@@ -14,12 +13,8 @@ router.get('/', (req, res) => {
   if (!req.session.ID) {
       res.redirect('/login')
       } else {
-  res.render("users/foyer")
+  res.render("users/foyerB")
   }
 })
-
-
-
-
 
 module.exports = router

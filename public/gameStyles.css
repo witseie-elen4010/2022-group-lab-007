@@ -1,15 +1,17 @@
-* {
-  /* font settings for the web page*/
-    color:rgb(3, 3, 3);
-    font-family: 
-    "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-}
+* { 
+    /* font settings for the web page*/
+      color:rgb(3, 3, 3);
+      font-family: 
+      "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  }
+  
+  /* background image setting */
+  body {
+      background-image: url("images/Background.png");
+      background-size: cover;
+  }
 
-/* background image setting */
-body {
-    background-image: url("images/Background.png");
-}
 
 h2 {
   font-size: 40px;  

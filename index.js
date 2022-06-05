@@ -44,59 +44,57 @@ server.listen(PORT, () => console.log(`Server running on port ${PORT}`))
 // Handle a socket connection request from web client
 const connections = [null, null] //edit here for allowing an addition player
 
+let NumClientA=0
+let NumClientB=0
+let roomNo=" "
+let roomsize
+
 io.on('connection', socket => {
 
-// Find an available player number
-  let playerIndex = -1
-  for (const i in connections) {
-    if (connections[i] === null) {
-      playerIndex = i
-      break
+  socket.on('ConnectedA',()=>{
+    NumClientA++;
+  //Sets 2 clients to a single room
+    roomNo = Math.round(NumClientA / 2)+"A";
+    socket.join(roomNo);
+    console.log(`New client no.: ${NumClientA}, room no.: ${roomNo}`);
+    socket.emit('serverMsg',roomNo)
+  })
+
+  socket.on('ConnectedB',()=>{
+    NumClientB++;
+  //Sets 2 clients to a single room
+    if(NumClientB%3==1){
+    roomNo = Math.round((NumClientB+1) / 3)+"B";
+    }else{
+      roomNo = Math.round(NumClientB / 3)+"B";
     }
-  }
-
-  // Tell the connecting client what player number they are
-  socket.emit('player-number', playerIndex)
-
-  console.log(`Player ${playerIndex} has connected`)
-
-  // Ignore player 3
-  if (playerIndex === -1) return
-
-  connections[playerIndex] = false
-
-  // Tell eveyone what player number just connected
-  socket.broadcast.emit('player-connection', playerIndex)
-
-  // Handle Diconnect
-  socket.on('disconnect', () => {
-    console.log(`Player ${playerIndex} disconnected`)
-    connections[playerIndex] = null
-    // Tell everyone what player numbe just disconnected
-    socket.broadcast.emit('player-connection', playerIndex)
+    
+    socket.join(roomNo);
+    console.log(`New client no.: ${NumClientB}, room no.: ${roomNo}`);
+    socket.emit('serverMsg',roomNo)
   })
 
-  // On Ready
-  socket.on('player-ready', () => {
-    socket.broadcast.emit('enemy-ready', playerIndex)
-    connections[playerIndex] = true
-  })
+    //Returns the number of clients in the room
+    socket.on('Checkroomsize',data=>{
+      roomsize=io.sockets.adapter.rooms.get(data).size
+      io.to(data).emit('Roomsize',roomsize)
+    })
 
-  // Check player connections
-  socket.on('check-players', () => {
-    const players = []
-    for (const i in connections) {
-      connections[i] === null ? players.push({ connected: false, ready: false }) : players.push({ connected: true, ready: connections[i] })
-    }
-    socket.emit('check-players', players)
-  })
+    //If matchmaking fails then client number is reduced so room can be used later
+    socket.on('Failed to matchmakeA',()=>{
+      NumClientA--;
+      socket.disconnect()
+    })
 
-  // Timeout connection
-  setTimeout(() => {
-    connections[playerIndex] = null
-    socket.emit('timeout')
-    socket.disconnect()
-  }, 600000) // 10 minute limit per player
+    socket.on('Failed to matchmakeB',()=>{
+      NumClientB--;
+      socket.disconnect()
+    })
+
+    socket.on('SubmitWord',(clientroom,word)=>{
+      socket.to(clientroom).emit('Sentword',word)
+  
+    })
 })
 
 
@@ -121,7 +119,10 @@ const aboutRouter = require('./routes/about')
 const queueRouter=require('./routes/queue')
 const Multiplayer1Router = require('./routes/MultiplayerMode1')
 const Multiplayer2Router = require('./routes/MultiplayerMode2')
-const LeaderboardRouter=require('./routes/leaderboard')
+const scoreboardRouter=require('./routes/scoreboard')
+const queueBRouter=require('./routes/queueB')
+
+
 // ///////////////////////////////////////////////////
 // Define routes
 // ///////////////////////////////////////////////////
@@ -134,8 +135,8 @@ app.use('/about',aboutRouter)
 app.use('/queue',queueRouter)
 app.use('/MultiplayerMode1',Multiplayer1Router)
 app.use('/MultiplayerMode2',Multiplayer2Router)
-app.use('/leaderboard',LeaderboardRouter)
-
+app.use('/scoreboard',scoreboardRouter)
+app.use('/queueB',queueBRouter)
 // ///////////////////////////////////////////////////
 // define function
 // ///////////////////////////////////////////////////

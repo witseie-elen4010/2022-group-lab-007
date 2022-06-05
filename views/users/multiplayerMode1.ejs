@@ -150,6 +150,7 @@
 
   <!--Insert game and socket connection logic here-->
 <script>
+
   
 document.addEventListener('DOMContentLoaded', () => {
     const userGrid = document.querySelector('.Multi-grid-user')
@@ -160,165 +161,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const infoDisplay = document.querySelector('#info')
     const multiPlayerButton = document.querySelector('#multiPlayerButton')
 
-    let isGameOver = false
-    let currentPlayer = 'user'
-    const width = 10
-    let gameMode = ""
-    let playerNum = 0
-    let ready = false
-    let enemyReady = false
-
-  
-    // Select Player Mode
-    multiPlayerButton.addEventListener('click', startMultiPlayer)
-
-    //startButton.addEventListener('click', playerReady)
-
- 
-    // Multiplayer
-    function startMultiPlayer() {
-      gameMode = 'multiPlayer'
-  
-      const socket = io();
-  
-      // Get your player number
-      socket.on('player-number', num => {
-      {
-       playerNum = parseInt(num)
-       if(playerNum === 1) currentPlayer = "enemy"
-  
-       console.log(playerNum)
-  
-       // Get other player status
-       socket.emit('check-players')
-       }
-      })
-  
-      // Another player has connected or disconnected
-      socket.on('player-connection', num => {
-        console.log(`Player number ${num} has connected or disconnected`)
-        playerConnectedOrDisconnected(num)
-      })
-  
-     // On enemy ready
-     socket.on('enemy-ready', num => {
-       enemyReady = true
-       playerReady(num)
-       if (ready) {
-         playGameMulti(socket)
-         //setupButtons.style.display = 'none'
-      }
-    })
-
-      // Check player status
-      socket.on('check-players', players => {
-        players.forEach((p, i) => {
-          if(p.connected) 
-          {
-              playerConnectedOrDisconnected(i)
-          }
-          if(p.ready) 
-          {
-             playerReady(i)
-             if(i !== playerReady) {enemyReady = true}
-          }
-        })
-      })
-  
-      // On Timeout
-      socket.on('timeout', () => {
-        infoDisplay.innerHTML = 'You have reached the 10 minute limit'
-      })
-
-     // Ready button click
-     startButton.addEventListener('click', () => {
-       console.log("Pressed ready")
-       playGameMulti(socket)
-      // else infoDisplay.innerHTML = "Please place all ships"
-     })
-
-      // Ready button click
-
-     //   // Ready button click
-     //   startButton.addEventListener('click', () => {
-     //     if(allShipsPlaced) playGameMulti(socket)
-     //     else infoDisplay.innerHTML = "Please place all ships"
-     //   })     
-     function playerConnectedOrDisconnected(num) {
-        let player = `.p${parseInt(num) + 1}`
-        document.querySelector(`${player} .connected span`).classList.toggle('green')
-        if(parseInt(num) === playerNum) document.querySelector(player).style.fontWeight = 'bold'
-      }  
-    }
-
-    // Game Logic for MultiPlayer
-
-    function playGameMulti(socket) {
-
-      if(isGameOver) return
-
-      if(!ready) {
-       socket.emit('player-ready')
-       ready = true
-       console.log("At play game multi")
-       playerReady(playerNum)
-      }      
-
-    }
-
-    function playerReady(num) {
-     let player = `.p${parseInt(num) + 1}`
-     document.querySelector(`${player} .ready span`).classList.toggle('green')
-    }
+const Backbutton= document.getElementById('Back')
 
 
-    function GameLogic()
-    {
-     // Update the grid guesses
-     const keyboard = document.querySelector("[data-keyboard]")
-     const guessingGrid = document.querySelector("[data-guess-grid]")
-     const answer = "Hello"
-     console.log(answer)
-     const alertContainer = document.querySelector("[data-alert-container]")
-     const popUp_Container = document.querySelector("[data-alert-container]") 
+//Restarts socket
+const socket=io()
+let clientroom;
+socket.emit('ConnectedA')
 
-     // A function to refresh  the programme to find if the keyboard or mouse has been clicked
-     refreshInteraction()   
-
-     // Function to listen out for a button press
-     function refreshInteraction()                           //refreshInteraction uses the built in addEventListener to listen out for a mouse click on
-     {                                                       // the buttons of the keyboard on the web page and for when one of the keys on the user's
-       document.addEventListener("click", MouseClick )      // keys are pressed
-       document.addEventListener("keydown", KeyPressed)
-     } 
- 
-     function completeInteraction()                           //This function  uses the built in function 'removeEventListener' which will end the listening  
-     {                                                        // out for an interaction which will be used when a win or loss occurs
-       document.removeEventListener("click", MouseClick )
-       document.removeEventListener("keydown", KeyPressed)
-     }
- 
-
-     //   if(!ready) {
-     //     socket.emit('player-ready')
-     //     ready = true
-     //     playerReady(playerNum)
-     //   }
-   
-     //   if(enemyReady) {
-     //     if(currentPlayer === 'user') {
-     //       turnDisplay.innerHTML = 'Your Go'
-     //     }
-     //     if(currentPlayer === 'enemy') {
-     //       turnDisplay.innerHTML = "Enemy's Go"
-     //     }
-     //   }
-    }
-  
-
-  
-    
+//Checks the room number of the client
+socket.on('serverMsg',(data)=>{
+    console.log(`I should be in room ${data}`)
+        clientroom=data;
 })
+
+
+socket.on('Sentword',(newword)=>{
+  console.log(newword)
+})
+
+let word="Hello"
+//Back button destination
+Backbutton.addEventListener('click', function () {
+  socket.emit('SubmitWord',clientroom,word)
+  console.log("IM here")
+}, false)
 
 </script>
 
