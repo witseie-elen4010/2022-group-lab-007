@@ -45,14 +45,12 @@
 <script>
 
 const socket=io()
-let clientroom
+let clientroom;
 
-socket.emit()
-
-if (1==2)
-{
-    socket.to(clientroom).emit('SubmitWord',word)
-}
+socket.on('serverMsg',(data)=>{
+    console.log(`I should be in room ${data}`)
+        clientroom=data;
+})
 
 
 </script>
