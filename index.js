@@ -90,6 +90,11 @@ io.on('connection', socket => {
       NumClientB--;
       socket.disconnect()
     })
+
+    socket.on('SubmitWord',(clientroom,word)=>{
+      socket.to(clientroom).emit('Sentword',word)
+  
+    })
 })
 
 
