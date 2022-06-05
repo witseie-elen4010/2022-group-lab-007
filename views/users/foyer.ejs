@@ -5,12 +5,12 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="/socket.io/socket.io.js"></script>
-        <title>OMW! Multiplayer Queue</title>
+        <title>OMW! Multiplayer </title>
         <link rel="stylesheet" href="/styles.css"/>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     </head>
-    
-    <body>
+
+    <body id="Main Body">
         <div class="container">
             <!--page heading-->
             <div class="text-center my-4">
@@ -32,18 +32,93 @@
             <!--Button to check for other players in the queue-->
             <div class="row justify-content-center ">
                 <div class="col-lg-6 justify-content-center">
-                    <form action="/queue" method="post">
                         <div class="text-center my-4">
-                            <button type="button text-center" class="btn btn-dark btn-lg my-4" >Check if players available</button>
+                            <button class="buttonMenu" id="Matchmaker">Check if players available</button>
                         </div>
                     </form>
                 </div>
+                <br>
             </div>
+            <div class="card mb-3" >
+                <div class="row text-center my-auto">
+                    <div class="card-body">
+                        <h2 class="card-title"></h2>
+                        <p id="Results"></p>
+                    </div>
+                </div>  
+            </div>
+        </div>
 
         </div>
-        <button style = "position:absolute; left:80px; bottom:20px;"  id="SendMessage">Message</button>
-
+        <button style = "position:absolute; right:80px; bottom:20px;" class="buttonMenu" id="Back">Back</button>        
+        <!-- Back Button position bottom right -->
+       
+        <script>src="routes/queue"</script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>      
     </body>
+
+<script>
+
+const Matchmakebutton= document.getElementById('Matchmaker')
+const Backbutton= document.getElementById('Back')
+
+//Back button destination
+Backbutton.addEventListener('click', function () {
+    window.location.href = ("/home");
+}, false)
+
+//Starts socket matchmaking
+Matchmakebutton.addEventListener('click', function () {
+
+    const socket=io()
+    let clientroom;
+
+    //Checks client room number
+    socket.on('serverMsg',(data)=>{
+    console.log(`I should be in room ${data}`)
+        clientroom=data;
+    })
+    //Gets the room number of clinets in the room from the server
+    socket.on('Roomsize',(roomsize)=>{
+    if(roomsize==2)
+    {
+        console.log('Match found')
+        window.location.href = ("/MultiplayerMode1");
+        //Takes client to multiplayer game room
+        
+    }
+    else if(roomsize==1)
+    {
+        console.log('No match found')
+        //try load again somehow
+    }
+  })
+setTimeout(() => {
+    socket.emit('Checkroomsize',clientroom)
+    document.getElementById("Results").innerHTML = "Searching";
+}, 3000) //3000ms delay
+
+setTimeout(() => {
+    socket.emit('Checkroomsize',clientroom)
+}, 6000) //Checks periodically for oppenents
+
+setTimeout(() => {
+    socket.emit('Checkroomsize',clientroom)
+}, 9000) 
+
+setTimeout(() => {
+    socket.emit('Checkroomsize',clientroom)
+}, 12000) 
+
+setTimeout(() => {
+    socket.emit('Checkroomsize',clientroom)
+    document.getElementById("Results").innerHTML = "No Opponents could be found please try again or return to the menu";
+    socket.emit('Failed to matchmake')
+}, 15000) //at 15000ms delay matchmaming is cancelled
+
+},false)
+
+
+</script>
 
 </html>
