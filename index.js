@@ -48,20 +48,23 @@ let NumClientA=0
 let NumClientB=0
 let roomNo=" "
 let roomsize
+let playernum
 
 io.on('connection', socket => {
 
   socket.on('ConnectedA',()=>{
     NumClientA++;
+    playernum=NumClientA%2
   //Sets 2 clients to a single room
     roomNo = Math.round(NumClientA / 2)+"A";
     socket.join(roomNo);
     console.log(`New client no.: ${NumClientA}, room no.: ${roomNo}`);
-    socket.emit('serverMsg',roomNo)
+    socket.emit('serverMsg',roomNo,playernum)
   })
 
   socket.on('ConnectedB',()=>{
     NumClientB++;
+    playernum=NumClientB%3
   //Sets 2 clients to a single room
     if(NumClientB%3==1){
     roomNo = Math.round((NumClientB+1) / 3)+"B";
@@ -71,7 +74,8 @@ io.on('connection', socket => {
     
     socket.join(roomNo);
     console.log(`New client no.: ${NumClientB}, room no.: ${roomNo}`);
-    socket.emit('serverMsg',roomNo)
+    socket.emit('serverMsg',roomNo,playernum)
+
   })
 
     //Returns the number of clients in the room
@@ -95,6 +99,14 @@ io.on('connection', socket => {
       socket.to(clientroom).emit('Sentword',word)
   
     })
+
+    socket.on('SetWordSend',(answer,room)=>{
+      io.to(room).emit('SetWordReceive',answer)
+    
+    })
+
+    // Check player connections
+  
 })
 
 

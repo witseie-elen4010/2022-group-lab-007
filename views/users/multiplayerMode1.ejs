@@ -152,7 +152,6 @@
 <script>
 
   
-document.addEventListener('DOMContentLoaded', () => {
     const userGrid = document.querySelector('.Multi-grid-user')
     const computerGrid = document.querySelector('.grid-computer')
     const displayGrid = document.querySelector('.grid-display')
@@ -161,18 +160,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const infoDisplay = document.querySelector('#info')
     const multiPlayerButton = document.querySelector('#multiPlayerButton')
 
+
 const Backbutton= document.getElementById('Back')
 
 
+// Select Player Mode
+multiPlayerButton.addEventListener('click', startMultiPlayer)
+
+//z code
 //Restarts socket
 const socket=io()
 let clientroom;
+let playerNum
+let num
+let answer
+let roomsize
 socket.emit('ConnectedA')
 
 //Checks the room number of the client
-socket.on('serverMsg',(data)=>{
+socket.on('serverMsg',(data,num)=>{
     console.log(`I should be in room ${data}`)
         clientroom=data;
+        playerNum=num;
 })
 
 
@@ -180,12 +189,101 @@ socket.on('Sentword',(newword)=>{
   console.log(newword)
 })
 
-let word="Hello"
+//socket.emit('SubmitWord',clientroom,word)
 //Back button destination
 Backbutton.addEventListener('click', function () {
-  socket.emit('SubmitWord',clientroom,word)
-  console.log("IM here")
+  window.location.href = ("/home");
 }, false)
+
+setTimeout(() => {
+  if(playerNum==0)
+{
+  console.log('IM here')
+   answer="apple"
+  //const answer = dictionary[Math.floor((Math.random()*12971)+0)]
+  socket.emit('SetWordSend',answer,clientroom)
+}
+}, 3000) //3000ms delay
+
+
+//Z code
+socket.on('SetWordReceive',(SetWord)=>{
+  console.log(SetWord)
+  
+})
+
+
+
+
+
+// Multiplayer
+function startMultiPlayer() {
+}
+
+// Game Logic for MultiPlayer
+
+function playGameMulti(socket) {
+
+  if(isGameOver) return
+
+  if(!ready) {
+   socket.emit('player-ready')
+   ready = true
+   console.log("At play game multi")
+   playerReady(playerNum)
+  }      
+
+}
+
+function playerReady(num) {
+ let player = `.p${parseInt(num) + 1}`
+ document.querySelector(`${player} .ready span`).classList.toggle('green')
+}
+
+
+function GameLogic()
+{
+ // Update the grid guesses
+ const keyboard = document.querySelector("[data-keyboard]")
+ const guessingGrid = document.querySelector("[data-guess-grid]")
+ const answer = "Hello"
+ console.log(answer)
+ const alertContainer = document.querySelector("[data-alert-container]")
+ const popUp_Container = document.querySelector("[data-alert-container]") 
+
+ // A function to refresh  the programme to find if the keyboard or mouse has been clicked
+ refreshInteraction()   
+
+ // Function to listen out for a button press
+ function refreshInteraction()                           //refreshInteraction uses the built in addEventListener to listen out for a mouse click on
+ {                                                       // the buttons of the keyboard on the web page and for when one of the keys on the user's
+   document.addEventListener("click", MouseClick )      // keys are pressed
+   document.addEventListener("keydown", KeyPressed)
+ } 
+
+ function completeInteraction()                           //This function  uses the built in function 'removeEventListener' which will end the listening  
+ {                                                        // out for an interaction which will be used when a win or loss occurs
+   document.removeEventListener("click", MouseClick )
+   document.removeEventListener("keydown", KeyPressed)
+ }
+
+
+ //   if(!ready) {
+ //     socket.emit('player-ready')
+ //     ready = true
+ //     playerReady(playerNum)
+ //   }
+
+ //   if(enemyReady) {
+ //     if(currentPlayer === 'user') {
+ //       turnDisplay.innerHTML = 'Your Go'
+ //     }
+ //     if(currentPlayer === 'enemy') {
+ //       turnDisplay.innerHTML = "Enemy's Go"
+ //     }
+ //   }
+}
+
 
 </script>
 
