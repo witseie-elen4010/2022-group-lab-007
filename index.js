@@ -44,8 +44,9 @@ server.listen(PORT, () => console.log(`Server running on port ${PORT}`))
 // Handle a socket connection request from web client
 const connections = [null, null] //edit here for allowing an addition player
 
-let NumClient=0;
-let roomNo;
+let NumClient=0
+let roomNo
+let roomsize
 
 io.on('connection', socket => {
 
@@ -54,9 +55,14 @@ io.on('connection', socket => {
     socket.join(roomNo);
     console.log(`New client no.: ${NumClient}, room no.: ${roomNo}`);
     socket.emit('serverMsg',roomNo)
-  
 
+  
+    socket.on('Checkroomsize',data=>{
+      roomsize=io.sockets.adapter.rooms.get(data).size
+      io.to(data).emit('Roomsize',roomsize)
+    })
 })
+
    
 
 

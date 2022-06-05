@@ -32,7 +32,6 @@
             <!--Button to check for other players in the queue-->
             <div class="row justify-content-center ">
                 <div class="col-lg-6 justify-content-center">
-                    <form action="/queue" method="post">
                         <div class="text-center my-4">
                             <button type="button text-center" class="btn btn-dark btn-lg my-4" >Check if players available</button>
                         </div>
@@ -45,5 +44,41 @@
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>      
     </body>
+
+<Script>
+
+const socket=io()
+let clientroom;
+
+socket.on('serverMsg',(data)=>{
+    console.log(`I should be in room ${data}`)
+        clientroom=data;
+})
+
+
+setTimeout(() => {
+
+    console.log('Testing123')
+    socket.emit('Checkroomsize',clientroom)
+    console.log('Testing1234')
+
+}, 3000) // 15 seconds
+
+
+socket.on('Roomsize',(roomsize)=>{
+    if(roomsize==2)
+    {
+        console.log('Match found')
+        window.location.href=("/MultiplayerMode1")
+    }
+    else if(roomsize==1)
+    {
+        console.log('No match found')
+        window.location.href=("/home")
+    }
+  })
+
+
+</Script>
 
 </html>
