@@ -44,18 +44,35 @@ server.listen(PORT, () => console.log(`Server running on port ${PORT}`))
 // Handle a socket connection request from web client
 const connections = [null, null] //edit here for allowing an addition player
 
-let NumClient=0
-let roomNo
+let NumClientA=0
+let NumClientB=0
+let roomNo=" "
 let roomsize
 
 io.on('connection', socket => {
 
-  NumClient++;
+  socket.on('ConnectedA',()=>{
+    NumClientA++;
   //Sets 2 clients to a single room
-    roomNo = Math.round(NumClient / 2);
+    roomNo = Math.round(NumClientA / 2)+"A";
     socket.join(roomNo);
-    console.log(`New client no.: ${NumClient}, room no.: ${roomNo}`);
+    console.log(`New client no.: ${NumClientA}, room no.: ${roomNo}`);
     socket.emit('serverMsg',roomNo)
+  })
+
+  socket.on('ConnectedB',()=>{
+    NumClientB++;
+  //Sets 2 clients to a single room
+    if(NumClientB%3==1){
+    roomNo = Math.round((NumClientB+1) / 3)+"B";
+    }else{
+      roomNo = Math.round(NumClientB / 3)+"B";
+    }
+    
+    socket.join(roomNo);
+    console.log(`New client no.: ${NumClientB}, room no.: ${roomNo}`);
+    socket.emit('serverMsg',roomNo)
+  })
 
     //Returns the number of clients in the room
     socket.on('Checkroomsize',data=>{
@@ -64,12 +81,16 @@ io.on('connection', socket => {
     })
 
     //If matchmaking fails then client number is reduced so room can be used later
-    socket.on('Failed to matchmake',()=>{
-      NumClient--;
+    socket.on('Failed to matchmakeA',()=>{
+      NumClientA--;
+      socket.disconnect()
+    })
+
+    socket.on('Failed to matchmakeB',()=>{
+      NumClientB--;
+      socket.disconnect()
     })
 })
-
-   
 
 
 // ///////////////////////////////////////////////////
@@ -94,6 +115,9 @@ const queueRouter=require('./routes/queue')
 const Multiplayer1Router = require('./routes/MultiplayerMode1')
 const Multiplayer2Router = require('./routes/MultiplayerMode2')
 const scoreboardRouter=require('./routes/scoreboard')
+const queueBRouter=require('./routes/queueB')
+
+
 // ///////////////////////////////////////////////////
 // Define routes
 // ///////////////////////////////////////////////////
@@ -107,7 +131,7 @@ app.use('/queue',queueRouter)
 app.use('/MultiplayerMode1',Multiplayer1Router)
 app.use('/MultiplayerMode2',Multiplayer2Router)
 app.use('/scoreboard',scoreboardRouter)
-
+app.use('/queueB',queueBRouter)
 // ///////////////////////////////////////////////////
 // define function
 // ///////////////////////////////////////////////////
