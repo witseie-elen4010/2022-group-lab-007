@@ -33,14 +33,25 @@
             <div class="row justify-content-center ">
                 <div class="col-lg-6 justify-content-center">
                         <div class="text-center my-4">
-                            <button type="button text-center" class="btn btn-dark btn-lg my-4" >Check if players available</button>
+                            <button class="buttonMenu" id="Matchmaker">Check if players available</button>
                         </div>
                     </form>
                 </div>
+                <br>
             </div>
+            <div class="card mb-3" >
+                <div class="row text-center my-auto">
+                    <div class="card-body">
+                        <h2 class="card-title"></h2>
+                        <p id="Results"></p>
+                    </div>
+                </div>  
+            </div>
+        </div>
 
         </div>
-        <button style = "position:absolute; left:80px; bottom:20px;"  id="SendMessage">Message</button>
+        <button style = "position:absolute; right:80px; bottom:20px;" class="buttonMenu" id="Back">Back</button>        
+        <!-- Back Button position bottom right -->
        
         <script>src="routes/queue"</script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>      
@@ -48,22 +59,25 @@
 
 <script>
 
+const Matchmakebutton= document.getElementById('Matchmaker')
+const Backbutton= document.getElementById('Back')
 
-const socket=io()
-let clientroom;
+//Back button destination
+Backbutton.addEventListener('click', function () {
+    window.location.href = ("/home");
+}, false)
 
-socket.on('serverMsg',(data)=>{
+
+Matchmakebutton.addEventListener('click', function () {
+
+    const socket=io()
+    let clientroom;
+
+    socket.on('serverMsg',(data)=>{
     console.log(`I should be in room ${data}`)
         clientroom=data;
-})
-
-
-setTimeout(() => {
-    socket.emit('Checkroomsize',clientroom)
-}, 3000) // 15 seconds
-
-
-socket.on('Roomsize',(roomsize)=>{
+    })
+    socket.on('Roomsize',(roomsize)=>{
     if(roomsize==2)
     {
         console.log('Match found')
@@ -76,6 +90,30 @@ socket.on('Roomsize',(roomsize)=>{
         //try load again somehow
     }
   })
+setTimeout(() => {
+    socket.emit('Checkroomsize',clientroom)
+    document.getElementById("Results").innerHTML = "Searching";
+}, 3000) // 15 seconds
+
+setTimeout(() => {
+    socket.emit('Checkroomsize',clientroom)
+}, 6000) // 15 seconds
+
+setTimeout(() => {
+    socket.emit('Checkroomsize',clientroom)
+}, 9000) // 15 seconds
+
+setTimeout(() => {
+    socket.emit('Checkroomsize',clientroom)
+}, 12000) // 15 seconds
+
+setTimeout(() => {
+    socket.emit('Checkroomsize',clientroom)
+    document.getElementById("Results").innerHTML = "No Opponents could be found please try again or return to the menu";
+    socket.emit('Failed to matchmake')
+}, 15000) // 15 seconds
+
+},false)
 
 
 </script>

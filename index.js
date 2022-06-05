@@ -61,6 +61,10 @@ io.on('connection', socket => {
       roomsize=io.sockets.adapter.rooms.get(data).size
       io.to(data).emit('Roomsize',roomsize)
     })
+
+    socket.on('Failed to matchmake',()=>{
+      NumClient--;
+    })
 })
 
    
