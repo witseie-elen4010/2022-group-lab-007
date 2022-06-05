@@ -23,6 +23,7 @@ router.get('/', (req, res) => {
 // validate data and send to server
 // ///////////////////////////////////////////////////
 router.post('/', async (req, res) => {
+    // temporary variables to represent input from user
     const username = req.body.username
     const email = req.body.email
     const password = req.body.password
@@ -43,17 +44,29 @@ router.post('/', async (req, res) => {
       .then(result => {
       if (result.recordset.length === 0) {
         database.pools
-        // Run query
+        // Run query to add an account
         .then((pool) => {
         return pool.request()
         .input('username', username)
         .input('password', hashedPassword)
         .input('email', email)
         .query('INSERT INTO dbo.AccountTable (username, password, email) VALUES (@username, @password, @email);')
+        
       })
       // Send result
       .then(result => {
-        return res.redirect('/home')
+        // create entry for scoreboard
+        database.pools
+        .then((pool) => {
+          return pool.request()
+          .input('username', username)
+          .input('games', 0)
+          .input('wins', 0)
+          .query('INSERT INTO dbo.scoreboard (username, games, wins) VALUES (@username, @games, @wins);')
+        })
+        .then(result => {
+          return res.redirect('/home')
+        })
       })
       
       // check for an error
@@ -73,6 +86,7 @@ router.post('/', async (req, res) => {
   // check for wrong password
   return res.redirect('/create')
   }
+
 })
 
 
