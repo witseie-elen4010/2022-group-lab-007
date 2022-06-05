@@ -13,6 +13,7 @@
         <div class="text-center my-4">
           <!-- All the different buttons for navigation -->     
          <button id="multiPlayerButton">Ready to Go!</button>
+         <button id="start">Ready to Play!</button>
          <h2>You</h2>
          <h3>Your enemy</h3>
          <hr />
@@ -150,7 +151,18 @@
   <!--Insert game and socket connection logic here-->
 <script>
 
+  
+document.addEventListener('DOMContentLoaded', () => {
+    const userGrid = document.querySelector('.Multi-grid-user')
+    const computerGrid = document.querySelector('.grid-computer')
+    const displayGrid = document.querySelector('.grid-display')
+    const startButton = document.querySelector('#start')
+    const turnDisplay = document.querySelector('#whose-go')
+    const infoDisplay = document.querySelector('#info')
+    const multiPlayerButton = document.querySelector('#multiPlayerButton')
+
 const Backbutton= document.getElementById('Back')
+
 
 //Restarts socket
 const socket=io()
