@@ -3,9 +3,9 @@ const puppeteer = require('puppeteer');
 const timeout = 90000;
 jest.setTimeout(timeout);
 
-describe('Test index page:', () => {
+describe('Test routing, security and login:', () => {
     
-    it("Login button reverts to Login Page:", async () => {
+    it("Login button routes to the Login Page:", async () => {
         
         const browser = await puppeteer.launch()
         const page = await browser.newPage()
@@ -13,7 +13,7 @@ describe('Test index page:', () => {
 
         await page.click('[name="start"]');
         await page.waitForTimeout(10);
-        await expect(page.title()).resolves.toMatch('Login Page');
+        await expect(page.title()).resolves.toMatch('OMW! Login');
         await page.waitForTimeout(1000);
         await browser.close();
      })
@@ -29,7 +29,7 @@ describe('Test index page:', () => {
         await page.click('[name="start"]');
         await page.waitForTimeout(10);
         await page.click('[name="registerbutton"]');
-        await expect(page.title()).resolves.toMatch('Create account');
+        await expect(page.title()).resolves.toMatch('OMW! Create account');
         await page.waitForTimeout(1000);
         await browser.close();
      })
@@ -40,7 +40,7 @@ describe('Test index page:', () => {
         await page.setViewport({width: 1920, height: 1080});
         await page.goto('https://ohmywordle.azurewebsites.net/')
         
-        await page.click('[name="landing"]');
+        await page.click('[name="start"]');
 
         await page.waitForSelector('input[name="username"]');
         await page.$eval('input[name="username"]', el => el.value = '123');
@@ -50,7 +50,7 @@ describe('Test index page:', () => {
 
         await page.click('[name="loginbutton"]');
         await page.waitForTimeout(10);
-        await expect(page.title()).resolves.toMatch('Homepage');
+        await expect(page.title()).resolves.toMatch('OMW! Game Menu');
         await page.waitForTimeout(1000);
         await browser.close();
     })
@@ -61,7 +61,7 @@ describe('Test index page:', () => {
         await page.setViewport({width: 1920, height: 1080});
         await page.goto('https://ohmywordle.azurewebsites.net/')
         
-        await page.click('[name="landing"]');
+        await page.click('[name="start"]');
 
         await page.waitForSelector('input[name="username"]');
         await page.$eval('input[name="username"]', el => el.value = '123');
@@ -71,7 +71,7 @@ describe('Test index page:', () => {
 
         await page.click('[name="loginbutton"]');
         await page.waitForTimeout(10);
-        await expect(page.title()).resolves.toMatch('Login Page');
+        await expect(page.title()).resolves.toMatch('OMW! Login');
         await page.waitForTimeout(1000);
         await browser.close();
     })
