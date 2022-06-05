@@ -9,6 +9,7 @@ body {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   background-image: url("images/Background.png");
+  background-size: cover;
   overflow: hidden;
 }
 .transparent {
@@ -106,7 +107,8 @@ header {
 
 
 .body2 {
-  background-image: url('images/MenuBackround.jpg');
+  background-image: url("images/Background.png");
+  background-size: cover;
   font-family: "Georgia", Times, serif;
 }
 

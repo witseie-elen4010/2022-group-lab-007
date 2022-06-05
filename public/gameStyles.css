@@ -9,6 +9,7 @@
   /* background image setting */
   body {
       background-image: url("images/Background.png");
+      background-size: cover;
   }
 
   h2 {
