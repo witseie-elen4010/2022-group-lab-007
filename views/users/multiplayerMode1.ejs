@@ -13223,6 +13223,21 @@ function playerReady() {
 }
 
 
+function gameState(gamecount)
+{
+    if(gamecount === 2)
+    {
+        if(count > counter)
+        {
+           console.log("You win1")
+        }
+        else if(count < counter)
+        {
+          console.log("You lose1")
+        }
+    }
+}
+
 function GameLogic(answer)
 {
  // Update the grid guesses
@@ -13451,10 +13466,12 @@ function changeTile(tile,index,array,attempt)                          //Functio
 function gameStatus(attempt, tiles)                             //Function to check if the guess is correct or not
 {
     
-    console.log(gamecount)
+   
     if (attempt === answer)
     {
         gamecount = gamecount +1
+        gameState(gamecount)
+        console.log("gamecount")
         popUpAlert("You guessed the word correctly in " + counter + " attempts")
         console.log("You win")
         completeInteraction()
@@ -13464,6 +13481,8 @@ function gameStatus(attempt, tiles)                             //Function to ch
     if (unusedTiles.length === 0)
     {   
         gamecount = gamecount +1
+        gameState(gamecount)
+        console.log("gamecount")
         popUpAlert(answer + "  was the correct word" )
         console.log(answer + " was the correct word")
         return
@@ -13471,13 +13490,6 @@ function gameStatus(attempt, tiles)                             //Function to ch
         //return
     }
 
-    if (attempt === answer && gamecount == 2 && counter < count)
-
-    {   popUpAlert("You win " + counter + " attempts")
-        console.log("You win")
-        completeInteraction()
-        return
-    }
    // refreshInteraction()
 
 }
@@ -13540,11 +13552,11 @@ function GameLogic2(answer, attempt,Player2Tiles)
     {
             
             gamecount = gamecount +1
+            gameState(gamecount)
             console.log("gamecount")
     }
 
 }
-
 
 
 
