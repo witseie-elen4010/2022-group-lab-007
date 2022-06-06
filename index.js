@@ -95,8 +95,8 @@ io.on('connection', socket => {
       socket.disconnect()
     })
 
-    socket.on('SubmitWord',(clientroom,word)=>{
-      socket.to(clientroom).emit('Sentword',word)
+    socket.on('SubmitWord',(clientroom,word,guessTile)=>{
+      socket.to(clientroom).emit('Sentword',word,guessTile)
     })
 
     socket.on('SetWordSend',(answer,room)=>{

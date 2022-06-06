@@ -18,7 +18,7 @@ h2 {
 }
     
 h3 {
-  font-size: 40px;
+  font-size: 40px; 
 }
     
 h2, h3 {
@@ -27,8 +27,8 @@ h2, h3 {
   margin: 0;
   padding: 0;
   display: inline;
-  margin-right: 1em;  
-  margin-left: 6em  
+  margin-right: 0em;  
+  margin-left: 9em  
 }      
 
 #container {
@@ -79,7 +79,7 @@ h2, h3 {
   margin-left: 2em;    
 }
 
-/* default empty tile settings */
+/* default empty tile settings for user grid */
 .tile {
   /*BACKGROUND*/
 background-color: cornflowerblue;
@@ -120,6 +120,38 @@ background-color: yellow;
 
 background-color:forestgreen;
 }
+
+/* default empty tile settings for enemy grid */
+.tile2 {
+  /*BACKGROUND*/
+background-color: rgb(17, 74, 180);
+color: transparent;
+border: .05em solid black;
+}
+
+/* setting currently selected tile */
+.tile2[data-state="active"] {
+border-color: black;
+}
+
+/* setting characteristics of wrong letter tile */
+.tile2[data-state="wrong"] {
+
+background-color: red;
+}
+
+/* setting characteristics of right letter wrong location tile */
+.tile2[data-state="wrong-location"] {
+
+background-color: yellow;
+}
+
+/* setting characteristics of correct letter in right tile */
+.tile2[data-state="correct"] {
+
+background-color:forestgreen;
+}
+
   /*Onscreen keyboard container settings */
 #onScreenkeyboard-container{
   height: 100px
