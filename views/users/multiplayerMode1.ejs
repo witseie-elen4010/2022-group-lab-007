@@ -13146,6 +13146,8 @@ let answer
 let roomsize
 let Player2Tiles = []
 let count = 0
+let counter = 0
+let gamecount = 0
 socket.emit('ConnectedA')
 
 //Checks the room number of the client
@@ -13396,7 +13398,9 @@ function submitGuess()                        //Function to submit the guess
 
     const attempt = filledTiles.reduce((word,tile) =>
     {
+      
       return word + tile.dataset.letter
+      
 
     }, "")
 
@@ -13410,7 +13414,8 @@ function submitGuess()                        //Function to submit the guess
     {
        //send our attempt to enemy 
       socket.emit('SubmitWord',clientroom,attempt,filledTiles)
-   
+      counter = counter +1
+      console.log(counter)
     } 
 
     completeInteraction()                                               //Call function to prevent the user from typing while the                                         
@@ -13434,38 +13439,52 @@ function changeTile(tile,index,array,attempt)                          //Functio
         tile.dataset.state = "wrong"
         key.classList.add("wrong")
       }
-      if (index === array.length - 1) {
+      
+    }
+    if (index === array.length - 1) {
             refreshInteraction()
             gameStatus(attempt, array)
       }
-    }
+    
 }
 
 function gameStatus(attempt, tiles)                             //Function to check if the guess is correct or not
 {
     
+    console.log(gamecount)
     if (attempt === answer)
-    {   popUpAlert("You win!")
+    {
+        gamecount = gamecount +1
+        popUpAlert("You guessed the word correctly in " + counter + " attempts")
         console.log("You win")
         completeInteraction()
         return
     }
-
     const unusedTiles = guessingGrid.querySelectorAll(":not([data-letter])")
     if (unusedTiles.length === 0)
-    {   popUpAlert(answer + "  was the correct word" )
+    {   
+        gamecount = gamecount +1
+        popUpAlert(answer + "  was the correct word" )
         console.log(answer + " was the correct word")
         return
         completeInteraction()
         //return
     }
-    //completeInteraction()
+
+    if (attempt === answer && gamecount == 2 && counter < count)
+
+    {   popUpAlert("You win " + counter + " attempts")
+        console.log("You win")
+        completeInteraction()
+        return
+    }
+   // refreshInteraction()
 
 }
 
 }
 
-function popUpAlert(message,duration=4000)
+function popUpAlert(message,duration=8000)
  {
   const popUp =document.createElement("div")
   popUp.textContent=message
@@ -13512,27 +13531,19 @@ function GameLogic2(answer, attempt,Player2Tiles)
         FollowingTile.dataset.state = "wrong"
 
       }
+      
 
     }
     count = count +1
+    console.log(count)
+    if (attempt === answer || count === 7) 
+    {
+            
+            gamecount = gamecount +1
+            console.log("gamecount")
+    }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
