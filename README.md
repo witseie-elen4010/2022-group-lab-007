@@ -1,6 +1,8 @@
 # 2022-group-lab-007
 
-Get ready for "Oh my Wordle!"
+Get ready for "Oh my Wordle!".
+
+Play it now at "https://ohmywordle.azurewebsites.net"
 
 DEVELOPERS: 
 
