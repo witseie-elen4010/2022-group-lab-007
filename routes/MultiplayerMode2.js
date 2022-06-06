@@ -1,9 +1,14 @@
 const express = require('express')
 const router = express.Router()
 
-//Fill in route for Multiplayer word page
+//The route for Custom Multiplayer word page
 router.get('/', (req, res) => {
-    res.render('')
-})
+    if (!req.session.ID) {
+        res.redirect('/login')
+        //Wont work if user is not logged on
+        } else {
+    res.render("users/multiplayerMode2")
+    }
+  })
 
 module.exports = router

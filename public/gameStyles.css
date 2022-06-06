@@ -202,6 +202,19 @@ resize: both;
   flex-grow: 0;
 }
 
+.WordSetter{
+  border: black;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
 
 .buttonMenu {
   background-color: #f50606; 
