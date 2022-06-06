@@ -33,6 +33,7 @@ describe('Test routing, security and login:', () => {
         await page.waitForTimeout(1000);
         await browser.close();
      })
+     /*
      it('Successful Login routes to HomePage:', async () => {
 
         const browser = await puppeteer.launch()
@@ -87,5 +88,5 @@ describe('Test routing, security and login:', () => {
         await page.waitForTimeout(1000);
         await browser.close();
      })
-
+*/
 })
