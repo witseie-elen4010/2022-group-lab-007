@@ -324,11 +324,11 @@ function KeyPressed(event)
 
 function pressedKey(key)
 {
-    // const wordLength = getWord()     // This function checks the length of the word to know when the user has completed a guessed word
-    // if (wordLength.length > 4)             // and if the word is less than 5 letters then it will place the inputted word
-    // {
-    //     return
-    // }
+    const wordLength = getWord()     // This function checks the length of the word to know when the user has completed a guessed word
+    if (wordLength.length > 4)             // and if the word is less than 5 letters then it will place the inputted word
+    {
+        return
+    }
     const FollowingTile = guessingGrid.querySelector(":not([data-letter])")
     FollowingTile.dataset.letter = key
     FollowingTile.textContent = key
@@ -369,26 +369,12 @@ function BackSpace()                             //Function to backspace the mos
 
 } 
 
-// function getWord()  //Returns the word
-// {
-//     const wordLen = guessingGrid.querySelectorAll('[data-state="taken"]')  // Returns a string of the word being inputted
-//     return wordLen
-// }
+function getWord()  //Returns the word
+{
+    const wordLen = guessingGrid.querySelectorAll('[data-state="taken"]')  // Returns a string of the word being inputted
+    return wordLen
+}
 
- //   if(!ready) {
- //     socket.emit('player-ready')
- //     ready = true
- //     playerReady(playerNum)
- //   }
-
- //   if(enemyReady) {
- //     if(currentPlayer === 'user') {
- //       turnDisplay.innerHTML = 'Your Go'
- //     }
- //     if(currentPlayer === 'enemy') {
- //       turnDisplay.innerHTML = "Enemy's Go"
- //     }
- //   }
 }
 
 
