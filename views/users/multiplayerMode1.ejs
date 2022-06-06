@@ -9,6 +9,7 @@
 
   </head>
   <body>
+    <div class="popUpcontainer" data-alert-container></div>
       <div class="container">
         <div class="text-center my-4">
          <h2>You</h2>
@@ -136,7 +137,11 @@
          <div class="ready">Ready <span></span></div>
         </div>              
     </div>
-      <button style = "position:absolute; right:80px; bottom:20px;" class="buttonMenu" id="Back">Back</button> 
+    <form action="/MultiplayerModel.js" method="POST">
+      <input type="boolean" id="gameWin" value="true" ></input>
+      <button style = "position:absolute; right:80px; bottom:20px;" class="buttonMenu" id="Back to Menu">Back to Menu</button> 
+    </form>
+
     </body>
   
   </body>
@@ -153,9 +158,10 @@
     const turnDisplay = document.querySelector('#whose-go')
     const infoDisplay = document.querySelector('#info')
     const multiPlayerButton = document.querySelector('#multiPlayerButton')
+    const popUp_Container = document.querySelector("[data-alert-container]") 
 
 
-const Backbutton= document.getElementById('Back')
+const Backbutton= document.getElementById('Back to Menu')
 
 // Select Player Mode
 
@@ -13144,6 +13150,8 @@ let answer
 let roomsize
 let Player2Tiles = []
 let count = 0
+let counter = 0
+let gamecount = 0
 socket.emit('ConnectedA')
 
 //Checks the room number of the client
@@ -13219,6 +13227,24 @@ function playerReady() {
 }
 
 
+function gameState(gamecount)
+{
+    if(gamecount === 2)
+    {
+        if(count > counter)
+        {
+          popUpAlert("You WIN!")
+           console.log("You win1")
+        }
+        else if(count < counter)
+        {
+          popUpAlert("You LOSE")
+          console.log("You lose1")
+        }
+        
+    }
+}
+
 function GameLogic(answer)
 {
  // Update the grid guesses
@@ -13229,6 +13255,9 @@ function GameLogic(answer)
 
  // A function to refresh  the programme to find if the keyboard or mouse has been clicked
  refreshInteraction()   
+
+ 
+
 
  // Function to listen out for a button press
  function refreshInteraction()                           //refreshInteraction uses the built in addEventListener to listen out for a mouse click on
@@ -13297,6 +13326,23 @@ function GameLogic(answer)
 
  }
 
+//  function popUpAlert(message,duration=4000)
+//  {
+//   const popUp =document.createElement("div")
+//   popUp.textContent=message
+//   popUp.classList.add("popUp")
+//   popUp_Container.prepend("popUp")
+//    if (duration ==null) return
+//      setTimeout(()=>
+//      {
+//       popUp.classList.add("hide")
+//       popUp.addEventListener("transitionend",() => {
+//       popUp.remove()
+//       }
+//       )
+//      },duration)
+// }
+
 function pressedKey(key)
 {
     const wordLength = getWord()     // This function checks the length of the word to know when the user has completed a guessed word
@@ -13357,6 +13403,7 @@ function getWord2()  //Returns the word
  return wordLen2
 }
 
+
 // Perform checks on the attempted word to ensure it exists 
 
 function submitGuess()                        //Function to submit the guess
@@ -13373,7 +13420,9 @@ function submitGuess()                        //Function to submit the guess
 
     const attempt = filledTiles.reduce((word,tile) =>
     {
+      
       return word + tile.dataset.letter
+      
 
     }, "")
 
@@ -13387,7 +13436,8 @@ function submitGuess()                        //Function to submit the guess
     {
        //send our attempt to enemy 
       socket.emit('SubmitWord',clientroom,attempt,filledTiles)
-   
+      counter = counter +1
+      console.log(counter)
     } 
 
     completeInteraction()                                               //Call function to prevent the user from typing while the                                         
@@ -13411,13 +13461,63 @@ function changeTile(tile,index,array,attempt)                          //Functio
         tile.dataset.state = "wrong"
         key.classList.add("wrong")
       }
-      if (index === array.length - 1) {
-            refreshInteraction()
-            //gameStatus(attempt, array)
-      }
+      
     }
+    if (index === array.length - 1) {
+            refreshInteraction()
+            gameStatus(attempt, array)
+      }
+    
 }
 
+function gameStatus(attempt, tiles)                             //Function to check if the guess is correct or not
+{
+    
+   
+    if (attempt === answer)
+    {
+        gamecount = gamecount +1
+        gameState(gamecount)
+        console.log("gamecount")
+        popUpAlert("You guessed the word correctly in " + counter + " attempts")
+        console.log("You win")
+        completeInteraction()
+        return
+    }
+    const unusedTiles = guessingGrid.querySelectorAll(":not([data-letter])")
+    if (unusedTiles.length === 0)
+    {   
+        gamecount = gamecount +1
+        gameState(gamecount)
+        console.log("gamecount")
+        popUpAlert(answer + "  was the correct word" )
+        console.log(answer + " was the correct word")
+        return
+        completeInteraction()
+        //return
+    }
+
+   // refreshInteraction()
+
+}
+
+}
+
+function popUpAlert(message,duration=8000)
+ {
+  const popUp =document.createElement("div")
+  popUp.textContent=message
+  popUp.classList.add("popUp")
+  popUp_Container.prepend(popUp)
+   if (duration ==null) return
+     setTimeout(()=>
+     {
+      popUp.classList.add("hide")
+      popUp.addEventListener("transitionend",() => {
+      popUp.remove()
+      }
+      )
+     },duration)
 }
 
 // Logic to put the enemies attempts onto player 1s grid
@@ -13450,28 +13550,20 @@ function GameLogic2(answer, attempt,Player2Tiles)
         FollowingTile.dataset.state = "wrong"
 
       }
+      
 
     }
     count = count +1
+    console.log(count)
+    if (attempt === answer || count === 7) 
+    {
+            
+            gamecount = gamecount +1
+            gameState(gamecount)
+            console.log("gamecount")
+    }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
