@@ -13157,12 +13157,20 @@ const dictionary =  [
 const socket=io()
 let clientroom;
 let playerNum
+let counter=0
+let count=0
+let gamecount=0
 let num
 let answer
 let roomsize
 let Player1Tiles = []
 let Player2Tiles = []
 let Psetword =""
+
+const keyboard = document.querySelector("[data-keyboard]")
+ const guessingGrid = document.querySelector("[data-guess-grid1]")
+ const alertContainer = document.querySelector("[data-alert-container]")
+ const popUp_Container = document.querySelector("[data-alert-container]") 
 
 //Sets Player mode
 socket.emit('ConnectedB')
@@ -13210,6 +13218,28 @@ if(playerNum!=0)
 })
     })
 
+}
+
+function gameState(gamecount)
+{
+    if(gamecount === 2)
+    {
+        if(count > counter)
+        {
+          popUpAlert("You WIN!")
+           console.log("You win1")
+        }
+        else if(count < counter)
+        {
+          popUpAlert("You LOSE!")
+          console.log("You lose1")
+        }
+        else if(count == counter)
+        {
+          popUpAlert("It is a DRAW!")
+        }
+        
+    }
 }
 
 
@@ -13658,6 +13688,7 @@ function gameStatus(attempt, tiles)                             //Function to ch
    // refreshInteraction()
 
 }
+
 
 }
 
