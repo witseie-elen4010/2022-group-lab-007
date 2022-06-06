@@ -129,7 +129,10 @@
         <button class="key" data-key="n">n</button>
         <button class="key" data-key="m">m</button>
         <button class="key" data-delete class="wide-button">delete</button>
+        <button class="key" data-backspace class="wide-button">backspace</button>
+                  
       </div>
+    
        <!--Divisions to confirm whether a player has connected-->
         <div class="player p1">
          Player 1
@@ -212,7 +215,7 @@ socket.on('SetWordReceive',(SetWord)=>{
   console.log(SetWord)
   // game Functions placed here
   let word = "bye"
-  socket.emit('SubmitWord',clientroom,word)
+  socket.emit('SubmitWord',clientroom,word) // goes into game page
   
   GameLogic()
 })
@@ -292,9 +295,9 @@ function GameLogic()
         submitGuess()                         // Call the function to check if the 
         return
     }
-}
+  }
 
-function KeyPressed(event)                
+ function KeyPressed(event)                
  {                                        // The key that was pressed down is ompared to a letter in the alphabet to
     if (event.key.match(/^[a-z]$/))      // be approved for the input guess
     {
@@ -320,7 +323,7 @@ function KeyPressed(event)
         return        
     } 
 
-}
+ }
 
 function pressedKey(key)
 {
@@ -351,6 +354,7 @@ function DeleteRow()                             //Function to delete the entire
   }
 
 }
+
 function BackSpace()                             //Function to backspace the most recent input letter in the current word in the row 
 {                                                // and that one recent element in the string is deleted and cleared
 
@@ -374,8 +378,8 @@ function getWord()  //Returns the word
     const wordLen = guessingGrid.querySelectorAll('[data-state="taken"]')  // Returns a string of the word being inputted
     return wordLen
 }
-
 }
+
 
 
 </script>
