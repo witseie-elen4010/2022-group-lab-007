@@ -55,6 +55,7 @@ router.post('/', async (req, res) => {
       })
       // Send result
       .then(result => {
+      
         // create entry for scoreboard
         database.pools
         .then((pool) => {
@@ -62,13 +63,24 @@ router.post('/', async (req, res) => {
           .input('username', username)
           .input('games', 0)
           .input('wins', 0)
-          .query('INSERT INTO dbo.scoreboard (username, games, wins) VALUES (@username, @games, @wins);')
+          .input('score', 0)
+          .query('INSERT INTO dbo.scoreboard (username, games, wins, score) VALUES (@username, @games, @wins, @score);')
         })
         .then(result => {
-          return res.redirect('/home')
+          database.pools
+          .then((pool)=>{
+            return pool.request()
+            .input('username', username)
+            .query('INSERT INTO dbo.scoreboard (userID) SELECT userID FROM dbo.AccountTable WHERE username = @username')
+            .then(result=>{
+              return res.redirect('/home')
+            })
+          })
+          
+          
         })
       })
-      
+
       // check for an error
       .catch(err => {
         res.send({ Error: err })

@@ -8,9 +8,28 @@ const router = express.Router()
 const session = require('express-session');
 const database = require('../serverConfig.js')
 
-    // check if logged in
-    router.get('/', (req, res) => {
-        res.render('users/multiplayerMode1')
-    })
+// check if logged in
+router.get('/', (req, res) => {
+    res.render('users/multiplayerMode1')
+})
+
+router.post('/', (req, res) => {
+    if (!req.session.ID) {
+        res.redirect('/login')
+        } else {
+            // put query to update scoretable here and redirect
+            database.pools
+            .then((pool)=>{
+                return pool.request()
+                .input('score', score)
+                .query('INSERT INTO dbo.scoreboard (score) VALUE (@score) WHERE userID = @userID')
+                .then(result=>{
+                    res.redirect('/scoreboard')
+                })
+            })
+        }
+    }
+)
+    
 
     module.exports = router;
