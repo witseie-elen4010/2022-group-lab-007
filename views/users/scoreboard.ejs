@@ -11,8 +11,24 @@
         <!--Style libraries-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <link rel="stylesheet" href="/styles.css"/>
+        <style>
+            .button {
+                background-color: #f50606; 
+                border: black;
+                border-radius: 3px;
+                color: white;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 20px;
+                margin: 4px 2px;
+                cursor: pointer;
+                border-radius: 4px;
+            }
+            </style>
     </head>
-    <body>
+    <body class="body2">
 
         <div class="container">
             
@@ -20,12 +36,11 @@
                 <div class="col-lg-6 justify-content-center">
 
                     <!-- Card for text and heading -->
-                    <div class="card mb-3" >
+                    <div class="card bg-primary mb-3" >
                         <div class="row text-center my-auto">                
                             <div class="card-body">
-                                <h1 class="card-title">Oh My Wordle!!!</h1>
-                                <h2 class="card-title">Player Rankings</h2>
-                                <p class="card-text">Check out the Player rankings below:</p>
+                                <h1 class="card-title">OMW!!! Player Rankings</h1>
+                                <h4 class="card-title">See how you compare to other players:</h4>
                             </div>
                         </div>  
                     </div>
@@ -38,7 +53,7 @@
                     <form action="/scoreboard" method="post">
                         <div class="card">
                             <!--Define table style-->
-                            <table class="table table-striped">
+                            <table class="table table-striped" >
                                 <thead class="text-center">
                                     <!--Table column names-->
                                     <tr>
@@ -67,8 +82,19 @@
             <br>
             
         </div>
-
+        <button style = "position:absolute; right:80px; bottom:20px;" class="button" id="Back" name="backButton">Back</button>
         <!--Style js libraries-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>      
     </body>
+
+    <!-- JS script to run with ejs file -->
+<script>
+    const Backbutton= document.getElementById('Back')
+    
+    //Back button destination
+    Backbutton.addEventListener('click', function () {
+        window.location.href = ("/home");
+    }, false)
+    
+    </script>
 </html>
