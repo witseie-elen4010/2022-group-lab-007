@@ -69,7 +69,8 @@ Backbutton.addEventListener('click', function () {
 
 //Starts socket matchmaking
 Matchmakebutton.addEventListener('click', function () {
-
+    
+    document.getElementById("Results").innerHTML = "Searching";
     const socket=io()
     let clientroom;
     socket.emit('ConnectedA')

@@ -49,6 +49,7 @@ let NumClientB=0
 let roomNo=" "
 let roomsize
 let playernum
+let playernumB
 
 io.on('connection', socket => {
 
@@ -64,17 +65,17 @@ io.on('connection', socket => {
 
   socket.on('ConnectedB',()=>{
     NumClientB++;
-    playernum=NumClientB%3
-  //Sets 2 clients to a single room
+
+  //Sets 3 clients to a single room
     if(NumClientB%3==1){
     roomNo = Math.round((NumClientB+1) / 3)+"B";
     }else{
       roomNo = Math.round(NumClientB / 3)+"B";
     }
-    
+    playernumB=NumClientB%3
     socket.join(roomNo);
     console.log(`New client no.: ${NumClientB}, room no.: ${roomNo}`);
-    socket.emit('serverMsg',roomNo,playernum)
+    socket.emit('serverMsg',roomNo,playernumB)
 
   })
 
@@ -97,6 +98,10 @@ io.on('connection', socket => {
 
     socket.on('SubmitWord',(clientroom,word,guessTile)=>{
       socket.to(clientroom).emit('Sentword',word,guessTile)
+    })
+
+    socket.on('SetWordCustom',(clientroom,word,)=>{
+      socket.to(clientroom).emit('CustomWordSent',word)
     })
 
     socket.on('SetWordSend',(answer,room)=>{
