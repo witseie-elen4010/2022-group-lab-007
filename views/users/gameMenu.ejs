@@ -10,7 +10,7 @@
 <!-- Bootstrap library inclusions -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 <!-- Set style -->
 <link rel="stylesheet" href="/styles.css"/>
 
@@ -20,8 +20,10 @@
 .button {
     background-color: #f50606; 
     border: black;
+    border-radius: 3px;
     color: white;
     padding: 15px 32px;
+    width: 300px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -35,38 +37,48 @@
 
 </head>
 <body class="body2">
+  
+        <!-- Page spacing where the headings and form gets presented -->
+        <div class="container">
+
+            <!-- Creates a grid within the container -->
+            <div class="row justify-content-center my-4">
+                <div class="col justify-content-center">
+                  <br>
+                  <br>
+                        <!-- Image card -->
+                        <div class="card bg-white mb-3" >
+                            <div class="row">
     
-    <!--Button test-->
-    <div class="row justify-content-center ">
-        <div class="col-lg-6 justify-content-center">
-            <form action="/home" method="post">
-                <div class="text-center my-4">
-                    <button type="button text-center" class="btn btn-dark btn-lg my-4">do the multiplayer stuff</button>
+                              <div class="col-md-6">
+                                <img src="/images/MenuImage.png" class="img-fluid rounded-start" alt="WordleImage" width="800px" height="750px">
+                              </div>
+    
+                              <div class="col-md-6 text-center my-auto">
+                                <div class="card-body">
+    
+                <button class="button" id="SinglePlayer" name="SinglePlayer">SinglePlayer</button>
+                <br>
+                <button class="button" id="MultiplayerVs" name="MultiplayerVs">Multiplayer</button>
+                <br>
+                <button class="button" id="MultiplayerWC" name="MultiplayerWC">Custom Multiplayer</button>
+                <br>
+                <button class="button" id="Scoreboard" name="Scoreboard">Scoreboard</button>
+                <br>
+                <button class="button" id="Instructions" name="Instructions">Instructions</button>
+                <br>
+                <button class="button" id="About" name="About">About</button>
+                <br>
+                <button class="button" id="Logout" name="Logout">Logout</button>
+                
+                                </div>
+                              </div>
+    
+                            </div>
+                          </div>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
-    
-    
-    <!-- Game Menu Page -->
-    <div class="container">
-        <div class="text-center my-4">
-             <!-- All the different buttons for navigation -->
-            <h1 id="heading" style="color:black">Oh My Wordle!!!</h1>
-            <br>
-            <button class="button" id="SinglePlayer" name="SinglePlayer">SinglePlayer</button>
-            <br>
-            <button class="button" id="MultiplayerVs" name="MultiplayerVs">Multiplayer Versus</button>
-            <br>
-            <button class="button" id="MultiplayerWC" name="MultiplayerWC">Multiplayer Custom Word</button>
-            <br>
-            <button class="button" id="Scoreboard" name="Scoreboard">Scoreboard</button>
-            <br>
-            <button class="button" id="Instructions" name="Instructions">Instructions</button>
-            <br>
-            <button style = "position:absolute; right:80px; bottom:20px;" class="button" id="Logout" name="Logout">Logout</button>
-            <br>
-            <button style = "position:absolute; left:80px; bottom:20px;" class="button" id="About" name="About">About</button>
 </body>
 
 <!-- JS script to run with ejs file -->

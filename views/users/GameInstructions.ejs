@@ -7,7 +7,7 @@
 <!-- Bootstrap library inclusions -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 <!-- Set style -->
 <link rel="stylesheet" href="/styles.css"/>
 
@@ -39,67 +39,84 @@
       }
       /* Setting backround image */
       body {
-    background-image: url('css/images/MenuBackround.jpg');
+    background-image: url('/images/GameImage.jpg');
     font-family: "Georgia", Times, serif;
     }
     </style>
 
 </head>
+
 <body class="body2">
     <div class="container">
+        <br>
+        <!-- Image card -->
+        <div class="card bg-primary mb-3" >
         <div class="text-center my-4">
-            <h1 id="heading">Oh My Wordle Instructions</h1>
+            <h1 id="heading">OMW! Instructions</h1>
             <br>
         </div>
-
+        </div>
     </div>
 
     <div class="container">
-        <div class="text-center my-4">
+        <div class="card bg-white mb-3" >
+        <div class="row">
+        <div class="col">
+            
+            <img src="/images/instructions.png" class="img-fluid rounded-start" alt="WordleImage" width="600px" height="550px">
+        </div>
+        <div class="col">
+        <div class="my-4">
             <!-- Singleplayer instructions -->
-            <h3 id="heading2">SinglePlayer</h3>
-            <p id="paragraph"> The goal of the game is to guess the hidden five letter word.
-                <br>
-                The game is played on a five wide and six long grid. Your five letter words are placed in the grid.
-                All guesses must be real words.
-                You have 6 guesses to get the correct word but you will be rewarded for guesses along the way.
-                <br>
-                If a letter in your guess turns
-                <span class="Yellowtext">Yellow</span>
-                then the letter in your guess are correct but in the wrong position.So the letter is in one of the other positions.
-                <br>
-                If a letter in your guess turns
-                <span class="Greentext">Green</span>
-                then the letter in your guess is the correct letter and in the right location. 
-                <br>
-                Using this information you can try and find the correct word without running out of guesses.
-                There is a helpful keyboard below that shows you your guesses, both 
-                <span class="GreyText">wrong</span>
-                ,
-                <span class="Yellowtext">yellow</span> 
-                and 
-                <span class="Greentext">green</span>
-                .
-            </p>
+            <h2 id="heading2">SinglePlayer</h2>
             <br>
-            <h3 id="heading2">MultiPlayer</h3>
+            
+            <h4 id="paragraph"> 
+                <ul>
+                    <li>The goal of the game is to guess the hidden five letter word.</li>
+                    <li>The game is played on a five wide and six long grid.</li>
+                    <li>Your five letter words are placed in the grid.</li>
+                    <li>All guesses must be real words.</li>
+                    <li>You have 6 guesses to get the correct word but you will be rewarded for guesses along the way.</li>
+                    <li>If a block in your guess turns yellow then the letter in your guess is correct but in the wrong position. So the letter is in one of the other positions.</li>
+                    <li>If a letter in your guess turns Green then the letter in your guess is the correct letter and in the right location.</li>
+                    <li>Using this information you can try and find the correct word without running out of guesses.</li>
+                    <li>There is a helpful keyboard below that shows you your guesses, both wrong, yellow and green.</li>
+                  </ul>
+
+            </h4>
+            <br>
+        </div>
+        </div>
+        </div>
+    </div>
+    </div>
+        
+    <div class="container">
+        <div class="card bg-white mb-3" >
+            <div class="row">
+            <div class="col">
+                
+                <img src="/images/instructions.png" class="img-fluid rounded-start" alt="WordleImage" width="600px" height="550px">
+            </div>
+            <div class="col">
+        <div class="my-4">
+            <h2 id="heading2">MultiPlayer</h2>
+            <br>
              <!-- Multiplayer instructions -->
-            <p id="paragraph">
-                During versus MultiPlayer you cannot see the letters that your opponent has guessed but you can see the
-                <span class="Yellowtext">Yellow</span>
-                and
-                <span class="Greentext">Green</span>
-                boxes that they have guessed so far.
+            <h4 id="paragraph">
+                <ul>
+                    <li>During versus MultiPlayer you cannot see the letters that your opponent has guessed.</li>
+                    <li>but you can see the Yellow and Green boxes they have guess so far.</li>
+                    <li>The first player to guess the correct five letter word is the winner.</li>
+                    <li>During word challenge Multiplayer player one sets a five letter word for player two  to guess.</li>
+                    <li>If the word is not guessed player one wins. If the word is guessed player two wins.</li>
+                    
+                  </ul>
                 <br>
-                The first player to guess the correct five letter word is the winner.
-                <br>
-                <br>
-                During word challenge Multiplayer player one sets a five letter word for player two  to guess.
-                <br>
-                If the word is not guessed player one wins. If the word is guessed player two wins.
 
-
-            </p>
+            </h4>
+            </div>
     <button style = "position:absolute; right:80px; bottom:20px;" class="button" id="Back" name="backButton">Back</button>        
              <!-- Back Button position bottom right -->
 </body>

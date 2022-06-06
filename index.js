@@ -9,7 +9,7 @@ const path = require('path')
 // http for local server connection
 const http = require('http')
 // defining a port
-const PORT = process.env.PORT || 3003
+const PORT = process.env.PORT || 3000
 // socket instance creation
 const socketio = require('socket.io')
 const app = express()
