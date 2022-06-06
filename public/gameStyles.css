@@ -231,7 +231,7 @@ resize: both;
 .popUpcontainer {
 position: fixed;
 top: 15vh;
-left: 32vw;
+left: 27.3vw;
 transform: translateX(100%);
 z-index: 1;
 display: flex;

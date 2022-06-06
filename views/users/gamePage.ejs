@@ -98,7 +98,7 @@
             
         </div>
         </div>
-        <button style = "position:absolute; right:80px; bottom:20px;" class="buttonMenu" id="Back">Back</button> 
+        <button style = "position:absolute; right:80px; bottom:20px;" class="buttonMenu" id="Back to Menu">Back to Menu</button> 
     
     </body>
 
@@ -13083,7 +13083,6 @@ const dictionary =  [
 const keyboard = document.querySelector("[data-keyboard]")
 const guessingGrid = document.querySelector("[data-guess-grid]")
 const answer = dictionary[Math.floor((Math.random()*12971)+0)]
-console.log(answer)
 const alertContainer = document.querySelector("[data-alert-container]")
 const popUp_Container = document.querySelector("[data-alert-container]")
 
@@ -13234,8 +13233,7 @@ function submitGuess()                        //Function to submit the guess
 
     if (filledTiles.length < 5)
     {
-        //console.log("Word not long enough")    // Function will output an error message if the inputted word 
-       popUpAlert("Word not long enough")
+       popUpAlert("Word is not long enough")  //Alert message for attempt word less than 5 letters and
        return                                 // is smaller than the word to be guessed
     }
 
@@ -13245,9 +13243,8 @@ function submitGuess()                        //Function to submit the guess
     }, "")
 
     if (!dictionary.includes(attempt))
-    {
-        console.log("Word does not exist")    // Function will output an error message if the inputted word                                  // is smaller than the word to be guessed
-        popUpAlert("Word does not exist")
+    { 
+        popUpAlert("Word does not exist")   // Alert message for an error message if the inputted word does not exist
         return
     }
 
@@ -13258,12 +13255,7 @@ function submitGuess()                        //Function to submit the guess
 function changeTile(tile,index,array,attempt)                          //Function that alters the status of the tile and the keyboard so that the grid tiles and keyboard tiles
 {                                                                      //become colour coded
      const letter = tile.dataset.letter 
-     console.log(letter)
-     console.log("here3")
-     console.log(tile.dataset.state)
      const key = keyboard.querySelector(`[data-key="${letter}"i]`)
-     console.log(key)
-     console.log(answer[index])
     
      for (let i = 0; i <5;i++)
      {
@@ -13277,11 +13269,12 @@ function changeTile(tile,index,array,attempt)                          //Functio
         tile.dataset.state = "wrong"
         key.classList.add("wrong")
       }
-      if (index === array.length - 1) {
-            refreshInteraction()
-            gameStatus(attempt, array)
-      }
+      
     }
+    if (index === array.length - 1) {
+          refreshInteraction()
+          gameStatus(attempt, array)
+      }
 }
 
 
@@ -13299,25 +13292,22 @@ function gameStatus(attempt, tiles)                             //Function to ch
 {
     
     if (attempt === answer)
-    {   popUpAlert("You win!")
-        console.log("You win")
+    {   popUpAlert("You win!")     //Alert message informing that player has won
         completeInteraction()
         return
     }
 
     const unusedTiles = guessingGrid.querySelectorAll(":not([data-letter])")
     if (unusedTiles.length === 0)
-    {   popUpAlert(answer + "  was the correct word" )
-        console.log(answer + " was the correct word")
+    {   popUpAlert(answer + "  was the correct word" ) //Informs the player what was the word
         return
         completeInteraction()
-        //return
+        
     }
-    //completeInteraction()
 
 }
 
-const Backbutton= document.getElementById('Back')
+const Backbutton= document.getElementById('Back to Menu')
 
 //Back button destination
 Backbutton.addEventListener('click', function () {
@@ -13327,9 +13317,5 @@ Backbutton.addEventListener('click', function () {
 
 
 </script>
-
-<!--include javascript files <script src="js/bootstrap.bundle.js"></script>
-<script src="gamePage.js"></script>-->
-
 
 </html>
