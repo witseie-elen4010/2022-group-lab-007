@@ -52,11 +52,11 @@
 
         <!-- creating the tiles for the guessing grid using bootstrap 5-->
         <div data-guess-grid2 class="Multi-guess-grid2">
-          <div class="tile2">g</div>
-          <div class="tile2">r</div>
-          <div class="tile2">i</div>
-          <div class="tile2">d</div>
-          <div class="tile2">s</div>
+          <div class="tile2"></div>
+          <div class="tile2"></div>
+          <div class="tile2"></div>
+          <div class="tile2"></div>
+          <div class="tile2"></div>
           <div class="tile2"></div>
           <div class="tile2"></div>
           <div class="tile2"></div>
@@ -13143,6 +13143,7 @@ let num
 let answer
 let roomsize
 let Player2Tiles = []
+let count = 0
 socket.emit('ConnectedA')
 
 //Checks the room number of the client
@@ -13223,7 +13224,6 @@ function GameLogic(answer)
  // Update the grid guesses
  const keyboard = document.querySelector("[data-keyboard]")
  const guessingGrid = document.querySelector("[data-guess-grid1]")
- const guessingGrid2 = document.querySelector("[data-guess-grid2]")
  const alertContainer = document.querySelector("[data-alert-container]")
  const popUp_Container = document.querySelector("[data-alert-container]") 
 
@@ -13416,6 +13416,69 @@ function changeTile(tile,index,array,attempt)                          //Functio
     }
 }
 
+}
+
+function GameLogic2(answer, attempt,Player2Tiles)
+{
+
+  const guessingGrid2 = document.querySelector("[data-guess-grid2]")  
+  
+
+  pressedKey(attempt)  
+
+  function pressedKey(attempt)
+{
+   //const wordLength = attempt.length    // This function checks the length of the word to know when the user has completed a guessed word
+    
+    for (let i = 0; i <5;i++)
+    {    
+     const FollowingTile = guessingGrid2.querySelector(":not([data-letter])")
+     FollowingTile.dataset.letter = attempt[i]
+     FollowingTile.textContent = attempt[i]
+     //FollowingTile.dataset.state = "taken"
+     const letter = attempt[i]
+     
+      if (answer[i] === letter) {
+        FollowingTile.dataset.state = "correct"
+        //tile.dataset.state = "correct"
+//        key.classList.add("correct")
+      } else if (answer.includes(letter)) {
+        FollowingTile.dataset.state = "wrong-location"
+       // tile.dataset.state = "wrong-location"
+       // key.classList.add("wrong-location")
+      } else {
+        FollowingTile.dataset.state = "wrong"
+
+      }
+
+    }
+    count = count +1
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//  Player2Tiles.forEach((...params) => changeTile(...params,attempt))  
+
 // function changeTile2(tile2,index,array,attempt)                          //Function that alters the status of the tile and the keyboard so that the grid tiles and keyboard tiles
 // {                                                                  //become colour coded
 //      const letter = tile2.dataset.letter 
@@ -13435,37 +13498,9 @@ function changeTile(tile,index,array,attempt)                          //Functio
 //       }
 //     }
 //     //SecondGrid(tile,index)
-// }
-
 }
 
-function GameLogic2(answer, attempt,Player2Tiles)
-{
-    
- Player2Tiles.forEach((...params) => changeTile(...params,attempt))  
 
-function changeTile2(tile2,index,array,attempt)                          //Function that alters the status of the tile and the keyboard so that the grid tiles and keyboard tiles
-{                                                                  //become colour coded
-     const letter = tile2.dataset.letter 
-     const key = keyboard.querySelector(`[data-key="${letter}"i]`)
-     for (let i = 0; i <5;i++)
-     {
-      if (answer[index] === letter) {
-        tile2.dataset.state = "correct"
-      } else if (answer.includes(letter)) {
-        tile2.dataset.state = "wrong-location"
-      } else {
-        tile2.dataset.state = "wrong"
-      }
-      if (index === array.length - 1) {
-            refreshInteraction()
-            //gameStatus(attempt, array)
-      }
-    }
-    //SecondGrid(tile,index)
-}
-
-}
 
     // for (let i = 0; i <5;i++)
     // {

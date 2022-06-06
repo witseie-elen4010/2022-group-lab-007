@@ -124,7 +124,8 @@ background-color:forestgreen;
 /* default empty tile settings for enemy grid */
 .tile2 {
   /*BACKGROUND*/
-background-color: rgb(4, 36, 95);
+background-color: rgb(17, 74, 180);
+color: transparent;
 border: .05em solid black;
 }
 
