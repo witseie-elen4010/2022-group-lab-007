@@ -100,6 +100,10 @@ io.on('connection', socket => {
       socket.to(clientroom).emit('Sentword',word,guessTile)
     })
 
+    socket.on('SetWordCustom',(clientroom,word,)=>{
+      socket.to(clientroom).emit('CustomWordSent',word)
+    })
+
     socket.on('SetWordSend',(answer,room)=>{
       io.to(room).emit('SetWordReceive',answer)
     
