@@ -20,7 +20,7 @@
 
         <div></div>
         <!-- creating the tiles for the guessing grid using bootstrap 5-->
-        <div data-guess-grid class="Multi-guess-grid1">
+        <div data-guess-grid1 class="Multi-guess-grid1">
           <div class="tile"></div>
           <div class="tile"></div>
           <div class="tile"></div>
@@ -54,7 +54,7 @@
         </div>
 
         <!-- creating the tiles for the guessing grid using bootstrap 5-->
-        <div data-guess-grid class="Multi-guess-grid2">
+        <div data-guess-grid2 class="Multi-guess-grid2">
           <div class="tile"></div>
           <div class="tile"></div>
           <div class="tile"></div>
@@ -87,10 +87,10 @@
           <div class="tile"></div>
         </div>
         </div>
-        </div>
+      </div>
        <!--Container with keyboard buttons in it for the on screen keyboard-->
-    <div class="onScreenkeyboard-container">
-      <div data-keyboard class="keyboard-row">
+       <div class="onScreenkeyboard-container">
+    <div data-keyboard class="keyboard">
         <button class="key" data-key="q">q</button>
         <button class="key" data-key="w">w</button>
         <button class="key" data-key="e">e</button>
@@ -101,10 +101,8 @@
         <button class="key" data-key="i">i</button>
         <button class="key" data-key="o">o</button>
         <button class="key" data-key="p">p</button>
-      </div>
-       <!--second row with keyboard buttons in it for the on screen keyboard-->
-      <div data-keyboard class="keyboard-row"> 
-        <div class="spacer-half"></div>
+    
+    <!--second row with keyboard buttons in it for the on screen keyboard-->  
         <button class="key" data-key="a">a</button>
         <button class="key" data-key="s">s</button>
         <button class="key" data-key="d">d</button>
@@ -114,13 +112,10 @@
         <button class="key" data-key="j">j</button>
         <button class="key" data-key="k">k</button>
         <button class="key" data-key="l">l</button>
-        <button data-enter class="key large">Enter</button>
+        <button class="key" data-enter class="wide-button">Enter</button>
         <div class="spacer-half"></div>
-            
-      </div>
-        <!--third row  with keyboard buttons in it for the on screen keyboard-->
-      <div data-keyboard class="keyboard-row">
-        <div class="spacer-half"></div>
+        
+    <!--third row  with keyboard buttons in it for the on screen keyboard-->    
         <button class="key" data-key="z">z</button>
         <button class="key" data-key="x">x</button>
         <button class="key" data-key="c">c</button>
@@ -129,7 +124,10 @@
         <button class="key" data-key="n">n</button>
         <button class="key" data-key="m">m</button>
         <button class="key" data-delete class="wide-button">delete</button>
-      </div>
+        <button class="key" data-backspace class="wide-button">backspace</button>
+        
+    </div>
+    
        <!--Divisions to confirm whether a player has connected-->
         <div class="player p1">
          Player 1
@@ -152,7 +150,6 @@
 <script>
 
   
-document.addEventListener('DOMContentLoaded', () => {
     const userGrid = document.querySelector('.Multi-grid-user')
     const computerGrid = document.querySelector('.grid-computer')
     const displayGrid = document.querySelector('.grid-display')
@@ -161,31 +158,279 @@ document.addEventListener('DOMContentLoaded', () => {
     const infoDisplay = document.querySelector('#info')
     const multiPlayerButton = document.querySelector('#multiPlayerButton')
 
+
 const Backbutton= document.getElementById('Back')
 
 
+// Select Player Mode
+multiPlayerButton.addEventListener('click', startMultiPlayer)
+
+//z code
 //Restarts socket
 const socket=io()
 let clientroom;
+let playerNum
+let num
+let answer
+let roomsize
 socket.emit('ConnectedA')
 
 //Checks the room number of the client
-socket.on('serverMsg',(data)=>{
+socket.on('serverMsg',(data,num)=>{
     console.log(`I should be in room ${data}`)
         clientroom=data;
+        playerNum=num;
 })
 
 
 socket.on('Sentword',(newword)=>{
+  //2nd board game logic
   console.log(newword)
 })
 
-let word="Hello"
+//socket.emit('SubmitWord',clientroom,word)
 //Back button destination
 Backbutton.addEventListener('click', function () {
-  socket.emit('SubmitWord',clientroom,word)
-  console.log("IM here")
+  window.location.href = ("/home");
 }, false)
+
+setTimeout(() => {
+  if(playerNum==0)
+{
+  console.log('IM here')
+   answer="apple"
+  //const answer = dictionary[Math.floor((Math.random()*12971)+0)]
+  socket.emit('SetWordSend',answer,clientroom)
+}
+}, 3000) //3000ms delay
+
+//Receiving the message
+
+socket.on('SetWordReceive',(SetWord)=>{
+  console.log(SetWord)
+  // game Functions placed here
+  let word = "bye"
+  socket.emit('SubmitWord',clientroom,word) // goes into game page
+  console.log(SetWord)
+  GameLogic(answer)
+})
+
+
+// Multiplayer
+function startMultiPlayer() {
+}
+
+// Game Logic for MultiPlayer
+
+function playGameMulti(socket) {
+
+  if(isGameOver) return
+
+  if(!ready) {
+   socket.emit('player-ready')
+   ready = true
+   console.log("At play game multi")
+   playerReady(playerNum)
+  }      
+
+}
+
+function playerReady(num) {
+ let player = `.p${parseInt(num) + 1}`
+ document.querySelector(`${player} .ready span`).classList.toggle('green')
+}
+
+
+function GameLogic(answer)
+{
+ // Update the grid guesses
+ const keyboard = document.querySelector("[data-keyboard]")
+ const guessingGrid = document.querySelector("[data-guess-grid1]")
+ console.log(answer)
+ const alertContainer = document.querySelector("[data-alert-container]")
+ const popUp_Container = document.querySelector("[data-alert-container]") 
+
+ // A function to refresh  the programme to find if the keyboard or mouse has been clicked
+ refreshInteraction()   
+
+ // Function to listen out for a button press
+ function refreshInteraction()                           //refreshInteraction uses the built in addEventListener to listen out for a mouse click on
+ {                                                       // the buttons of the keyboard on the web page and for when one of the keys on the user's
+   document.addEventListener("click", MouseClick )      // keys are pressed
+   document.addEventListener("keydown", KeyPressed)
+ } 
+
+ function completeInteraction()                           //This function  uses the built in function 'removeEventListener' which will end the listening  
+ {                                                        // out for an interaction which will be used when a win or loss occurs
+   document.removeEventListener("click", MouseClick )
+   document.removeEventListener("keydown", KeyPressed)
+ }
+
+ function MouseClick(event)                               // An input event button is inputted into the function and checks if it matches   
+ {                                                        // any of the set alphabet letters. then it returns which button was pressed 
+    if (event.target.matches("[data-key]"))
+    {
+     pressedKey(event.target.dataset.key)    // The specific key that was pressed is sent to a function that will enter it into the row for the guess
+     return
+    }
+
+    if (event.target.matches("[data-delete]")) 
+    {                                           
+      DeleteRow()                             // Call the delete function to delete the letters in the row
+      return
+    }
+    if (event.target.matches("[data-backspace]")) 
+    {                                           
+      BackSpace()                             // Call the backspace function to delete the most recent letter in the row
+      return
+    }
+
+    if (event.target.matches("[data-enter]"))
+    {
+        submitGuess()                         // Call the function to check if the 
+        return
+    }
+  }
+
+ function KeyPressed(event)                
+ {                                        // The key that was pressed down is ompared to a letter in the alphabet to
+    if (event.key.match(/^[a-z]$/))      // be approved for the input guess
+    {
+        pressedKey(event.key)
+        return
+    }
+
+    if (event.key === "Enter")
+    {
+        submitGuess()
+        return        
+    }
+
+    if (event.key === "Delete")
+    {
+        DeleteRow()
+        return        
+    }
+
+    if (event.key === "Backspace")
+    {
+        BackSpace()
+        return        
+    } 
+
+ }
+
+function pressedKey(key)
+{
+    const wordLength = getWord()     // This function checks the length of the word to know when the user has completed a guessed word
+    if (wordLength.length > 4)             // and if the word is less than 5 letters then it will place the inputted word
+    {
+        return
+    }
+    const FollowingTile = guessingGrid.querySelector(":not([data-letter])")
+    FollowingTile.dataset.letter = key
+    FollowingTile.textContent = key
+    FollowingTile.dataset.state = "taken"
+}
+
+function DeleteRow()                             //Function to delete the entire row calls the current word in the row 
+{                                                // and each element in the string is deleted and cleared to delete the 
+  const filledTiles = getWord()                // entire string/word
+
+  for (let i=0;i < filledTiles.length;i++)
+  {
+   if (filledTiles == null)
+    {
+      return                               //Nothing to delete
+    }
+    filledTiles[i].textContent = ""
+    delete filledTiles[i].dataset.state      //empty the string and remove the state to reset it
+    delete filledTiles[i].dataset.letter
+  }
+
+}
+
+function BackSpace()                             //Function to backspace the most recent input letter in the current word in the row 
+{                                                // and that one recent element in the string is deleted and cleared
+
+    const filledTiles = getWord()
+    
+    for (let i=(filledTiles.length-1);i < filledTiles.length;i++)
+    {
+        if (filledTiles == null)
+        {
+            return                               //Nothing to backspace
+        }
+        filledTiles[i].textContent = ""
+        delete filledTiles[i].dataset.state      //empty the most recent tile and remove the state to reset it
+        delete filledTiles[i].dataset.letter
+    }
+
+} 
+
+function getWord()  //Returns the word
+{
+    const wordLen = guessingGrid.querySelectorAll('[data-state="taken"]')  // Returns a string of the word being inputted
+    return wordLen
+}
+
+
+function submitGuess()                        //Function to submit the guess
+{
+    const filledTiles = [...getWord()]
+
+    if (filledTiles.length < 5)
+    {
+        //console.log("Word not long enough")    // Function will output an error message if the inputted word 
+       popUpAlert("Word not long enough")
+       return                                 // is smaller than the word to be guessed
+    }
+
+    const attempt = filledTiles.reduce((word,tile) =>
+    {
+        return word + tile.dataset.letter
+        //console.log("Word is entered")
+        //socket.emit('SetWordSend',attempt,clientroom)
+    }, "")
+
+   // if (!dictionary.includes(attempt))
+    //{
+    //    console.log("Word does not exist")    // Function will output an error message if the inputted word                                  // is smaller than the word to be guessed
+     //   popUpAlert("Word does not exist")
+      //  return
+    //}
+
+    completeInteraction()                                               //Call function to prevent the user from typing while the                                         
+    filledTiles.forEach((...params) => changeTile(...params,attempt))   // Alter the status of the tiles
+}
+
+
+function changeTile(tile,index,array,attempt)                          //Function that alters the status of the tile and the keyboard so that the grid tiles and keyboard tiles
+{    const answer="apple"                                                                  //become colour coded
+     const letter = tile.dataset.letter 
+     const key = keyboard.querySelector(`[data-key="${letter}"i]`)
+     for (let i = 0; i <5;i++)
+     {
+      if (answer[index] === letter) {
+        tile.dataset.state = "correct"
+       key.classList.add("correct")
+      } else if (answer.includes(letter)) {
+        tile.dataset.state = "wrong-location"
+        key.classList.add("wrong-location")
+      } else {
+        tile.dataset.state = "wrong"
+        key.classList.add("wrong")
+      }
+      if (index === array.length - 1) {
+            refreshInteraction()
+            //gameStatus(attempt, array)
+      }
+    }
+}
+
+}
+
+
 
 </script>
 
