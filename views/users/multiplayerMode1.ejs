@@ -13357,6 +13357,8 @@ function getWord2()  //Returns the word
  return wordLen2
 }
 
+// Perform checks on the attempted word to ensure it exists 
+
 function submitGuess()                        //Function to submit the guess
 {
 
@@ -13418,6 +13420,8 @@ function changeTile(tile,index,array,attempt)                          //Functio
 
 }
 
+// Logic to put the enemies attempts onto player 1s grid
+
 function GameLogic2(answer, attempt,Player2Tiles)
 {
 
@@ -13428,24 +13432,20 @@ function GameLogic2(answer, attempt,Player2Tiles)
 
   function pressedKey(attempt)
 {
-   //const wordLength = attempt.length    // This function checks the length of the word to know when the user has completed a guessed word
-    
+
     for (let i = 0; i <5;i++)
     {    
      const FollowingTile = guessingGrid2.querySelector(":not([data-letter])")
      FollowingTile.dataset.letter = attempt[i]
      FollowingTile.textContent = attempt[i]
-     //FollowingTile.dataset.state = "taken"
      const letter = attempt[i]
      
       if (answer[i] === letter) {
         FollowingTile.dataset.state = "correct"
-        //tile.dataset.state = "correct"
-//        key.classList.add("correct")
+
       } else if (answer.includes(letter)) {
         FollowingTile.dataset.state = "wrong-location"
-       // tile.dataset.state = "wrong-location"
-       // key.classList.add("wrong-location")
+
       } else {
         FollowingTile.dataset.state = "wrong"
 
@@ -13453,7 +13453,6 @@ function GameLogic2(answer, attempt,Player2Tiles)
 
     }
     count = count +1
-
 
 }
 
