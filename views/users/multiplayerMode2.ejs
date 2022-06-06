@@ -13199,13 +13199,22 @@ if(playerNum!=0)
         answer = SetWord
         document.getElementById("PlayerSetWord").innerHTML = "Word is Set";
         popUpAlert("Go!!!!")
-        //GameLogic For Player 2&3
+        GameLogic(answer)
+
+        socket.on('Sentword',(newword,Tiles)=>{
+         //2nd board game logic
+        Player2Tiles = Tiles
+        console.log(answer + "Check heere")
+        GameLogic2(answer, newword,Player2Tiles)
+        console.log(newword)
+})
     })
 
 }
 
 
-function SetterLogic(){
+function SetterLogic()
+{
 const keyboard = document.querySelector("[data-keyboard]")
 const AnswerGrid = document.querySelector("[AnswerGrid]")
 const alertContainer = document.querySelector("[data-alert-container]")
@@ -13392,9 +13401,333 @@ function getWord()  //Returns the word
     const wordLen = AnswerGrid.querySelectorAll('[data-state="taken"]')  // Returns a string of the word being inputted
     return wordLen
 }
+}
 
+function GameLogic(answer)
+{
+ // Update the grid guesses
+ const keyboard = document.querySelector("[data-keyboard]")
+ const guessingGrid = document.querySelector("[data-guess-grid1]")
+ const alertContainer = document.querySelector("[data-alert-container]")
+ const popUp_Container = document.querySelector("[data-alert-container]") 
+
+ // A function to refresh  the programme to find if the keyboard or mouse has been clicked
+ refreshInteraction()   
+
+ 
+
+
+ // Function to listen out for a button press
+ function refreshInteraction()                           //refreshInteraction uses the built in addEventListener to listen out for a mouse click on
+ {                                                       // the buttons of the keyboard on the web page and for when one of the keys on the user's
+   document.addEventListener("click", MouseClick )      // keys are pressed
+   document.addEventListener("keydown", KeyPressed)
+ } 
+
+ function completeInteraction()                           //This function  uses the built in function 'removeEventListener' which will end the listening  
+ {                                                        // out for an interaction which will be used when a win or loss occurs
+   document.removeEventListener("click", MouseClick )
+   document.removeEventListener("keydown", KeyPressed)
+ }
+
+ function MouseClick(event)                               // An input event button is inputted into the function and checks if it matches   
+ {                                                        // any of the set alphabet letters. then it returns which button was pressed 
+    if (event.target.matches("[data-key]"))
+    {
+     pressedKey(event.target.dataset.key)    // The specific key that was pressed is sent to a function that will enter it into the row for the guess
+     return
+    }
+
+    if (event.target.matches("[data-delete]")) 
+    {                                           
+      DeleteRow()                             // Call the delete function to delete the letters in the row
+      return
+    }
+    if (event.target.matches("[data-backspace]")) 
+    {                                           
+      BackSpace()                             // Call the backspace function to delete the most recent letter in the row
+      return
+    }
+
+    if (event.target.matches("[data-enter]"))
+    {
+        submitGuess()                         // Call the function to check if the 
+        return
+    }
+  }
+
+ function KeyPressed(event)                
+ {                                        // The key that was pressed down is ompared to a letter in the alphabet to
+    if (event.key.match(/^[a-z]$/))      // be approved for the input guess
+    {
+        pressedKey(event.key)
+        return
+    }
+
+    if (event.key === "Enter")
+    {
+        submitGuess()
+        return        
+    }
+
+    if (event.key === "Delete")
+    {
+        DeleteRow()
+        return        
+    }
+
+    if (event.key === "Backspace")
+    {
+        BackSpace()
+        return        
+    } 
+
+ }
+
+//  function popUpAlert(message,duration=4000)
+//  {
+//   const popUp =document.createElement("div")
+//   popUp.textContent=message
+//   popUp.classList.add("popUp")
+//   popUp_Container.prepend("popUp")
+//    if (duration ==null) return
+//      setTimeout(()=>
+//      {
+//       popUp.classList.add("hide")
+//       popUp.addEventListener("transitionend",() => {
+//       popUp.remove()
+//       }
+//       )
+//      },duration)
+// }
+
+function pressedKey(key)
+{
+    const wordLength = getWord()     // This function checks the length of the word to know when the user has completed a guessed word
+    if (wordLength.length > 4)             // and if the word is less than 5 letters then it will place the inputted word
+    {
+        return
+    }
+    const FollowingTile = guessingGrid.querySelector(":not([data-letter])")
+    FollowingTile.dataset.letter = key
+    FollowingTile.textContent = key
+    FollowingTile.dataset.state = "taken"
+}
+
+function DeleteRow()                             //Function to delete the entire row calls the current word in the row 
+{                                                // and each element in the string is deleted and cleared to delete the 
+  const filledTiles = getWord()                // entire string/word
+
+  for (let i=0;i < filledTiles.length;i++)
+  {
+   if (filledTiles == null)
+    {
+      return                               //Nothing to delete
+    }
+    filledTiles[i].textContent = ""
+    delete filledTiles[i].dataset.state      //empty the string and remove the state to reset it
+    delete filledTiles[i].dataset.letter
+  }
 
 }
+
+function BackSpace()                             //Function to backspace the most recent input letter in the current word in the row 
+{                                                // and that one recent element in the string is deleted and cleared
+
+    const filledTiles = getWord()
+    
+    for (let i=(filledTiles.length-1);i < filledTiles.length;i++)
+    {
+        if (filledTiles == null)
+        {
+            return                               //Nothing to backspace
+        }
+        filledTiles[i].textContent = ""
+        delete filledTiles[i].dataset.state      //empty the most recent tile and remove the state to reset it
+        delete filledTiles[i].dataset.letter
+    }
+
+} 
+
+function getWord()  //Returns the word
+{
+    const wordLen = guessingGrid.querySelectorAll('[data-state="taken"]')  // Returns a string of the word being inputted
+    return wordLen
+}
+
+function getWord2()  //Returns the word
+{
+ const wordLen2 = newword  // Returns a string of the word being inputted
+ return wordLen2
+}
+
+
+// Perform checks on the attempted word to ensure it exists 
+
+function submitGuess()                        //Function to submit the guess
+{
+
+    const filledTiles = [...getWord()]
+
+    if (filledTiles.length < 5)
+    {
+        //console.log("Word not long enough")    // Function will output an error message if the inputted word 
+       popUpAlert("Word not long enough")
+       return                                 // is smaller than the word to be guessed
+    }
+
+    const attempt = filledTiles.reduce((word,tile) =>
+    {
+      
+      return word + tile.dataset.letter
+      
+
+    }, "")
+
+   if (!dictionary.includes(attempt))
+    {
+       console.log("Word does not exist")    // Function will output an error message if the inputted word                                  // is smaller than the word to be guessed
+       popUpAlert("Word does not exist")
+       return
+    }
+    else 
+    {
+       //send our attempt to enemy 
+      socket.emit('SubmitWord',clientroom,attempt,filledTiles)
+      counter = counter +1
+      console.log(counter)
+    } 
+
+    completeInteraction()                                               //Call function to prevent the user from typing while the                                         
+    filledTiles.forEach((...params) => changeTile(...params,attempt))   // Alter the status of the tiles
+ }
+
+
+function changeTile(tile,index,array,attempt)                          //Function that alters the status of the tile and the keyboard so that the grid tiles and keyboard tiles
+{                                                                  //become colour coded
+     const letter = tile.dataset.letter 
+     const key = keyboard.querySelector(`[data-key="${letter}"i]`)
+     for (let i = 0; i <5;i++)
+     {
+      if (answer[index] === letter) {
+        tile.dataset.state = "correct"
+        key.classList.add("correct")
+      } else if (answer.includes(letter)) {
+        tile.dataset.state = "wrong-location"
+        key.classList.add("wrong-location")
+      } else {
+        tile.dataset.state = "wrong"
+        key.classList.add("wrong")
+      }
+      
+    }
+    if (index === array.length - 1) {
+            refreshInteraction()
+            gameStatus(attempt, array)
+      }
+    
+}
+
+function gameStatus(attempt, tiles)                             //Function to check if the guess is correct or not
+{
+    
+   
+    if (attempt === answer)
+    {
+        gamecount = gamecount +1
+        gameState(gamecount)
+        console.log("gamecount")
+        popUpAlert("You guessed the word correctly in " + counter + " attempts")
+        console.log("You win")
+        completeInteraction()
+        return
+    }
+    const unusedTiles = guessingGrid.querySelectorAll(":not([data-letter])")
+    if (unusedTiles.length === 0)
+    {   
+        gamecount = gamecount +1
+        gameState(gamecount)
+        console.log("gamecount")
+        popUpAlert(answer + "  was the correct word" )
+        console.log(answer + " was the correct word")
+        return
+        completeInteraction()
+        //return
+    }
+
+   // refreshInteraction()
+
+}
+
+}
+
+function popUpAlert(message,duration=8000)
+ {
+  const popUp =document.createElement("div")
+  popUp.textContent=message
+  popUp.classList.add("popUp")
+  popUp_Container.prepend(popUp)
+   if (duration ==null) return
+     setTimeout(()=>
+     {
+      popUp.classList.add("hide")
+      popUp.addEventListener("transitionend",() => {
+      popUp.remove()
+      }
+      )
+     },duration)
+}
+
+
+
+function GameLogic2(answer, attempt,Player2Tiles)
+{
+
+  const guessingGrid2 = document.querySelector("[data-guess-grid2]")  
+  
+
+  pressedKey(attempt)  
+
+  function pressedKey(attempt)
+{
+
+    for (let i = 0; i <5;i++)
+    {    
+     const FollowingTile = guessingGrid2.querySelector(":not([data-letter])")
+     FollowingTile.dataset.letter = attempt[i]
+     FollowingTile.textContent = attempt[i]
+     const letter = attempt[i]
+     
+      if (answer[i] === letter) {
+        FollowingTile.dataset.state = "correct"
+
+      } else if (answer.includes(letter)) {
+        FollowingTile.dataset.state = "wrong-location"
+
+      } else {
+        FollowingTile.dataset.state = "wrong"
+
+      }
+      
+
+    }
+    count = count +1
+    console.log(count)
+    if (attempt === answer || count === 7) 
+    {
+            
+            gamecount = gamecount +1
+            gameState(gamecount)
+            console.log("gamecount")
+    }
+
+}
+}
+
+
+
+
+
 
 </script>
 
