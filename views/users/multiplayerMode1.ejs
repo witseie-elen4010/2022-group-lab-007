@@ -137,7 +137,9 @@
          <div class="ready">Ready <span></span></div>
         </div>              
     </div>
-      <button style = "position:absolute; right:80px; bottom:20px;" class="buttonMenu" id="Back">Back</button> 
+      <button style = "position:absolute; right:80px; bottom:20px;" class="buttonMenu" id="Back to Menu">Back to Menu</button> 
+      
+
     </body>
   
   </body>
@@ -157,7 +159,7 @@
     const popUp_Container = document.querySelector("[data-alert-container]") 
 
 
-const Backbutton= document.getElementById('Back')
+const Backbutton= document.getElementById('Back to Menu')
 
 // Select Player Mode
 
@@ -13229,12 +13231,15 @@ function gameState(gamecount)
     {
         if(count > counter)
         {
+          popUpAlert("You WIN!")
            console.log("You win1")
         }
         else if(count < counter)
         {
+          popUpAlert("You LOSE")
           console.log("You lose1")
         }
+        
     }
 }
 
