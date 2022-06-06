@@ -87,10 +87,10 @@
           <div class="tile"></div>
         </div>
         </div>
-        </div>
+      </div>
        <!--Container with keyboard buttons in it for the on screen keyboard-->
-    <div class="onScreenkeyboard-container">
-      <div data-keyboard class="keyboard-row">
+       <div class="onScreenkeyboard-container">
+    <div data-keyboard class="keyboard">
         <button class="key" data-key="q">q</button>
         <button class="key" data-key="w">w</button>
         <button class="key" data-key="e">e</button>
@@ -101,10 +101,8 @@
         <button class="key" data-key="i">i</button>
         <button class="key" data-key="o">o</button>
         <button class="key" data-key="p">p</button>
-      </div>
-       <!--second row with keyboard buttons in it for the on screen keyboard-->
-      <div data-keyboard class="keyboard-row"> 
-        <div class="spacer-half"></div>
+    
+    <!--second row with keyboard buttons in it for the on screen keyboard-->  
         <button class="key" data-key="a">a</button>
         <button class="key" data-key="s">s</button>
         <button class="key" data-key="d">d</button>
@@ -114,13 +112,10 @@
         <button class="key" data-key="j">j</button>
         <button class="key" data-key="k">k</button>
         <button class="key" data-key="l">l</button>
-        <button data-enter class="key large">Enter</button>
+        <button class="key" data-enter class="wide-button">Enter</button>
         <div class="spacer-half"></div>
-            
-      </div>
-        <!--third row  with keyboard buttons in it for the on screen keyboard-->
-      <div data-keyboard class="keyboard-row">
-        <div class="spacer-half"></div>
+        
+    <!--third row  with keyboard buttons in it for the on screen keyboard-->    
         <button class="key" data-key="z">z</button>
         <button class="key" data-key="x">x</button>
         <button class="key" data-key="c">c</button>
@@ -130,8 +125,8 @@
         <button class="key" data-key="m">m</button>
         <button class="key" data-delete class="wide-button">delete</button>
         <button class="key" data-backspace class="wide-button">backspace</button>
-                  
-      </div>
+        
+    </div>
     
        <!--Divisions to confirm whether a player has connected-->
         <div class="player p1">
@@ -216,8 +211,8 @@ socket.on('SetWordReceive',(SetWord)=>{
   // game Functions placed here
   let word = "bye"
   socket.emit('SubmitWord',clientroom,word) // goes into game page
-  
-  GameLogic()
+  console.log(SetWord)
+  GameLogic(answer)
 })
 
 
@@ -246,12 +241,12 @@ function playerReady(num) {
 }
 
 
-function GameLogic()
+function GameLogic(answer)
 {
  // Update the grid guesses
  const keyboard = document.querySelector("[data-keyboard]")
  const guessingGrid = document.querySelector("[data-guess-grid1]")
- //console.log(answer)
+ console.log(answer)
  const alertContainer = document.querySelector("[data-alert-container]")
  const popUp_Container = document.querySelector("[data-alert-container]") 
 
@@ -378,6 +373,61 @@ function getWord()  //Returns the word
     const wordLen = guessingGrid.querySelectorAll('[data-state="taken"]')  // Returns a string of the word being inputted
     return wordLen
 }
+
+
+function submitGuess()                        //Function to submit the guess
+{
+    const filledTiles = [...getWord()]
+
+    if (filledTiles.length < 5)
+    {
+        //console.log("Word not long enough")    // Function will output an error message if the inputted word 
+       popUpAlert("Word not long enough")
+       return                                 // is smaller than the word to be guessed
+    }
+
+    const attempt = filledTiles.reduce((word,tile) =>
+    {
+        return word + tile.dataset.letter
+        //console.log("Word is entered")
+        //socket.emit('SetWordSend',attempt,clientroom)
+    }, "")
+
+   // if (!dictionary.includes(attempt))
+    //{
+    //    console.log("Word does not exist")    // Function will output an error message if the inputted word                                  // is smaller than the word to be guessed
+     //   popUpAlert("Word does not exist")
+      //  return
+    //}
+
+    completeInteraction()                                               //Call function to prevent the user from typing while the                                         
+    filledTiles.forEach((...params) => changeTile(...params,attempt))   // Alter the status of the tiles
+}
+
+
+function changeTile(tile,index,array,attempt)                          //Function that alters the status of the tile and the keyboard so that the grid tiles and keyboard tiles
+{    const answer="apple"                                                                  //become colour coded
+     const letter = tile.dataset.letter 
+     const key = keyboard.querySelector(`[data-key="${letter}"i]`)
+     for (let i = 0; i <5;i++)
+     {
+      if (answer[index] === letter) {
+        tile.dataset.state = "correct"
+       key.classList.add("correct")
+      } else if (answer.includes(letter)) {
+        tile.dataset.state = "wrong-location"
+        key.classList.add("wrong-location")
+      } else {
+        tile.dataset.state = "wrong"
+        key.classList.add("wrong")
+      }
+      if (index === array.length - 1) {
+            refreshInteraction()
+            //gameStatus(attempt, array)
+      }
+    }
+}
+
 }
 
 
