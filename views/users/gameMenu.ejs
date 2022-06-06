@@ -63,8 +63,9 @@
                 <br>
                 <button class="button" id="MultiplayerWC" name="MultiplayerWC">Custom Multiplayer</button>
                 <br>
-                <button class="button" id="Scoreboard" name="Scoreboard">Scoreboard</button>
-                <br>
+                <form action="/scoreboard" method="get">
+                    <button class="button" id="Scoreboard" name="Scoreboard">Scoreboard</button>
+                </form>
                 <button class="button" id="Instructions" name="Instructions">Instructions</button>
                 <br>
                 <button class="button" id="About" name="About">About</button>
@@ -104,11 +105,6 @@ MultiVsbutton.addEventListener('click', function () {
 //Word challengeMultiplayer button destination
 MultiWCbutton.addEventListener('click', function () {
     window.location.href = ("/queueB")
-}, false)
-
-//Scoreboard button destination
-Scorebutton.addEventListener('click', function () {
-    window.location.href = ("/scoreboard")
 }, false)
 
 //Logout button destination

@@ -55,28 +55,32 @@ router.post('/', async (req, res) => {
       })
       // Send result
       .then(result => {
-        // create entry for scoreboard
         database.pools
-        .then((pool) => {
-          return pool.request()
-          .input('username', username)
-          .input('games', 0)
-          .input('wins', 0)
-          .query('INSERT INTO dbo.scoreboard (username, games, wins) VALUES (@username, @games, @wins);')
-        })
-        .then(result => {
-          return res.redirect('/home')
+        .then((pool)=>{
+        pool.request()
+        .input('username', username)
+        .query('SELECT userID FROM dbo.AccountTable WHERE username = @username')
+        .then(result=>{
+          database.pools
+          .then((pool)=>{
+            pool.request()
+            .input('userID', result.recordset[0].userID)
+            .input('username', username)
+            .input('games', 0)
+            .input('wins', 0)
+            .input('score', 0)
+            .query('INSERT INTO dbo.scoreboard (userID, username, games, wins, score) VALUES (@userID, @username, @games, @wins, @score);')
+            .then(result=>{
+              return res.redirect('/home')
+            })
+          })
         })
       })
-      
-      // check for an error
-      .catch(err => {
-        res.send({ Error: err })
-      })
-    } else {
+    })
+  } else {
       // return if email already in use
       return res.redirect('/create')
-      }
+    }
   })
   // check for an error
   .catch(err => {
@@ -86,7 +90,6 @@ router.post('/', async (req, res) => {
   // check for wrong password
   return res.redirect('/create')
   }
-
 })
 
 

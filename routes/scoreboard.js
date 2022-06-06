@@ -26,11 +26,11 @@ router.get('/', (req, res) => {
         .then((pool) => {
             return pool.request()
             // Select scoreboard and order by wins
-            .query('SELECT * FROM dbo.scoreboard ORDER BY wins DESC;')
+            .query('SELECT * FROM dbo.scoreboard ORDER BY score DESC;')
         })
             .then(result => {
                 // arrange retrieved data as columns/rows for display
-                let columns = ['username', 'games', 'wins']
+                let columns = ['userID','username', 'games', 'wins','score']
                 // define table size
                 let cols = columns.length
                 let rows = result.recordset.length
