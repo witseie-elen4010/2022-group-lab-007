@@ -13182,10 +13182,9 @@ setTimeout(() => {
 
 socket.on('SetWordReceive',(SetWord)=>{
   answer = SetWord
+  console.log("Word is received and players can play")
   // game Functions placed here
   let word = "bye"
-  //socket.emit('SubmitWord',clientroom,word) // goes into game page
- // playerReady()
 
   GameLogic(SetWord)
 })
@@ -13193,6 +13192,7 @@ socket.on('SetWordReceive',(SetWord)=>{
 socket.on('Sentword',(newword,Tiles)=>{
   //2nd board game logic
   Player2Tiles = Tiles
+  console.log(answer + "Check Here")
   GameLogic2(answer, newword,Player2Tiles)
 })
 
