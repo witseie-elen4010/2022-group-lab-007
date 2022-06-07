@@ -13186,6 +13186,7 @@ socket.on('SetWordReceive',(SetWord)=>{
   let word = "bye"
   //socket.emit('SubmitWord',clientroom,word) // goes into game page
  // playerReady()
+
   GameLogic(SetWord)
 })
 
@@ -13235,6 +13236,10 @@ function gameState(gamecount)
         else if(count < counter)
         {
           popUpAlert("You LOSE! Enemy beat you by "+ (counter-count) + "attempts.", null)
+        }
+        else if(count === counter)
+        {
+          popUpAlert("Its a Draw!")
         }
         
     }
