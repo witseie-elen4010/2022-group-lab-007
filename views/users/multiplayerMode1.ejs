@@ -13181,21 +13181,19 @@ setTimeout(() => {
 //Receiving the message
 
 socket.on('SetWordReceive',(SetWord)=>{
-  console.log(SetWord)
   answer = SetWord
+  console.log("Word is received and players can play")
   // game Functions placed here
   let word = "bye"
-  //socket.emit('SubmitWord',clientroom,word) // goes into game page
- // playerReady()
+
   GameLogic(SetWord)
 })
 
 socket.on('Sentword',(newword,Tiles)=>{
   //2nd board game logic
   Player2Tiles = Tiles
-  console.log(answer + "Check heere")
+  console.log(answer + "Check Here")
   GameLogic2(answer, newword,Player2Tiles)
-  console.log(newword)
 })
 
 // Multiplayer
@@ -13211,7 +13209,6 @@ function playGameMulti(socket) {
   if(!ready) {
    socket.emit('player-ready')
    ready = true
-   console.log("At play game multi")
    playerReady(playerNum)
   }      
 
@@ -13234,13 +13231,15 @@ function gameState(gamecount)
     {
         if(count > counter)
         {
-          popUpAlert("You WIN!")
-           console.log("You win1")
+          popUpAlert("OMW! You WIN! You beat Enemy by " + (count-counter) + " attempts.", null)
         }
         else if(count < counter)
         {
-          popUpAlert("You LOSE")
-          console.log("You lose1")
+          popUpAlert("You LOSE! Enemy beat you by "+ (counter-count) + "attempts.", null)
+        }
+        else if(count === counter)
+        {
+          popUpAlert("Its a Draw!"), null
         }
         
     }
@@ -13327,23 +13326,6 @@ function GameLogic(answer)
 
  }
 
-//  function popUpAlert(message,duration=4000)
-//  {
-//   const popUp =document.createElement("div")
-//   popUp.textContent=message
-//   popUp.classList.add("popUp")
-//   popUp_Container.prepend("popUp")
-//    if (duration ==null) return
-//      setTimeout(()=>
-//      {
-//       popUp.classList.add("hide")
-//       popUp.addEventListener("transitionend",() => {
-//       popUp.remove()
-//       }
-//       )
-//      },duration)
-// }
-
 function pressedKey(key)
 {
     const wordLength = getWord()     // This function checks the length of the word to know when the user has completed a guessed word
@@ -13378,9 +13360,10 @@ function BackSpace()                             //Function to backspace the mos
 {                                                // and that one recent element in the string is deleted and cleared
 
     const filledTiles = getWord()
-    
-    for (let i=(filledTiles.length-1);i < filledTiles.length;i++)
+    if(filledTiles.length>0)
     {
+      for (let i=(filledTiles.length-1);i < filledTiles.length;i++)
+      {
         if (filledTiles == null)
         {
             return                               //Nothing to backspace
@@ -13388,7 +13371,9 @@ function BackSpace()                             //Function to backspace the mos
         filledTiles[i].textContent = ""
         delete filledTiles[i].dataset.state      //empty the most recent tile and remove the state to reset it
         delete filledTiles[i].dataset.letter
+      }
     }
+    
 
 } 
 
@@ -13414,8 +13399,8 @@ function submitGuess()                        //Function to submit the guess
 
     if (filledTiles.length < 5)
     {
-        //console.log("Word not long enough")    // Function will output an error message if the inputted word 
-       popUpAlert("Word not long enough")
+          // Function will output an error message if the inputted word 
+       popUpAlert("Word is not long enough", 3000)
        return                                 // is smaller than the word to be guessed
     }
 
@@ -13429,8 +13414,8 @@ function submitGuess()                        //Function to submit the guess
 
    if (!dictionary.includes(attempt))
     {
-       console.log("Word does not exist")    // Function will output an error message if the inputted word                                  // is smaller than the word to be guessed
-       popUpAlert("Word does not exist")
+       // Function will output an error message if the inputted word                                  // is smaller than the word to be guessed
+       popUpAlert("Word does not exist", 3000)
        return
     }
     else 
@@ -13438,7 +13423,6 @@ function submitGuess()                        //Function to submit the guess
        //send our attempt to enemy 
       socket.emit('SubmitWord',clientroom,attempt,filledTiles)
       counter = counter +1
-      console.log(counter)
     } 
 
     completeInteraction()                                               //Call function to prevent the user from typing while the                                         
@@ -13479,9 +13463,7 @@ function gameStatus(attempt, tiles)                             //Function to ch
     {
         gamecount = gamecount +1
         gameState(gamecount)
-        console.log("gamecount")
-        popUpAlert("You guessed the word correctly in " + counter + " attempts")
-        console.log("You win")
+        popUpAlert("You guessed the word correctly in " + counter + " attempts", 10000)
         completeInteraction()
         return
     }
@@ -13490,21 +13472,17 @@ function gameStatus(attempt, tiles)                             //Function to ch
     {   
         gamecount = gamecount +1
         gameState(gamecount)
-        console.log("gamecount")
-        popUpAlert(answer + "  was the correct word" )
-        console.log(answer + " was the correct word")
+        popUpAlert("The correct word was " + answer.toUpperCase() , 10000 )
         return
         completeInteraction()
-        //return
+        
     }
 
-   // refreshInteraction()
-
 }
 
 }
 
-function popUpAlert(message,duration=8000)
+function popUpAlert(message,duration)
  {
   const popUp =document.createElement("div")
   popUp.textContent=message
@@ -13561,45 +13539,12 @@ function GameLogic2(answer, attempt,Player2Tiles)
             
             gamecount = gamecount +1
             gameState(gamecount)
-            console.log("gamecount")
+
     }
 
 }
 
-
-
-
-//  Player2Tiles.forEach((...params) => changeTile(...params,attempt))  
-
-// function changeTile2(tile2,index,array,attempt)                          //Function that alters the status of the tile and the keyboard so that the grid tiles and keyboard tiles
-// {                                                                  //become colour coded
-//      const letter = tile2.dataset.letter 
-//      const key = keyboard.querySelector(`[data-key="${letter}"i]`)
-//      for (let i = 0; i <5;i++)
-//      {
-//       if (answer[index] === letter) {
-//         tile2.dataset.state = "correct"
-//       } else if (answer.includes(letter)) {
-//         tile2.dataset.state = "wrong-location"
-//       } else {
-//         tile2.dataset.state = "wrong"
-//       }
-//       if (index === array.length - 1) {
-//             refreshInteraction()
-//             //gameStatus(attempt, array)
-//       }
-//     }
-//     //SecondGrid(tile,index)
 }
-
-
-
-    // for (let i = 0; i <5;i++)
-    // {
-    //  tile2.dataset.state = tile.dataset.state
-    // }
-
-
 
 </script>
 
