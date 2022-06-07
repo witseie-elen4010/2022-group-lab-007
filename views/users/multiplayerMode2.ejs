@@ -13206,15 +13206,13 @@ if(playerNum!=0)
     socket.on('CustomWordSent',SetWord=>{
         answer = SetWord
         document.getElementById("PlayerSetWord").innerHTML = "Word is Set";
-        popUpAlert("Go!!!!")
+        popUpAlert("Go!!!!", 3000)
         GameLogic(answer)
 
         socket.on('Sentword',(newword,Tiles)=>{
          //2nd board game logic
         Player2Tiles = Tiles
-        console.log(answer + "Check heere")
         GameLogic2(answer, newword,Player2Tiles)
-        console.log(newword)
 })
     })
 
@@ -13226,13 +13224,11 @@ function gameState(gamecount)
     {
         if(count > counter)
         {
-          popUpAlert("You WIN!")
-           console.log("You win1")
+          popUpAlert("OMW! You WIN! You beat Enemy by " + (count-counter) + " attempts.", null)
         }
         else if(count < counter)
         {
-          popUpAlert("You LOSE!")
-          console.log("You lose1")
+          popUpAlert("You LOSE! Enemy beat you by "+ (counter-count) + "attempts.", null)
         }
         else if(count == counter)
         {
@@ -13297,7 +13293,7 @@ function MouseClick(event)                               // An input event butto
 
 
 //Function to create pop-up messages 
-function popUpAlert(message,duration=4000)
+function popUpAlert(message,duration)
 {
 const popUp =document.createElement("div")
 popUp.textContent=message
@@ -13380,8 +13376,10 @@ function BackSpace()                             //Function to backspace the mos
 
     const filledTiles = getWord()
     
-    for (let i=(filledTiles.length-1);i < filledTiles.length;i++)
+    if(filledTiles.length>0)
     {
+      for (let i=(filledTiles.length-1);i < filledTiles.length;i++)
+      {
         if (filledTiles == null)
         {
             return                               //Nothing to backspace
@@ -13389,6 +13387,7 @@ function BackSpace()                             //Function to backspace the mos
         filledTiles[i].textContent = ""
         delete filledTiles[i].dataset.state      //empty the most recent tile and remove the state to reset it
         delete filledTiles[i].dataset.letter
+      }
     }
 
 }
@@ -13400,7 +13399,7 @@ function submitGuess()                        //Function to submit the guess
     if (filledTiles.length < 5)
     {
         //console.log("Word not long enough")    // Function will output an error message if the inputted word 
-       popUpAlert("Word not long enough")
+       popUpAlert("Word not long enough", 3000)
        return                                 // is smaller than the word to be guessed
     }
 
@@ -13411,8 +13410,8 @@ function submitGuess()                        //Function to submit the guess
 
     if (!dictionary.includes(attempt))
     {
-        console.log("Word does not exist")    // Function will output an error message if the inputted word          // is smaller than the word to be guessed
-        popUpAlert("Word does not exist")
+        // Function will output an error message if the inputted word          // is smaller than the word to be guessed
+        popUpAlert("Word does not exist", 3000)
         return
     }
     else
@@ -13514,23 +13513,6 @@ function GameLogic(answer)
 
  }
 
-//  function popUpAlert(message,duration=4000)
-//  {
-//   const popUp =document.createElement("div")
-//   popUp.textContent=message
-//   popUp.classList.add("popUp")
-//   popUp_Container.prepend("popUp")
-//    if (duration ==null) return
-//      setTimeout(()=>
-//      {
-//       popUp.classList.add("hide")
-//       popUp.addEventListener("transitionend",() => {
-//       popUp.remove()
-//       }
-//       )
-//      },duration)
-// }
-
 function pressedKey(key)
 {
     const wordLength = getWord()     // This function checks the length of the word to know when the user has completed a guessed word
@@ -13565,9 +13547,10 @@ function BackSpace()                             //Function to backspace the mos
 {                                                // and that one recent element in the string is deleted and cleared
 
     const filledTiles = getWord()
-    
-    for (let i=(filledTiles.length-1);i < filledTiles.length;i++)
+    if(filledTiles.length>0)
     {
+      for (let i=(filledTiles.length-1);i < filledTiles.length;i++)
+      {
         if (filledTiles == null)
         {
             return                               //Nothing to backspace
@@ -13575,6 +13558,7 @@ function BackSpace()                             //Function to backspace the mos
         filledTiles[i].textContent = ""
         delete filledTiles[i].dataset.state      //empty the most recent tile and remove the state to reset it
         delete filledTiles[i].dataset.letter
+      }
     }
 
 } 
@@ -13601,8 +13585,8 @@ function submitGuess()                        //Function to submit the guess
 
     if (filledTiles.length < 5)
     {
-        //console.log("Word not long enough")    // Function will output an error message if the inputted word 
-       popUpAlert("Word not long enough")
+         // Function will output an error message if the inputted word 
+       popUpAlert("Word is not long enough", 3000)
        return                                 // is smaller than the word to be guessed
     }
 
@@ -13616,8 +13600,8 @@ function submitGuess()                        //Function to submit the guess
 
    if (!dictionary.includes(attempt))
     {
-       console.log("Word does not exist")    // Function will output an error message if the inputted word                                  // is smaller than the word to be guessed
-       popUpAlert("Word does not exist")
+       // Function will output an error message if the inputted word                                  // is smaller than the word to be guessed
+       popUpAlert("Word does not exist", 3000)
        return
     }
     else 
@@ -13666,10 +13650,10 @@ function gameStatus(attempt, tiles)                             //Function to ch
     {
         gamecount = gamecount +1
         gameState(gamecount)
-        console.log("gamecount")
-        popUpAlert("You guessed the word correctly in " + counter + " attempts")
-        console.log("You win")
+
+        popUpAlert("You guessed the word correctly in " + counter + " attempts", 10000)
         fetch(`/updateScoreboard/?userID=${userID}`)
+
         completeInteraction()
         return
     }
@@ -13679,22 +13663,20 @@ function gameStatus(attempt, tiles)                             //Function to ch
         gamecount = gamecount +1
         gameState(gamecount)
         console.log("gamecount")
-        popUpAlert(answer + "  was the correct word" )
-        console.log(answer + " was the correct word")
+
+        popUpAlert("The correct word was " + answer.toUpperCase() , 10000 )
         fetch(`/updateScoreboardLose/?userID=${userID}`)
+
         return
         completeInteraction()
-        //return
     }
 
-   // refreshInteraction()
-
 }
 
 
 }
 
-function popUpAlert(message,duration=8000)
+function popUpAlert(message,duration)
  {
   const popUp =document.createElement("div")
   popUp.textContent=message
@@ -13751,7 +13733,6 @@ function GameLogic2(answer, attempt,Player2Tiles)
             
             gamecount = gamecount +1
             gameState(gamecount)
-            console.log("gamecount")
     }
 
 }
