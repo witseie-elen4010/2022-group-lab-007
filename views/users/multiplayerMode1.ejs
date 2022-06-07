@@ -138,9 +138,7 @@
         </div>              
     </div>
 
-   <!--<form action="/MultiplayerMode1" method="post">-->
       <button style = "position:absolute; right:80px; bottom:20px;" class="buttonMenu" id="Back to Menu">Back to Menu</button> 
-   <!--</form>-->
     </body>
   
   </body>
@@ -13163,8 +13161,14 @@ socket.on('serverMsg',(data,num)=>{
 
 //socket.emit('SubmitWord',clientroom,word)
 //Back button destination
+//let gameWin = 'true'
+let userID = 10
 Backbutton.addEventListener('click', function () {
+
+  //fetch(`/updateScoreboardLose/?userID=${userID}`)
   window.location.href = ("/home");
+
+  
 }, false)
 
 setTimeout(() => {
@@ -13235,11 +13239,6 @@ function gameState(gamecount)
           popUpAlert("You WIN!")
            console.log("You win1")
 
-          fetch(`/updateScoreboard/?gameWin=${true}`)
-		      //.then(response => response.json())
-		      //.then(json => {
-			    //myUsernameMessage(json)
-		//})
         }
         else if(count < counter)
         {
@@ -13487,6 +13486,7 @@ function gameStatus(attempt, tiles)                             //Function to ch
         popUpAlert("You guessed the word correctly in " + counter + " attempts")
         console.log("You win")
         completeInteraction()
+        fetch(`/updateScoreboard/?userID=${userID}`)
         return
     }
     const unusedTiles = guessingGrid.querySelectorAll(":not([data-letter])")
@@ -13497,6 +13497,7 @@ function gameStatus(attempt, tiles)                             //Function to ch
         console.log("gamecount")
         popUpAlert(answer + "  was the correct word" )
         console.log(answer + " was the correct word")
+        fetch(`/updateScoreboardLose/?userID=${userID}`)
         return
         completeInteraction()
         //return

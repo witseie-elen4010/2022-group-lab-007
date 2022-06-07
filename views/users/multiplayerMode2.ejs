@@ -13669,6 +13669,7 @@ function gameStatus(attempt, tiles)                             //Function to ch
         console.log("gamecount")
         popUpAlert("You guessed the word correctly in " + counter + " attempts")
         console.log("You win")
+        fetch(`/updateScoreboard/?userID=${userID}`)
         completeInteraction()
         return
     }
@@ -13680,6 +13681,7 @@ function gameStatus(attempt, tiles)                             //Function to ch
         console.log("gamecount")
         popUpAlert(answer + "  was the correct word" )
         console.log(answer + " was the correct word")
+        fetch(`/updateScoreboardLose/?userID=${userID}`)
         return
         completeInteraction()
         //return
