@@ -48,7 +48,7 @@ router.post('/', (req, res) => {
 
     // if no input into the username field 
     if (username_.length === 0){
-        return res.redirect('/users/login')
+        return res.redirect('/users')
     }
 
     // Check the server database for the inputted username
@@ -72,13 +72,13 @@ router.post('/', (req, res) => {
         return res.redirect('/home')
     } else {
         // if Login fails remain on Login page
-        return res.redirect('/users/login')
+        return res.redirect('/users')
     }
 
     })
     // Error with the server database
     .catch(err => {
-        res.send({ Error: err })
+        return res.redirect('/users')
     })
 
 })
