@@ -1,6 +1,6 @@
 * { 
     /* font settings for the web page*/
-      color:rgb(3, 3, 3);
+      color:aqua;
       font-family: 
       "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
       "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
@@ -53,7 +53,7 @@ h2, h3 {
     gap: .25em;
     margin-bottom: 1em;
   }
-
+/*implementing the characteristics of muliplayer mode*/
 .Multi-guess-grid1 {
     display: inline-grid;
     justify-content: left;
@@ -254,7 +254,7 @@ resize: both;
 .key.correct {
   background-color: forestgreen;
 }
-
+ /* Popup messages container*/
 .popUpcontainer {
 position: fixed;
 top: 15vh;
@@ -266,6 +266,7 @@ flex-direction: column;
 align-items: center;
 
 }
+
 .popUp {
 opacity: 1;
 pointer-events: none;
@@ -280,6 +281,7 @@ margin-bottom: .5em;
 size-adjust: 1000px;
 font-size: large;
 }
+/* Last PopUp message prepended to list*/
 .popUp:last-child{
 
 margin-bottom: 0;
