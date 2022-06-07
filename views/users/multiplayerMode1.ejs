@@ -138,11 +138,7 @@
         </div>              
     </div>
 
-   <!-- <form action="/MultiplayerMode1" method="post">-->
-      <!--<input checked id="gameWin" value="true" ></input>-->
       <button style = "position:absolute; right:80px; bottom:20px;" class="buttonMenu" id="Back to Menu">Back to Menu</button> 
-   <!-- </form>-->
-
     </body>
   
   </body>
@@ -13165,8 +13161,14 @@ socket.on('serverMsg',(data,num)=>{
 
 //socket.emit('SubmitWord',clientroom,word)
 //Back button destination
+//let gameWin = 'true'
+let userID = 10
 Backbutton.addEventListener('click', function () {
+
+  //fetch(`/updateScoreboardLose/?userID=${userID}`)
   window.location.href = ("/home");
+
+  
 }, false)
 
 setTimeout(() => {
@@ -13465,6 +13467,7 @@ function gameStatus(attempt, tiles)                             //Function to ch
         gameState(gamecount)
         popUpAlert("You guessed the word correctly in " + counter + " attempts", 10000)
         completeInteraction()
+        fetch(`/updateScoreboard/?userID=${userID}`)
         return
     }
     const unusedTiles = guessingGrid.querySelectorAll(":not([data-letter])")
@@ -13472,7 +13475,10 @@ function gameStatus(attempt, tiles)                             //Function to ch
     {   
         gamecount = gamecount +1
         gameState(gamecount)
+
         popUpAlert("The correct word was " + answer.toUpperCase() , 10000 )
+        fetch(`/updateScoreboardLose/?userID=${userID}`)
+
         return
         completeInteraction()
         

@@ -13650,7 +13650,10 @@ function gameStatus(attempt, tiles)                             //Function to ch
     {
         gamecount = gamecount +1
         gameState(gamecount)
+
         popUpAlert("You guessed the word correctly in " + counter + " attempts", 10000)
+        fetch(`/updateScoreboard/?userID=${userID}`)
+
         completeInteraction()
         return
     }
@@ -13660,7 +13663,10 @@ function gameStatus(attempt, tiles)                             //Function to ch
         gamecount = gamecount +1
         gameState(gamecount)
         console.log("gamecount")
+
         popUpAlert("The correct word was " + answer.toUpperCase() , 10000 )
+        fetch(`/updateScoreboardLose/?userID=${userID}`)
+
         return
         completeInteraction()
     }
