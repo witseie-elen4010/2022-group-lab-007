@@ -138,11 +138,9 @@
         </div>              
     </div>
 
-   <!-- <form action="/MultiplayerMode1" method="post">-->
-      <!--<input checked id="gameWin" value="true" ></input>-->
+   <!--<form action="/MultiplayerMode1" method="post">-->
       <button style = "position:absolute; right:80px; bottom:20px;" class="buttonMenu" id="Back to Menu">Back to Menu</button> 
-   <!-- </form>-->
-
+   <!--</form>-->
     </body>
   
   </body>
@@ -13236,6 +13234,12 @@ function gameState(gamecount)
         {
           popUpAlert("You WIN!")
            console.log("You win1")
+
+          fetch(`/updateScoreboard/?gameWin=${true}`)
+		      //.then(response => response.json())
+		      //.then(json => {
+			    //myUsernameMessage(json)
+		//})
         }
         else if(count < counter)
         {

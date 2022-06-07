@@ -153,6 +153,48 @@ app.use('/MultiplayerMode1',Multiplayer1Router)
 app.use('/MultiplayerMode2',Multiplayer2Router)
 app.use('/scoreboard',scoreboardRouter)
 app.use('/queueB',queueBRouter)
+
+app.get('/updateScoreboard', (req, res) => {
+    const gameWon = req.body.gameWin
+    console.log("Game win:")
+    console.log(req.body.gameWin)
+    //const gameWon = true
+    const userID = req.session.ID
+    let score
+
+    //Aquire games won and games played from score table
+    db.pools
+    .then((pool)=>{
+        return pool.request()
+        .input('userID',userID)
+        .query('SELECT games,wins FROM dbo.scoreboard WHERE userID = @userID')
+    }).then(result=>{
+        let games = result.recordset[0].games
+        let wins = result.recordset[0].wins
+        // update values and calculate new score
+        if(gameWon===true){
+            games = games + 1
+            wins = wins + 1
+            score = (wins/games)*100
+        }else{
+            score = (wins/games)*100
+        }
+        // update Score Table on database
+        db.pools
+        .then((pool)=>{
+            return pool.request()
+            .input('userID',userID)
+            .input('games',games)
+            .input('wins',wins)
+            .input('score',score)
+            .query('UPDATE dbo.scoreboard SET games=@games,wins=@wins,score=@score WHERE (userID = @userID)')
+        }).then(result=>{
+            // route to home page
+            res.redirect('/home')
+        })
+    })
+})
+
 // ///////////////////////////////////////////////////
 // define function
 // ///////////////////////////////////////////////////

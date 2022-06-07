@@ -12,11 +12,11 @@ router.get('/', (req, res) => {
 
 // after multiwordle game finishes
 router.post('/', (req, res) => {
-    console.log("I made it!!!")
     //const gameWon = req.body.gameWin
+    //console.log("Game win:")
+    //console.log(req.body.gameWin)
     const gameWon = true
-    //const userID = req.session.id
-    let userID = 32
+    const userID = req.session.ID
     let score
 
     //Aquire games won and games played from score table
@@ -26,18 +26,15 @@ router.post('/', (req, res) => {
         .input('userID',userID)
         .query('SELECT games,wins FROM dbo.scoreboard WHERE userID = @userID')
     }).then(result=>{
-        console.log("I made it here 2!!!")
         let games = result.recordset[0].games
-        console.log("I made it here 3!!!")
         let wins = result.recordset[0].wins
         // update values and calculate new score
         if(gameWon===true){
             games = games + 1
-            console.log("I made it here 4!!!")
             wins = wins + 1
-            score = wins/games
+            score = (wins/games)*100
         }else{
-            score = wins/games
+            score = (wins/games)*100
         }
         // update Score Table on database
         database.pools
@@ -47,9 +44,8 @@ router.post('/', (req, res) => {
             .input('games',games)
             .input('wins',wins)
             .input('score',score)
-            .query('INSERT INTO dbo.scoreboard (games,wins,score) VALUES (@games,@wins,@score) WHERE userID = @userID;')
+            .query('UPDATE dbo.scoreboard SET games=@games,wins=@wins,score=@score WHERE (userID = @userID)')
         }).then(result=>{
-            console.log("I made it 5!!!")
             // route to home page
             res.redirect('/home')
         })
