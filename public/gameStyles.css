@@ -53,7 +53,7 @@ h2, h3 {
     gap: .25em;
     margin-bottom: 1em;
   }
-
+/*implementing the characteristics of muliplayer mode*/
 .Multi-guess-grid1 {
     display: inline-grid;
     justify-content: left;
